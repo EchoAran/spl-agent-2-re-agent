@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多 Agent 访谈 Chatbox</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="panel">
+        <h1>多 Agent 访谈</h1>
+        <section>
+          <h2>仓库配置</h2>
+          <label for="repoUrlInput">GitHub 仓库 URL</label>
+          <input id="repoUrlInput" placeholder="https://github.com/owner/repo" />
+          <label for="projectNameInput">项目名（可选）</label>
+          <input id="projectNameInput" placeholder="repo-name" />
+        </section>
+        <button id="startBtn">创建会话</button>
+        <div class="controls">
+          <button id="runBtn" type="button">开始</button>
+          <button id="pauseBtn" type="button">暂停</button>
+          <button id="resumeBtn" type="button">继续</button>
+        </div>
+        <div id="sessionInfo"></div>
+      </aside>
+      <main class="chat">
+        <div id="messages" class="messages"></div>
+        <form id="chatForm" class="composer">
+          <input id="userInput" placeholder="输入你的需求、追问或补充..." />
+          <button type="submit">发送</button>
+        </form>
+      </main>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,25 @@
+llm:
+  api_key: "sk-kMVPQRq57cqRm2oN7e26D7Ab8aCb481392207b3fAb7391D1"
+  base_url: "https://api.rcouyi.com/v1"
+  model: "gpt-5"
+  temperature: 0.0
+  timeout_sec: 120
+
+source:
+  target: "./Code"
+  type: null
+  local_path: null
+  repo_url: null
+  commit: null
+  project_name: null
+  prefer_legacy_spl: true
+  force_rebuild: false
+
+runtime:
+  cache_dir: ".spl_cache"
+  max_rounds: 15
+  export_spl: true
+  use_llm_for_build: true
+  tool_timeout_sec: 30
+
+question: "What does this project do?"

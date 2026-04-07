@@ -1,0 +1,234 @@
+# ==================== PROMPT_STRUCTURE_ANALYSIS ====================
+PROMPT_STRUCTURE_ANALYSIS = """你是SPL流程图结构分析专家。你的任务是深度解析SPL模板，提取完整的逻辑结构，包括并行处理路径。
+
+**核心任务**：
+1. 识别所有COMMAND节点及其业务含义
+2. 理解MAIN_FLOW、ALTERNATIVE_FLOW、EXCEPTION_FLOW的层级关系
+3. 识别条件分支(condition、specific_condition)及其触发逻辑，逻辑判断使用原文的判断，比如通过、超时、验证通过等，这些判断需要符合原文，假如原文是通过，那就有两种情况，一种是通过一种是不通过，请好好处理判断条件
+4. 识别循环、回归(RETURN_TO)结构
+5. 识别可以并行执行的命令节点
+6. 保持原始语言(中文/英文)不翻译
+
+**输入SPL内容**：
+{content}
+
+**输出JSON格式**(直接输出纯JSON，无任何markdown标记)：
+{{
+  "language": "zh",
+  "title": "流程图标题(从DEFINE_WORKER提取或自动生成)",
+  "commands": [
+    {{
+      "id": "cmd_1",
+      "text": "COMMAND原始文字(保持完整，去除[COMMAND]等标记)",
+      "flow_type": "main",
+      "conditions": ["通过", "失败"],
+      "return_to": "cmd_3",
+      "is_decision": false,
+      "can_parallel": false
+    }}
+  ],
+  "flow_structure": {{
+    "main_flow": ["cmd_1", "cmd_2"],
+    "parallel_groups": [
+      {{
+        "nodes": ["cmd_3", "cmd_4"],
+        "join_at": "cmd_5"
+      }}
+    ],
+    "alternatives": [
+      {{
+        "trigger": "cmd_2",
+        "branches": [
+          {{"condition": "通过", "nodes": ["cmd_3"]}},
+          {{"condition": "失败", "nodes": ["cmd_4"]}}
+        ]
+      }}
+    ],
+    "exceptions": [
+      {{
+        "trigger": "cmd_1",
+        "condition": "超时",
+        "nodes": ["cmd_5"]
+      }}
+    ],
+    "loops": [
+      {{"from": "cmd_6", "to": "cmd_2"}}
+    ]
+  }}
+}}
+
+**重要提示**：
+- 只输出纯JSON
+- 保持原始语言不翻译，保持全文字都是英文包括边上文字
+- 保持节点文字完整，不要简化
+- 完整提取所有逻辑关系，特别识别并行执行节点
+- 节点绝对不能自我连接(例如cmd_1不能连接到cmd_1)
+- is_decision标记是否为决策节点(有多个分支)
+- can_parallel标记是否可以并行执行
+"""
+
+# ==================== PROMPT_MERMAID_GENERATION ====================
+PROMPT_MERMAID_GENERATION = """你是Mermaid流程图语法专家。基于结构分析结果，生成标准的Mermaid flowchart代码，合理安排并行流程。
+
+**Mermaid flowchart语法规则**：
+1. 第一行必须是：`flowchart TD`
+2. 节点定义：
+   - 矩形节点：`节点ID[显示文字]`
+   - 圆形节点：`节点ID(("显示文字"))`
+   - 圆角矩形：`节点ID(["显示文字"])`
+   - 菱形决策：`节点ID{显示文字}` **注意：只用单个花括号**
+3. 连线语法：
+   - 普通连接：`节点A --> 节点B`
+   - 带文字连接：`节点A -->|文字| 节点B`
+   - 虚线连接：`节点A -.-> 节点B`
+   - 并行分支：每条连线单独写，不使用 & 符号
+4. **文本处理规则**：
+   - 保持节点文字完整，不要简化
+   - 如果包含特殊字符，必须用双引号包裹：`n1["文字(特殊)"]`
+   - 移除 `<REF>` `</REF>` 等HTML标记
+   - 移除 `RESULT` 关键字
+   - 中文字符可以直接使用
+
+**输入数据**：
+{structure_json}
+
+**生成策略**：
+1. 为每个command生成唯一ID(n1, n2, n3...)
+2. 从structure_json的text字段提取文本，保持完整
+3. 主流程使用实线箭头 `-->`
+4. 分支流程使用带标签的箭头 `-->|条件|`，比如通过以及不通过
+5. 异常流程使用虚线箭头 `-.->`
+6. 识别并行节点，但每条连线单独书写
+7. 保持原始文字不翻译
+8. **严禁节点自我连接**：绝对不能出现 `n1 --> n1`
+9. 所有节点必须至少有一个连接，避免孤立节点
+10. 避免使用subgraph
+11. **菱形节点只用单花括号** `{}`
+
+**输出格式**(直接输出纯Mermaid代码，无markdown标记，无```符号)：
+flowchart TD
+    n1([开始])
+    n2[验证用户信息并检查权限]
+    n3{类型检查是否通过}
+    n4[转换为整数类型]
+    n5[处理负值情况]
+    n6([完成])
+
+    n1 --> n2
+    n2 --> n3
+    n3 -->|通过| n4
+    n3 -->|失败| n5
+    n4 --> n6
+    n5 --> n6
+
+**关键注意**：
+- 节点ID不能是"end"(改用"end_node"或"finish")
+- **菱形节点语法：`n3{文字}`，不是 `n3{{文字}}`**，菱形判断之后的判断应该两条线都需要带有判断条件吧，比如一条是通过，一条是不通过
+- 文字中包含特殊字符必须用双引号
+- **绝对禁止**：`n1 --> n1` 这样的自我连接
+- 并行流程的连线要分开写
+- 只输出Mermaid代码，不要有markdown代码块标记
+- 不要出现Mermaid语法错误
+- 只使用flowchart语法
+- 避免使用subgraph
+- 保持节点文字完整，不要简化，保持全文字都是英文包括边上文字
+"""
+
+# ==================== PROMPT_MERMAID_OPTIMIZATION ====================
+PROMPT_MERMAID_OPTIMIZATION = """你是Mermaid流程图优化专家。在基础代码上添加样式和布局优化，使用简洁的黑白风格。
+
+**输入Mermaid代码**：
+{mermaid_code}
+
+**CRITICAL: 必须执行的修复**
+1. **保持节点文字完整，不要简化或修改原始文本**
+
+2. **修复语法错误**：
+   - 删除所有自我连接(如 `n1 --> n1`)
+   - 修复双花括号：`n1{{文字}}` 改为 `n1{文字}`
+   - 删除所有 & 符号，改为分开的连线
+   - 删除所有subgraph
+
+3. **清理文本**：
+   - 移除 `<REF>` `</REF>` 等标记
+   - 移除 `RESULT` 关键字
+   - 确保特殊字符用双引号包裹
+
+4. **修复编码**：
+   - 确保UTF-8编码正确
+   - 修复乱码注释
+
+**样式优化策略**：
+1. **使用类选择器，不要为每个节点单独设置样式**
+2. 定义3-4个样式类：
+   - 起始/结束节点类
+   - 决策节点类
+   - 异常节点类
+3. 使用 `class` 和 `classDef` 语法批量应用样式
+4. 只使用 `linkStyle default` 统一设置所有连线样式，不要单独设置每条连线
+
+**Mermaid flowchart语法规则**：
+1. 第一行必须是：`flowchart TD`
+2. 节点定义：
+   - 矩形节点：`节点ID[显示文字]`
+   - 菱形决策：`节点ID{显示文字}` **只用单花括号**
+3. 连线语法：
+   - 普通连接：`节点A --> 节点B`
+   - 带文字连接：`节点A -->|文字| 节点B`
+   - **禁止使用**：`节点A --> 节点B & 节点C`
+
+**样式规则**：
+- 使用类选择器批量应用样式，背景色用白色
+- 主流程节点：黑色边框
+- 决策节点：灰色边框
+- 异常节点：虚线边框
+- 连线：统一使用 `linkStyle default`
+- 图片的整个背景色都要用白色
+
+**输出格式**(直接输出优化后的Mermaid代码，无markdown标记，无```符号)：
+flowchart TD
+    %%{init: {'theme':'base', 'themeVariables': {'background':'#FFFFFF', 'mainBkg':'#FFFFFF', 'secondaryBkg':'#FFFFFF', 'tertiaryBkg':'#FFFFFF'}}}%%
+
+    %% 主流程
+    n1([开始])
+    n2[验证用户信息并检查权限]
+    n3{类型检查是否通过}
+    n4[转换为整数类型]
+    n5[处理负值情况]
+    n6([完成])
+
+    %% 流程连接
+    n1 --> n2
+    n2 --> n3
+    n3 -->|通过| n4
+    n3 -->|失败| n5
+    n4 --> n6
+    n5 --> n6
+
+    %% 定义样式类
+    classDef startEndNode stroke:#000000,stroke-width:2px,fill:#FFFFFF
+    classDef decisionNode stroke:#666666,stroke-width:1.5px,fill:#FFFFFF
+    classDef processNode stroke:#000000,stroke-width:1.5px,fill:#FFFFFF
+
+    %% 应用样式类
+    class n1,n6 startEndNode
+    class n3 decisionNode
+    class n2,n4,n5 processNode
+
+    %% 统一连线样式
+    linkStyle default stroke:#000000,stroke-width:1px
+
+**关键要求**：
+- **保持节点文字完整，不要简化**
+- **必须修复菱形语法**：`{{}}` 改为 `{}`
+- **必须删除所有自我连接**：检查并删除 `nX --> nX`
+- **必须修复并行语法**：将 `&` 改为分开的两行
+- **必须删除subgraph**
+- **必须移除特殊标记**：删除 `<REF>` `RESULT` 等
+- **使用类选择器批量设置样式，不要为每个节点单独设置**
+- **只用一个 linkStyle default 设置所有连线样式**
+- 只输出Mermaid代码，无markdown标记
+- 只使用flowchart语法
+- 保持原始逻辑和文字，保持全文字都是英文
+- 简洁黑白风格
+"""

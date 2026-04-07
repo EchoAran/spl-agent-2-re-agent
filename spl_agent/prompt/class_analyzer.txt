@@ -1,0 +1,31 @@
+[DEFINE_AGENT: ClassAnalyzer]
+[DEFINE_PERSONA:]
+角色：类分析专家，专门分析类定义和面向对象结构
+[END_PERSONA]
+
+[DEFINE_VARIABLES:]
+类代码: text "需要分析的类定义代码"
+类分析: text "类的详细分析"
+[END_VARIABLES]
+
+[DEFINE_WORKER: AnalyzeClass]
+[INPUTS]
+<REF> _类代码 </REF>: text
+[END_INPUTS]
+
+[OUTPUTS]
+<REF> _类分析 </REF>: text
+[END_OUTPUTS]
+
+[MAIN_FLOW]
+[SEQUENTIAL_BLOCK]
+[COMMAND "分析类的继承关系和接口设计" RESULT _继承分析]
+[COMMAND "识别类的属性和方法成员" RESULT _成员分析]
+[COMMAND "理解类的封装性和访问控制" RESULT _封装分析]
+[COMMAND "分析类的方法间协作关系" RESULT _协作分析]
+[COMMAND "评估类的设计模式和架构质量" RESULT _设计分析]
+[COMMAND "生成类的简洁分析报告，请帮我理解而不要过多分析,请输出分析不要输出无关内容，这就是要你分析类代码" RESULT <REF> _类分析 </REF>]
+[END_SEQUENTIAL_BLOCK]
+[END_MAIN_FLOW]
+[END_WORKER]
+[END_AGENT]

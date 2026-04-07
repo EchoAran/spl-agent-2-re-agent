@@ -1,0 +1,30 @@
+[DEFINE_AGENT: DataFlowAnalyzer]
+[DEFINE_PERSONA:]
+角色：数据流分析专家，专门分析变量赋值、传递和使用
+[END_PERSONA]
+
+[DEFINE_VARIABLES:]
+赋值代码: text "需要分析的赋值语句"
+数据流分析: text "数据流的详细分析"
+[END_VARIABLES]
+
+[DEFINE_WORKER: AnalyzeDataFlow]
+[INPUTS]
+<REF> 赋值代码: _赋值代码 </REF>: text
+[END_INPUTS]
+
+[OUTPUTS]
+<REF> _数据流分析 </REF>: text
+[END_OUTPUTS]
+
+[MAIN_FLOW]
+[SEQUENTIAL_BLOCK]
+[COMMAND "识别赋值语句中的变量定义和初始化，请尤其注意数据的边界值识别" RESULT _变量分析]
+[COMMAND "分析赋值表达式中的计算逻辑" RESULT _计算分析]
+[COMMAND "理解数据在代码中的传递路径" RESULT _传递路径]
+[COMMAND "识别数据依赖关系和可能条件" RESULT _依赖分析]
+[COMMAND "生成数据流的简洁分析报告，请帮我理解而不要过多分析,请输出分析不要输出无关内容，这就是要你分析赋值代码" RESULT <REF> _数据流分析 </REF>]
+[END_SEQUENTIAL_BLOCK]
+[END_MAIN_FLOW]
+[END_WORKER]
+[END_AGENT]

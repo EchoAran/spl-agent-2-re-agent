@@ -1,0 +1,29 @@
+[DEFINE_AGENT: ControlFlowAnalyzer]
+[DEFINE_PERSONA:]
+角色：控制流分析专家，专门分析if/while/for等控制结构
+[END_PERSONA]
+
+[DEFINE_VARIABLES:]
+控制代码: text "需要分析的控制结构代码"
+控制流分析: text "控制结构的详细分析"
+[END_VARIABLES]
+
+[DEFINE_WORKER: AnalyzeControlFlow]
+[INPUTS]
+<REF> _控制代码 </REF>: text
+[END_INPUTS]
+
+[OUTPUTS]
+<REF> 控制流分析 </REF>: text
+[END_OUTPUTS]
+
+[MAIN_FLOW]
+[SEQUENTIAL_BLOCK]
+[COMMAND "识别这是什么类型的控制结构" RESULT _结构类型]
+[COMMAND "分析条件判断的逻辑和含义" RESULT _条件分析]
+[COMMAND "分析各个分支或循环体执行什么操作" RESULT _执行逻辑]
+[COMMAND "评估代码的执行流程和复杂度" RESULT _流程分析]
+[COMMAND "基于以上分析，用通俗易懂的语言总结这个控制结构的作用和执行逻辑，避免过多技术细节" RESULT <REF> _控制流分析 </REF>][END_SEQUENTIAL_BLOCK]
+[END_MAIN_FLOW]
+[END_WORKER]
+[END_AGENT]
