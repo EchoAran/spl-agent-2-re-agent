@@ -21,3 +21,4 @@ ENV/
 .idea/
 .vscode/
 spl_agent/node_modules/
+.spl_i/
