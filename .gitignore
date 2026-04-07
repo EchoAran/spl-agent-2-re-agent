@@ -15,16 +15,9 @@ env/
 ENV/
 .env
 .env.*
+.envrc
+.direnv/
 
 .idea/
 .vscode/
-node_modules/
 spl_agent/node_modules/
-dist/
-build/
-*.log
-.DS_Store
-Thumbs.db
-.spl_i/
-spl_agent/.spl_cache/
-multi_agent_interview/backend/runtime/session_cache/
