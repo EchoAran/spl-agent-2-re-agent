@@ -1,0 +1,138 @@
+---
+{
+  "page_id": "file:commerce_ops/pricing.py",
+  "page_type": "entity",
+  "entity_kind": "file",
+  "title": "commerce_ops_demo.commerce_ops.pricing",
+  "summary": "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.",
+  "tags": [
+    "file",
+    "python",
+    "service module"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/__file__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.pricing
+
+Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.
+
+## SPL
+
+```spl
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" pricing.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "service module"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals."
+    PublicSurface: "PriceQuote; PricingPolicy"
+    InternalOrganization: "['The module defines a value object (PriceQuote) and a policy service (PricingPolicy). PricingPolicy holds policy configuration (tax_rate_bps and a coupon code map) set on construction, and exposes quote as the primary operation. quote coordinates internal helpers: calculate_subtotal derives a subtotal from items/products, apply_coupon computes and caps a discount from the configured mapping and customer context, calculate_tax computes tax from the taxable amount, and quote assembles the result into a PriceQuote.']"
+    ModuleMechanism: "Consumers construct PricingPolicy with a tax rate and coupons mapping; the initializer validates and normalizes configuration. At runtime, clients call quote with customer, cart items, price lookup, and an optional coupon. The module computes subtotal, discount, and tax, then returns a PriceQuote. Other parts of the system (e.g., services) depend on this module as the pricing provider."
+    DependencyBoundary: "external dependency __future__; external dependency commerce_ops.models; external dependency dataclasses; external dependency typing"
+    ErrorBoundary: "ValueError: tax rate cannot be negative (initialization).; AttributeError: coupons does not provide an .items() method (initialization).; AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).; ValueError: total must be positive (quote).; ValueError: qty must be positive (calculate_subtotal).; ValueError: price_cents must be positive (calculate_subtotal).; AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).; KeyError: SKU not found in price lookup (calculate_subtotal).; TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).; ValueError: coupon is not supported (apply_coupon).; AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).; ValueError: taxable amount cannot be negative (calculate_tax).; TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "pricing.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.pricing"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\pricing.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals."
+    <REF> role </REF>: text "service module"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["PriceQuote", "PricingPolicy"]
+    <REF> entrypoints </REF>: List [text] ["PricingPolicy.__init__", "PricingPolicy.quote"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["PriceQuote: dataclass value object holding subtotal_cents, discount_cents, tax_cents, total_cents, coupon", "PricingPolicy: service encapsulating pricing rules and quote orchestration", "PricingPolicy helpers: calculate_subtotal, apply_coupon, calculate_tax"]
+    <REF> internal_structure </REF>: text "['The module defines a value object (PriceQuote) and a policy service (PricingPolicy). PricingPolicy holds policy configuration (tax_rate_bps and a coupon code map) set on construction, and exposes quote as the primary operation. quote coordinates internal helpers: calculate_subtotal derives a subtotal from items/products, apply_coupon computes and caps a discount from the configured mapping and customer context, calculate_tax computes tax from the taxable amount, and quote assembles the result into a PriceQuote.']"
+    <REF> module_mechanism </REF>: text "Consumers construct PricingPolicy with a tax rate and coupons mapping; the initializer validates and normalizes configuration. At runtime, clients call quote with customer, cart items, price lookup, and an optional coupon. The module computes subtotal, discount, and tax, then returns a PriceQuote. Other parts of the system (e.g., services) depend on this module as the pricing provider."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency commerce_ops.models", "external dependency dataclasses", "external dependency typing"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["tax_rate_bps (int) for PricingPolicy.__init__", "coupons mapping[str,int] for PricingPolicy.__init__", "customer (commerce_ops.models.Customer) for quote/apply_coupon", "items (List[commerce_ops.models.CartItem]) for quote/calculate_subtotal", "products price map (Dict[str, commerce_ops.models.Product]) for quote/calculate_subtotal", "coupon code (str or None) for quote/apply_coupon"]
+    <REF> outputs </REF>: List [text] ["PriceQuote from PricingPolicy.quote", "subtotal_cents (int)", "discount_cents (int)", "tax_cents (int)", "total_cents (int) encapsulated in PriceQuote"]
+    <REF> key_paths </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService.checkout -> PricingPolicy.quote -> calculate_subtotal -> apply_coupon -> calculate_tax -> PriceQuote", "commerce_ops_demo.commerce_ops.cli.build_demo_service -> PricingPolicy.__init__", "PricingPolicy.quote constructs PriceQuote"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Stores tax_rate_bps on the PricingPolicy instance during __init__", "Normalizes coupon keys to uppercase and stores the mapping during __init__", "Constructs PriceQuote objects when quoting", "No external I/O, network, or persistence effects in evidence"]
+    <REF> errors </REF>: List [text] ["ValueError: tax rate cannot be negative (initialization).", "AttributeError: coupons does not provide an .items() method (initialization).", "AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).", "ValueError: total must be positive (quote).", "ValueError: qty must be positive (calculate_subtotal).", "ValueError: price_cents must be positive (calculate_subtotal).", "AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).", "KeyError: SKU not found in price lookup (calculate_subtotal).", "TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).", "ValueError: coupon is not supported (apply_coupon).", "AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).", "ValueError: taxable amount cannot be negative (calculate_tax).", "TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."]
+    <REF> initialization_order </REF>: List [text] ["Instantiate PricingPolicy (__init__) to validate tax_rate_bps and normalize coupons before calling quote", "Coupons normalization and policy state setup occur during __init__"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PriceQuote/__class__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]
+```
+
+## Wiki Navigation
+
+- Page ID: `file:commerce_ops/pricing.py`
+- Entity kind: `file`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/pricing.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.pricing
+
+Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.
+
+## Exports
+- PriceQuote
+- PricingPolicy
+
+## Components
+- PriceQuote: dataclass value object holding subtotal_cents, discount_cents, tax_cents, total_cents, coupon
+- PricingPolicy: service encapsulating pricing rules and quote orchestration
+- PricingPolicy helpers: calculate_subtotal, apply_coupon, calculate_tax
+
+## Internal Structure
+- The module defines a value object (PriceQuote) and a policy service (PricingPolicy). PricingPolicy holds policy configuration (tax_rate_bps and a coupon code map) set on construction, and exposes quote as the primary operation. quote coordinates internal helpers: calculate_subtotal derives a subtotal from items/products, apply_coupon computes and caps a discount from the configured mapping and customer context, calculate_tax computes tax from the taxable amount, and quote assembles the result into a PriceQuote.
+
+## Imports
+- external dependency __future__
+- external dependency commerce_ops.models
+- external dependency dataclasses
+- external dependency typing
+
+## Source Evidence
+- <SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PriceQuote/__class__.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__class__.spl</SPL>

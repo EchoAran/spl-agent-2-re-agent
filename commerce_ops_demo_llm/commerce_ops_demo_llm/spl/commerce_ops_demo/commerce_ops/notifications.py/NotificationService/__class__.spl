@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" NotificationService]
+
+[DEFINE_PERSONA:]
+    ROLE: "service"
+    DOMAIN: "commerce operations - notifications"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Compose and record notification messages such as order receipts and low-stock alerts, accumulating them in an internal list for later use; invoked by OrderService._notify_customer."
+    Responsibility: "Primary: generate and accumulate notification messages in sent_messages. Secondary: delegate currency formatting to a helper function for receipt totals."
+    PublicBehavior: "__init__(): initialize internal accumulator sent_messages; send_receipt(customer, order) -> str: compose a receipt message and record it; send_low_stock_alert(products, threshold=2) -> List[str]: generate alerts for low inventory and record them"
+    InternalMechanism: "Builds message strings from provided domain objects, delegates currency formatting to format_currency for totals, appends each composed message to an internal sent_messages list, and returns the message or list of messages. No external I/O is performed."
+    StateModel: "sent_messages: List[str] (accumulator; initialized in constructor; appended by public methods)"
+    Collaboration: "commerce_ops_demo.commerce_ops.notifications.format_currency"
+    ErrorBoundary: "<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.; Exception: Propagated exception from format_currency when formatting the total.; AttributeError: Raised when expected attributes are missing on customer or order.; customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.; self.sent_messages is missing or not list-like, causing append to fail.; A product lacks the 'sku' attribute when formatting the alert string; A product lacks the 'stock' attribute when evaluating the threshold condition; TypeError: Object is not iterable.; TypeError: Unsupported comparison between product.stock and threshold.; products is None or not iterable when entering the loop"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "NotificationService"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    <REF> source_file </REF>: text "commerce_ops/notifications.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Compose and record notification messages such as order receipts and low-stock alerts, accumulating them in an internal list for later use; invoked by OrderService._notify_customer."
+    <REF> responsibility </REF>: text "Primary: generate and accumulate notification messages in sent_messages. Secondary: delegate currency formatting to a helper function for receipt totals."
+    <REF> role </REF>: text "service"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["__init__(): initialize internal accumulator sent_messages", "send_receipt(customer, order) -> str: compose a receipt message and record it", "send_low_stock_alert(products, threshold=2) -> List[str]: generate alerts for low inventory and record them"]
+    <REF> entrypoints </REF>: List [text] ["__init__", "send_receipt", "send_low_stock_alert"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Builds message strings from provided domain objects, delegates currency formatting to format_currency for totals, appends each composed message to an internal sent_messages list, and returns the message or list of messages. No external I/O is performed."
+    <REF> internal_structure </REF>: List [text] ["State: sent_messages (List[str]) as an accumulator for all composed notifications", "No private helpers; public methods directly compose and append messages", "Delegation: uses format_currency to format monetary amounts in receipt messages"]
+    <REF> lifecycle </REF>: List [text] ["Creation: __init__ sets up sent_messages", "Usage: each call to a public method composes messages and appends them to sent_messages", "Retention: accumulated messages persist on the instance for its lifetime"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["sent_messages: List[str] (accumulator; initialized in constructor; appended by public methods)"]
+    <REF> inputs </REF>: List [text] ["customer.email (send_receipt)", "order.order_id (send_receipt)", "order.total_cents (send_receipt, formatted via format_currency)", "products iterable of Product objects (send_low_stock_alert)", "product.sku (send_low_stock_alert)", "product.stock comparable to threshold (send_low_stock_alert)", "threshold: int with default 2 (send_low_stock_alert)"]
+    <REF> outputs </REF>: List [text] ["receipt message string (from send_receipt)", "list of low-stock alert strings (from send_low_stock_alert)", "mutated sent_messages containing all composed messages"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["commerce_ops_demo.commerce_ops.notifications.format_currency"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"]
+    <REF> key_interactions </REF>: List [text] ["Incoming: OrderService._notify_customer -> send_receipt", "Incoming: OrderService._notify_customer -> send_low_stock_alert", "Outgoing: send_receipt -> format_currency for total formatting", "State effect: both public methods -> self.sent_messages.append for accumulation"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Appends composed messages to self.sent_messages", "Maintains an in-memory log of messages across calls via sent_messages"]
+    <REF> errors </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.", "Exception: Propagated exception from format_currency when formatting the total.", "AttributeError: Raised when expected attributes are missing on customer or order.", "customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.", "self.sent_messages is missing or not list-like, causing append to fail.", "A product lacks the 'sku' attribute when formatting the alert string", "A product lacks the 'stock' attribute when evaluating the threshold condition", "TypeError: Object is not iterable.", "TypeError: Unsupported comparison between product.stock and threshold.", "products is None or not iterable when entering the loop"]
+    <REF> invariants </REF>: List [text] ["sent_messages exists on the instance and supports append operations", "send_receipt assumes customer has email and order has order_id and total_cents acceptable to format_currency", "send_low_stock_alert assumes each product provides sku and stock, and stock is comparable to threshold", "Methods operate in-memory without external I/O; side effects are confined to sent_messages"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_low_stock_alert.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

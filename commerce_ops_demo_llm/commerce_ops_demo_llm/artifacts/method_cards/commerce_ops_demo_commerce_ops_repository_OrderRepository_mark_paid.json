@@ -1,0 +1,80 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "owner_file_id": "commerce_ops/repository.py",
+  "signature": "def mark_paid(self, order_id: str, payment_id: str) -> Order:",
+  "visibility": "public",
+  "summary": "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.",
+  "purpose_hint": "",
+  "inputs": [
+    "order_id (str): Identifier of the order to update.",
+    "payment_id (str): Identifier of the payment used to mark the order as paid."
+  ],
+  "outputs": [
+    "order (Order): The updated Order entity after being marked as paid and saved."
+  ],
+  "main_effect": "Return the updated order",
+  "side_effects": [
+    "self.save(order)"
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid",
+    "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order",
+    "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order",
+    "AttributeError: Attempting to call mark_paid on a None order value.",
+    "Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.",
+    "Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>.",
+    "Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.",
+    "Retrieved order is None, causing a failure on mark_paid invocation"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+  ],
+  "direct_callers": [],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 4,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "order = self.get(order_id)"
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 3,
+        "code": "order.mark_paid(payment_id)"
+      },
+      {
+        "type": "function_call",
+        "lineno": 4,
+        "code": "self.save(order)"
+      }
+    ],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 5,
+        "code": "return order"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

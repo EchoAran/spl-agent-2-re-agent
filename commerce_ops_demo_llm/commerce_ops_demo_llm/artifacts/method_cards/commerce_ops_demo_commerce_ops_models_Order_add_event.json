@@ -1,0 +1,74 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def add_event(self, kind: str, detail: str) -> None:",
+  "visibility": "public",
+  "summary": "Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.",
+  "purpose_hint": "",
+  "inputs": [
+    "kind (str): Event type identifier to record in the new event.",
+    "detail (str): Event detail message or description.",
+    "self.events (list): Existing events list on the instance that will be mutated via append."
+  ],
+  "outputs": [
+    "return (None): No direct return value.",
+    "self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp."
+  ],
+  "main_effect": "Append the constructed event dictionary to self.events.",
+  "side_effects": [
+    "mutates self.events",
+    "mutates self.events via append",
+    "self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.",
+    "self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )"
+  ],
+  "errors": [
+    "AttributeError: self.events does not support append.",
+    "NameError: datetime or timezone is not defined.",
+    "datetime or timezone is not imported/defined when generating the timestamp.",
+    "self.events is None or lacks an append method (not a list-like)."
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "external.datetime.now",
+    "external.datetime.now(timezone.utc).isoformat",
+    "external.self.events.append"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+  ],
+  "external_calls": [
+    "external.datetime.now",
+    "external.datetime.now(timezone.utc).isoformat",
+    "external.self.events.append"
+  ],
+  "state_reads": [],
+  "state_writes": [
+    "events"
+  ],
+  "control_markers": {
+    "statements_count": 1,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 2,
+        "code": "self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )"
+      }
+    ],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Order/add_event.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

@@ -1,0 +1,39 @@
+[DEFINE_WORKER: "Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list." parse_cart]
+    [INPUTS]
+        <REF> raw_items </REF>: List[str] "Iterable of strings in the format 'sku:qty' to parse into CartItem objects."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> items </REF>: List[CartItem] "List of CartItem objects constructed from the parsed input strings."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize an empty list to collect parsed items. RESULT items]
+            [COMMAND Iterate over raw_items; for each raw, split on ':' with maxsplit=1 and unpack into sku and qty_text. RESULT sku and qty_text for current element]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> with sku.strip() and int(qty_text) and append it to items. RESULT items updated with a new CartItem]
+            [COMMAND Return the accumulated items list. RESULT List[CartItem]]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: raw.split(':', 1) does not produce exactly two parts for unpacking.]
+        [LOG "Failed to unpack 'sku' and 'qty_text' from raw; expected 'sku:qty' format."]
+        [THROW ValueError "Not enough values to unpack (expected 2)."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: qty_text cannot be converted to an integer via int(qty_text).]
+        [LOG "Invalid quantity; int conversion failed for qty_text."]
+        [THROW ValueError "Invalid literal for int() with base 10."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: raw is not a string-like object and does not support split(':', 1).]
+        [LOG "raw element lacks a compatible split method."]
+        [THROW AttributeError or TypeError "Object has no attribute 'split' or split invocation is not applicable."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.]
+        [LOG "CartItem construction failed and is propagated."]
+        [THROW Exception "Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

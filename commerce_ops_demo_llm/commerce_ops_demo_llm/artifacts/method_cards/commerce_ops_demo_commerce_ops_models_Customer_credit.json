@@ -1,0 +1,71 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def credit(self, amount_cents: int) -> None:",
+  "visibility": "public",
+  "summary": "Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values.",
+  "purpose_hint": "",
+  "inputs": [
+    "amount_cents (int): Amount to credit, in cents; must be > 0.",
+    "self.balance_cents (int): Current balance in cents read and incremented."
+  ],
+  "outputs": [
+    "self.balance_cents (int): Updated balance in cents after adding amount_cents.",
+    "return (None): No return value."
+  ],
+  "main_effect": "Increment self.balance_cents by amount_cents",
+  "side_effects": [
+    "mutates self.balance_cents",
+    "self.balance_cents (int): Updated balance in cents after adding amount_cents."
+  ],
+  "errors": [
+    "TypeError: Implicitly raised by the comparison when amount_cents cannot be compared to 0.",
+    "ValueError: Raised with message 'amount must be positive' when the amount is not greater than 0.",
+    "amount_cents <= 0",
+    "amount_cents > 0",
+    "amount_cents is None or non-numeric, making the '<=' comparison invalid",
+    "raise ValueError(\"amount must be positive\")"
+  ],
+  "validation_rules": [
+    "amount_cents > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "balance_cents"
+  ],
+  "state_writes": [
+    "balance_cents"
+  ],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if amount_cents <= 0:\n            raise ValueError(\"amount must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Customer/credit.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

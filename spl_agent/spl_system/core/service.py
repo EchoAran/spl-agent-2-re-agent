@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -24,6 +25,7 @@ class SPLProjectService:
         self.base_dir = Path(base_dir)
         self.store = SPLStore(cache_dir)
         self.sources = SourceResolver(cache_dir)
+        os.environ.setdefault("SPL_LLM_IO_LOG_PATH", str(self.store.cache_dir / "llm_io.jsonl"))
         self.semantic_builder = FunctionSemanticBuilder(llm_config=llm_config, base_dir=self.base_dir)
         self.builder = ProjectSPLBuilder(self.semantic_builder, max_workers=build_workers)
         self.llm_config = llm_config

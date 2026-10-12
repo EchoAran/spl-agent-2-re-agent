@@ -1,0 +1,136 @@
+---
+{
+  "page_id": "file:commerce_ops/notifications.py",
+  "page_type": "entity",
+  "entity_kind": "file",
+  "title": "commerce_ops_demo.commerce_ops.notifications",
+  "summary": "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.",
+  "tags": [
+    "file",
+    "python",
+    "service module"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/__file__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.notifications
+
+Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.
+
+## SPL
+
+```spl
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" notifications.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "service module"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts."
+    PublicSurface: "NotificationService; format_currency"
+    InternalOrganization: "['The module exposes a service class and a small utility. NotificationService composes messages for downstream consumers and records them in an instance-level accumulator. When building receipts, it calls the module-level format_currency helper. The file maintains no module-level state and relies on callers (e.g., OrderService, CLI) to invoke the service.']"
+    ModuleMechanism: "At import, the module defines a service class and a formatter function. At runtime, external modules construct NotificationService and invoke its methods; send_receipt uses format_currency to build totals and appends composed messages to the instance accumulator. No external I/O is performed by this module."
+    DependencyBoundary: "external dependency __future__; external dependency commerce_ops.models; external dependency typing"
+    ErrorBoundary: "<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.; Exception: Propagated exception from format_currency when formatting the total.; AttributeError: Raised when expected attributes are missing on customer or order.; customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.; self.sent_messages is missing or not list-like, causing append to fail.; A product lacks the 'sku' attribute when formatting the alert string; A product lacks the 'stock' attribute when evaluating the threshold condition; TypeError: Object is not iterable.; TypeError: Unsupported comparison between product.stock and threshold.; products is None or not iterable when entering the loop; ValueError: currency value cannot be negative; cents < 0; cents > 0; raise ValueError('currency value cannot be negative')"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "notifications.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.notifications"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\notifications.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts."
+    <REF> role </REF>: text "service module"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["NotificationService", "format_currency"]
+    <REF> entrypoints </REF>: List [text] ["NotificationService", "format_currency"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["NotificationService: service class that composes receipt and low-stock alert messages and accumulates them in an in-memory sent_messages list; delegates total formatting to format_currency.", "format_currency(cents) -> str: utility function formatting non-negative cent amounts into dollar strings; raises ValueError for negative input."]
+    <REF> internal_structure </REF>: text "['The module exposes a service class and a small utility. NotificationService composes messages for downstream consumers and records them in an instance-level accumulator. When building receipts, it calls the module-level format_currency helper. The file maintains no module-level state and relies on callers (e.g., OrderService, CLI) to invoke the service.']"
+    <REF> module_mechanism </REF>: text "At import, the module defines a service class and a formatter function. At runtime, external modules construct NotificationService and invoke its methods; send_receipt uses format_currency to build totals and appends composed messages to the instance accumulator. No external I/O is performed by this module."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency commerce_ops.models", "external dependency typing"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["NotificationService.send_receipt(customer, order)", "NotificationService.send_low_stock_alert(products, threshold=2)", "format_currency(cents)"]
+    <REF> outputs </REF>: List [text] ["send_receipt: receipt message string recorded in self.sent_messages", "send_low_stock_alert: list of low-stock alert strings recorded in self.sent_messages", "format_currency: formatted currency string like '$12.34'", "NotificationService: maintains an in-memory accumulator of composed messages (sent_messages)"]
+    <REF> key_paths </REF>: List [text] ["NotificationService.send_receipt -> format_currency", "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> NotificationService.send_receipt", "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> NotificationService.send_low_stock_alert", "commerce_ops_demo.commerce_ops.cli.build_demo_service -> NotificationService"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Appends composed messages to NotificationService.sent_messages (in-memory state)", "Maintains an in-memory log of composed messages across calls via NotificationService.sent_messages"]
+    <REF> errors </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.", "Exception: Propagated exception from format_currency when formatting the total.", "AttributeError: Raised when expected attributes are missing on customer or order.", "customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.", "self.sent_messages is missing or not list-like, causing append to fail.", "A product lacks the 'sku' attribute when formatting the alert string", "A product lacks the 'stock' attribute when evaluating the threshold condition", "TypeError: Object is not iterable.", "TypeError: Unsupported comparison between product.stock and threshold.", "products is None or not iterable when entering the loop", "ValueError: currency value cannot be negative", "cents < 0", "cents > 0", "raise ValueError('currency value cannot be negative')"]
+    <REF> initialization_order </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/format_currency.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]
+```
+
+## Wiki Navigation
+
+- Page ID: `file:commerce_ops/notifications.py`
+- Entity kind: `file`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/notifications.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.notifications
+
+Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.
+
+## Exports
+- NotificationService
+- format_currency
+
+## Components
+- NotificationService: service class that composes receipt and low-stock alert messages and accumulates them in an in-memory sent_messages list; delegates total formatting to format_currency.
+- format_currency(cents) -> str: utility function formatting non-negative cent amounts into dollar strings; raises ValueError for negative input.
+
+## Internal Structure
+- The module exposes a service class and a small utility. NotificationService composes messages for downstream consumers and records them in an instance-level accumulator. When building receipts, it calls the module-level format_currency helper. The file maintains no module-level state and relies on callers (e.g., OrderService, CLI) to invoke the service.
+
+## Imports
+- external dependency __future__
+- external dependency commerce_ops.models
+- external dependency typing
+
+## Source Evidence
+- <SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__class__.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/format_currency.spl</SPL>

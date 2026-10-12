@@ -1,0 +1,115 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "slug": "commerce-ops-demo-commerce-ops-models-customer-can-spend",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-can-spend",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Customer/can_spend.spl"
+  ],
+  "summary": "Returns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.Customer.can_spend\n\nReturns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Returns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.\" can_spend]\n    [INPUTS]\n        <REF> amount_cents </REF>: int \"Requested spend amount in cents.\"\n        <REF> self.balance_cents </REF>: int \"Current balance in cents read from instance state.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return_value </REF>: bool \"True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Evaluate amount_cents > 0 and, if True, check self.balance_cents >= amount_cents using short-circuit AND semantics. RESULT is_spendable]\n            [COMMAND Return the computed boolean result. RESULT return_value]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.models.Customer.can_spend`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.Customer.can_spend\n\nReturns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.\n\n## Inputs\n- amount_cents (int): Requested spend amount in cents.\n- self.balance_cents (int): Current balance in cents read from instance state.\n\n## Outputs\n- return_value (bool): True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False.\n\n## Main Effect\nReturn the computed boolean result.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.models.Customer.debit\n\n## Side Effects\n- return_value (bool): True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False.\n\n## Errors\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-debit",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.debit"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-debit",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.debit"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "source_url": "/wiki/topic/external-integration",
+      "relation": "topic_mentions",
+      "label": "External Integration"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.models.Customer",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.631184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "bd9d31e0bce71f5878eb748e5d931e2d529af10d7e364009bac937f7e6af6630",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/Customer/can_spend.spl",
+  "spl_content": "[DEFINE_WORKER: \"Returns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.\" can_spend]\n    [INPUTS]\n        <REF> amount_cents </REF>: int \"Requested spend amount in cents.\"\n        <REF> self.balance_cents </REF>: int \"Current balance in cents read from instance state.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return_value </REF>: bool \"True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Evaluate amount_cents > 0 and, if True, check self.balance_cents >= amount_cents using short-circuit AND semantics. RESULT is_spendable]\n            [COMMAND Return the computed boolean result. RESULT return_value]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]"
+}

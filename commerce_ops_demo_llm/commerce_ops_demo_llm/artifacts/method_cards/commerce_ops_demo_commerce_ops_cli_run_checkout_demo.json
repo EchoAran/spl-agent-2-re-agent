@@ -1,0 +1,96 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/cli.py",
+  "signature": "def run_checkout_demo(raw_items: List[str], coupon: str = \"\") -> str:",
+  "visibility": "public",
+  "summary": "Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.",
+  "purpose_hint": "",
+  "inputs": [
+    "raw_items (List[str]): List of raw item strings to parse into cart items.",
+    "coupon (str): Optional coupon code applied during checkout; empty string when none."
+  ],
+  "outputs": [
+    "summary (str): Formatted summary string: 'created={order_id}; status={status}; history_count={count}'."
+  ],
+  "main_effect": "Format the return message as \"created={order.order_id}; status={order.status}; history_count={len(history)}\".",
+  "side_effects": [],
+  "errors": [
+    "AttributeError: order.order_id or order.status not available.",
+    "Exception: Checkout operation error.",
+    "Exception: Customer history retrieval error.",
+    "Exception: Invalid cart items.",
+    "Exception: Service initialization error.",
+    "If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.",
+    "If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.",
+    "If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.",
+    "If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.",
+    "If order lacks order_id or status attributes when formatting the summary string."
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "commerce_ops_demo.commerce_ops.models.Customer",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "external.len"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.cli.main"
+  ],
+  "external_calls": [
+    "external.len"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 6,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "service = build_demo_service()"
+      },
+      {
+        "type": "assignment",
+        "lineno": 3,
+        "code": "customer = Customer(\"cust-100\", \"reader@example.com\", 20000, \"vip\")"
+      },
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "items = parse_cart(raw_items)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 5,
+        "code": "order = service.checkout(customer, items, coupon)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 6,
+        "code": "history = service.customer_history(customer.customer_id)"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 7,
+        "code": "return f\"created={order.order_id}; status={order.status}; history_count={len(history)}\""
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": true,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/cli.py/run_checkout_demo.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

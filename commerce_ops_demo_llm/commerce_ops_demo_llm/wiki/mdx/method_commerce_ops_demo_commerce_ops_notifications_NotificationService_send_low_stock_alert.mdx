@@ -1,0 +1,127 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+  "summary": "Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_low_stock_alert.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert
+
+Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages." send_low_stock_alert]
+    [INPUTS]
+        <REF> products </REF>: List[Product] "Iterable of Product objects; each product is expected to have 'stock' and 'sku' attributes."
+        <REF> threshold </REF>: int "Stock threshold; products with stock <= threshold are considered low. Defaults to 2."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> alerts </REF>: List[str] "List of alert message strings created for products whose stock <= threshold, returned in iteration order."
+        <REF> self.sent_messages </REF>: side_effect "Each generated alert message is appended to self.sent_messages."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize an empty collection to accumulate alert messages. RESULT alerts (empty list)]
+            [COMMAND Iterate over products; for each product with product.stock <= threshold, format the alert string: "Low stock for {product.sku}: {product.stock}". RESULT alert (string) for each qualifying product]
+            [COMMAND Append each created alert to self.sent_messages. RESULT self.sent_messages updated with new alert entries]
+            [COMMAND Append each created alert to the alerts collection. RESULT alerts updated with new alert entries]
+            [COMMAND Return the collected alerts. RESULT alerts (List[str])]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: product.stock > threshold during iteration]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Skip alert creation and do not append anything. RESULT No change to alerts or self.sent_messages for this product]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: products is None or not iterable when entering the loop]
+        [LOG "Failed to iterate over 'products'."]
+        [THROW TypeError "Object is not iterable."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: A product lacks the 'stock' attribute when evaluating the threshold condition]
+        [LOG "Product missing 'stock' attribute during low-stock check."]
+        [THROW AttributeError "Missing 'stock' attribute on product."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: product.stock cannot be compared to threshold (e.g., incompatible type)]
+        [LOG "Type comparison failed between product.stock and threshold."]
+        [THROW TypeError "Unsupported comparison between product.stock and threshold."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: A product lacks the 'sku' attribute when formatting the alert string]
+        [LOG "Product missing 'sku' attribute during alert formatting."]
+        [THROW AttributeError "Missing 'sku' attribute on product."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.sent_messages is missing or does not support append]
+        [LOG "Cannot append alert to self.sent_messages."]
+        [THROW AttributeError "Attribute 'sent_messages' missing or not appendable."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/notifications.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert
+
+Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages.
+
+## Inputs
+- products (List[Product]): Iterable of Product objects; each product is expected to have 'stock' and 'sku' attributes.
+- threshold (int): Stock threshold; products with stock <= threshold are considered low. Defaults to 2.
+
+## Outputs
+- alerts (List[str]): List of alert message strings created for products whose stock <= threshold, returned in iteration order.
+- self.sent_messages (side_effect): Each generated alert message is appended to self.sent_messages.
+
+## Main Effect
+Return the collected alerts.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.services.OrderService._notify_customer
+
+## Side Effects
+- alerts.append(alert)
+- mutates self.sent_messages
+- mutates self.sent_messages via append
+- self.sent_messages (side_effect): Each generated alert message is appended to self.sent_messages.
+- self.sent_messages.append(alert)
+
+## Errors
+- A product lacks the 'sku' attribute when formatting the alert string
+- A product lacks the 'stock' attribute when evaluating the threshold condition
+- AttributeError: Attribute 'sent_messages' missing or not appendable.
+- AttributeError: Missing 'sku' attribute on product.
+- AttributeError: Missing 'stock' attribute on product.
+- TypeError: Object is not iterable.
+- TypeError: Unsupported comparison between product.stock and threshold.
+- product.stock cannot be compared to threshold (e.g., incompatible type)
+- products is None or not iterable when entering the loop
+- self.sent_messages is missing or does not support append
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

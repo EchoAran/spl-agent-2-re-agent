@@ -1,0 +1,15 @@
+{
+  "root_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo",
+  "output_dir": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\Result\\commerce_ops_demo_llm",
+  "target_kind": "repository",
+  "include_tests": false,
+  "root_package_id": "commerce_ops_demo",
+  "root_package_spl": "spl/commerce_ops_demo/__package__.spl",
+  "method_count": 43,
+  "class_count": 13,
+  "file_count": 9,
+  "package_count": 2,
+  "quality_warning_count": 3,
+  "wiki_page_count": 77,
+  "wiki_entry": "wiki/frontend/index.html"
+}

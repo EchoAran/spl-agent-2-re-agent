@@ -1,0 +1,61 @@
+{
+  "file_name": "__init__.py",
+  "module_name": "commerce_ops_demo.commerce_ops",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\__init__.py",
+  "language": "python",
+  "purpose": "Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules.",
+  "role": "re-export module",
+  "exports": [
+    "CartItem",
+    "Customer",
+    "Order",
+    "OrderService",
+    "Product"
+  ],
+  "entrypoints": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "components": [
+    "Re-exports: CartItem, Customer, Order, Product from commerce_ops.models",
+    "Re-exports: OrderService from commerce_ops.services"
+  ],
+  "internal_structure": [
+    "Provides two re-export blocks: one importing domain model symbols from commerce_ops.models and one importing OrderService from commerce_ops.services. No additional classes, functions, or module state are defined."
+  ],
+  "module_mechanism": "On import, binds CartItem, Customer, Order, Product, and OrderService into the package namespace by importing them from their submodules, enabling consumers to import these names directly from commerce_ops.",
+  "imports": [
+    "external dependency commerce_ops.models",
+    "external dependency commerce_ops.services"
+  ],
+  "internal_imports": [],
+  "globals": [
+    "__all__"
+  ],
+  "inputs": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "outputs": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "key_paths": [
+    "Importing commerce_ops initializes the package namespace by re-exporting CartItem, Customer, Order, Product, and OrderService from submodules."
+  ],
+  "side_effects": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "errors": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "initialization_order": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "class_refs": [],
+  "function_refs": [],
+  "id": "commerce_ops/__init__.py",
+  "path": "commerce_ops/__init__.py",
+  "incoming_files": [],
+  "outgoing_files": [],
+  "summary": "Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/__init__.py/__file__.spl"
+}

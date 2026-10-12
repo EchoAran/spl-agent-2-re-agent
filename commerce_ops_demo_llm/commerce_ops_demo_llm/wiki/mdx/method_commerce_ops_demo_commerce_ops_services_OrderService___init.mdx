@@ -1,0 +1,103 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+  "summary": "Constructs the instance by storing injected services on the object and initializing last_receipt to None.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__init__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.services.OrderService.__init__
+
+Constructs the instance by storing injected services on the object and initializing last_receipt to None.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Constructs the instance by storing injected services on the object and initializing last_receipt to None." __init__]
+    [INPUTS]
+        <REF> catalog </REF>: ProductCatalog "Product catalog dependency to be stored on the instance."
+        <REF> pricing </REF>: PricingPolicy "Pricing policy dependency to be stored on the instance."
+        <REF> payments </REF>: PaymentGateway "Payment gateway dependency to be stored on the instance."
+        <REF> repository </REF>: OrderRepository "Order repository dependency to be stored on the instance."
+        <REF> notifications </REF>: NotificationService "Notification service dependency to be stored on the instance."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.catalog </REF>: ProductCatalog "Instance attribute set to the provided catalog reference."
+        <REF> self.pricing </REF>: PricingPolicy "Instance attribute set to the provided pricing reference."
+        <REF> self.payments </REF>: PaymentGateway "Instance attribute set to the provided payments reference."
+        <REF> self.repository </REF>: OrderRepository "Instance attribute set to the provided repository reference."
+        <REF> self.notifications </REF>: NotificationService "Instance attribute set to the provided notifications reference."
+        <REF> self.last_receipt </REF>: PaymentReceipt | None "Initialized to None to indicate no receipt is present at construction time."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Assign constructor dependencies to instance attributes RESULT self.catalog, self.pricing, self.payments, self.repository, self.notifications]
+            [COMMAND Initialize last_receipt attribute to None RESULT self.last_receipt = None]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService.__init__`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/services.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.services.OrderService.__init__
+
+Constructs the instance by storing injected services on the object and initializing last_receipt to None.
+
+## Inputs
+- catalog (ProductCatalog): Product catalog dependency to be stored on the instance.
+- pricing (PricingPolicy): Pricing policy dependency to be stored on the instance.
+- payments (PaymentGateway): Payment gateway dependency to be stored on the instance.
+- repository (OrderRepository): Order repository dependency to be stored on the instance.
+- notifications (NotificationService): Notification service dependency to be stored on the instance.
+
+## Outputs
+- self.catalog (ProductCatalog): Instance attribute set to the provided catalog reference.
+- self.pricing (PricingPolicy): Instance attribute set to the provided pricing reference.
+- self.payments (PaymentGateway): Instance attribute set to the provided payments reference.
+- self.repository (OrderRepository): Instance attribute set to the provided repository reference.
+- self.notifications (NotificationService): Instance attribute set to the provided notifications reference.
+
+## Main Effect
+Initialize last_receipt attribute to None
+
+## Calls and Callers
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Side Effects
+- mutates self.catalog
+- mutates self.last_receipt
+- mutates self.notifications
+- mutates self.payments
+- mutates self.pricing
+- mutates self.repository
+- self.catalog (ProductCatalog): Instance attribute set to the provided catalog reference.
+- self.notifications (NotificationService): Instance attribute set to the provided notifications reference.
+- self.payments (PaymentGateway): Instance attribute set to the provided payments reference.
+- self.pricing (PricingPolicy): Instance attribute set to the provided pricing reference.
+- self.repository (OrderRepository): Instance attribute set to the provided repository reference.
+
+## Errors
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

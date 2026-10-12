@@ -1,0 +1,87 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "summary": "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.get
+
+Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent." get]
+    [INPUTS]
+        <REF> order_id </REF>: str "Identifier of the order to retrieve."
+        <REF> self.orders </REF>: Mapping[str, Order] "Internal mapping of orders keyed by order_id."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The order object corresponding to the provided order_id."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Check that order_id exists in self.orders RESULT validated_presence]
+            [COMMAND Retrieve the order via self.orders[order_id] RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: order_id not in self.orders]
+        [LOG "Exception information"]
+        [THROW KeyError "order {order_id} not found"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/repository.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.get
+
+Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.
+
+## Inputs
+- order_id (str): Identifier of the order to retrieve.
+- self.orders (Mapping[str, Order]): Internal mapping of orders keyed by order_id.
+
+## Outputs
+- order (Order): The order object corresponding to the provided order_id.
+
+## Main Effect
+Retrieve the order via self.orders[order_id]
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid
+- commerce_ops_demo.commerce_ops.services.OrderService.cancel_order
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- KeyError: order {order_id} not found
+- invalid when order_id not in self.orders
+- order_id not in self.orders
+- raise KeyError(f"order {order_id} not found")
+
+## Validation Rules
+- invalid when order_id not in self.orders

@@ -1,0 +1,64 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "owner_file_id": "commerce_ops/services.py",
+  "signature": "def customer_history(self, customer_id: str) -> List[Dict[str, str]]:",
+  "visibility": "public",
+  "summary": "Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.",
+  "purpose_hint": "",
+  "inputs": [
+    "customer_id (str): Identifier of the customer whose orders are requested.",
+    "self.repository (OrderRepository): Repository used to retrieve orders for the given customer."
+  ],
+  "outputs": [],
+  "main_effect": "Construct a list of dictionaries from orders, each with order_id, status, and total as str(order.total_cents).",
+  "side_effects": [],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> raises an exception.",
+    "Exception: Propagates any exception raised by the repository call.",
+    "TypeError: Raised when attempting to iterate over a None or non-iterable orders result.",
+    "orders is None or otherwise non-iterable, causing the list comprehension to fail."
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "external.str"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "external_calls": [
+    "external.str"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "orders = self.repository.list_by_customer(customer_id)"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 3,
+        "code": "return [\n            {\"order_id\": order.order_id, \"status\": order.status, \"total\": str(order.total_cents)}\n            for order in orders\n        ]"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/customer_history.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

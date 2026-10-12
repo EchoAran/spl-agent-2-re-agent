@@ -1,0 +1,25 @@
+llm:
+  api_key: "sk-kMVPQRq57cqRm2oN7e26D7Ab8aCb481392207b3fAb7391D1"
+  base_url: "https://api.rcouyi.com/v1"
+  model: "gpt-5"
+  temperature: 0.0
+  timeout_sec: 120
+
+source:
+  target: "https://github.com/kennethreitz/records"
+  type: null
+  repo_url: null
+  commit: null
+  local_path: null
+  project_name: null
+  prefer_legacy_spl: false
+  force_rebuild: false
+
+runtime:
+  cache_dir: ".spl_cache"
+  max_rounds: 15
+  export_spl: true
+  use_llm_for_build: false
+  tool_timeout_sec: 30
+
+question: "这个项目的整体功能是什么？用户执行一条 SQL 查询后，数据是怎么一步步从数据库取出来、最终变成用户可用结果的？中间涉及哪些关键函数？"

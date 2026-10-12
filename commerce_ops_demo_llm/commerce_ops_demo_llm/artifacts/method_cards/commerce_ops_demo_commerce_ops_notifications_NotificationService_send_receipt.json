@@ -1,0 +1,82 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+  "owner_file_id": "commerce_ops/notifications.py",
+  "signature": "def send_receipt(self, customer: Customer, order: Order) -> str:",
+  "visibility": "public",
+  "summary": "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Object instance that must provide a sent_messages list-like attribute to append the message.",
+    "customer (Customer): Customer object providing email used in the receipt message.",
+    "order (Order): Order object providing order_id and total_cents used to compose and format the receipt."
+  ],
+  "outputs": [
+    "message (str): The composed receipt message string that is returned.",
+    "self.sent_messages (List[str]): Updated list after appending the composed receipt message."
+  ],
+  "main_effect": "Return the composed message.",
+  "side_effects": [
+    "mutates self.sent_messages",
+    "mutates self.sent_messages via append",
+    "self.sent_messages (List[str]): Updated list after appending the composed receipt message.",
+    "self.sent_messages.append(message)"
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.",
+    "AttributeError: Raised when expected attributes are missing on customer or order.",
+    "Exception: Propagated exception from format_currency when formatting the total.",
+    "customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.",
+    "self.sent_messages is missing or not list-like, causing append to fail."
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "external.self.sent_messages.append"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "external_calls": [
+    "external.self.sent_messages.append"
+  ],
+  "state_reads": [],
+  "state_writes": [
+    "sent_messages"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "message = f\"Receipt for {customer.email}: order {order.order_id} total {format_currency(order.total_cents)}\""
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 3,
+        "code": "self.sent_messages.append(message)"
+      }
+    ],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return message"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

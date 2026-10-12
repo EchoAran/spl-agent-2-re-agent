@@ -1,0 +1,90 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "summary": "Increases the object's stock by the given quantity after validating the quantity is positive.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Product.release
+
+Increases the object's stock by the given quantity after validating the quantity is positive.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Increases the object's stock by the given quantity after validating the quantity is positive." release]
+    [INPUTS]
+        <REF> qty </REF>: int "Quantity to add; must be greater than 0."
+        <REF> self.stock </REF>: int "Current stock value prior to update."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.stock </REF>: int "Updated stock after adding qty."
+        <REF> return </REF>: None "No return value."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that qty is greater than 0 RESULT validation_passed]
+            [COMMAND Add qty to self.stock RESULT updated_stock]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: qty <= 0]
+        [LOG "Invalid quantity: qty must be positive"]
+        [THROW ValueError "Raised when qty is not positive with message 'qty must be positive'."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Product.release`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Product.release
+
+Increases the object's stock by the given quantity after validating the quantity is positive.
+
+## Inputs
+- qty (int): Quantity to add; must be greater than 0.
+- self.stock (int): Current stock value prior to update.
+
+## Outputs
+- self.stock (int): Updated stock after adding qty.
+- return (None): No return value.
+
+## Main Effect
+Add qty to self.stock
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items
+
+## Side Effects
+- mutates self.stock
+- self.stock (int): Updated stock after adding qty.
+
+## Errors
+- ValueError: Raised when qty is not positive with message 'qty must be positive'.
+- qty <= 0
+- qty > 0
+- raise ValueError("qty must be positive")
+
+## Validation Rules
+- qty > 0

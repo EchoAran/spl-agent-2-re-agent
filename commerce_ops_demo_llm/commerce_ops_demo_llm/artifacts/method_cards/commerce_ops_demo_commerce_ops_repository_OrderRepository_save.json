@@ -1,0 +1,80 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "owner_file_id": "commerce_ops/repository.py",
+  "signature": "def save(self, order: Order) -> None:",
+  "visibility": "public",
+  "summary": "Validates the order has a truthy order_id and stores the order in the instance's orders mapping under that key.",
+  "purpose_hint": "",
+  "inputs": [
+    "order (Order): Order object to be saved; must expose a truthy order_id used as the storage key.",
+    "self.orders (MutableMapping): Instance mapping of orders keyed by order_id that will be updated."
+  ],
+  "outputs": [
+    "return_value (NoneType): No value is returned.",
+    "orders_updated (state_mutation): self.orders[order.order_id] is set to the provided order (overwrites existing entry if the key already exists)."
+  ],
+  "main_effect": "Assign the order into self.orders keyed by order.order_id",
+  "side_effects": [
+    "mutates self.orders",
+    "mutates self.orders[order.order_id]",
+    "orders_updated (state_mutation): self.orders[order.order_id] is set to the provided order (overwrites existing entry if the key already exists)."
+  ],
+  "errors": [
+    "ValueError: order_id is required",
+    "invalid when not order.order_id",
+    "order.order_id is falsy (e.g., None, '', 0)",
+    "orders must contain order.order_id",
+    "raise ValueError(\"order_id is required\")"
+  ],
+  "validation_rules": [
+    "invalid when not order.order_id",
+    "orders must contain order.order_id"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "orders"
+  ],
+  "state_writes": [
+    "orders"
+  ],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if not order.order_id:\n            raise ValueError(\"order_id is required\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "self.orders[order.order_id] = order"
+      }
+    ],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

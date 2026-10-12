@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" repository.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "repository module; in-memory data access adapter for the Order domain"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide an in-memory repository for Order entities used by service-layer operations, supporting save, retrieval, customer-scoped listing, and a mark-paid workflow that coordinates with the Order domain model."
+    PublicSurface: "OrderRepository"
+    InternalOrganization: "['The module exports OrderRepository as its primary component. The repository maintains an internal mapping keyed by order_id initialized at construction. Operational methods manipulate this mapping. mark_paid orchestrates a small workflow: get the order, delegate to Order.mark_paid, then persist with save; internal edges show mark_paid calls get and save.']"
+    ModuleMechanism: "Consumers (e.g., CLI demo builder and service layer) instantiate OrderRepository and invoke its public methods. The module depends on typing for annotations and on the Order model for domain behavior during mark_paid. It raises validation and lookup errors across the module boundary and provides an in-memory data source for higher-level services."
+    DependencyBoundary: "external dependency __future__; external dependency commerce_ops.models; external dependency typing"
+    ErrorBoundary: "ValueError: order_id is required (save) when order.order_id is falsy; KeyError: order {order_id} not found (get) when the id is absent; AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer); AttributeError: The orders collection does not implement values() (list_by_customer); <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid); AttributeError: Attempting to call mark_paid on a None order value (mark_paid); Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "repository.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.repository"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\repository.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Provide an in-memory repository for Order entities used by service-layer operations, supporting save, retrieval, customer-scoped listing, and a mark-paid workflow that coordinates with the Order domain model."
+    <REF> role </REF>: text "repository module; in-memory data access adapter for the Order domain"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["OrderRepository"]
+    <REF> entrypoints </REF>: List [text] ["OrderRepository", "OrderRepository.save", "OrderRepository.get", "OrderRepository.list_by_customer", "OrderRepository.mark_paid"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["Class OrderRepository: in-memory repository keyed by order_id; constructor initializes empty orders mapping; provides save(order), get(order_id), list_by_customer(customer_id), and mark_paid(order_id, payment_id) that retrieves, invokes Order.mark_paid, then persists via save"]
+    <REF> internal_structure </REF>: text "['The module exports OrderRepository as its primary component. The repository maintains an internal mapping keyed by order_id initialized at construction. Operational methods manipulate this mapping. mark_paid orchestrates a small workflow: get the order, delegate to Order.mark_paid, then persist with save; internal edges show mark_paid calls get and save.']"
+    <REF> module_mechanism </REF>: text "Consumers (e.g., CLI demo builder and service layer) instantiate OrderRepository and invoke its public methods. The module depends on typing for annotations and on the Order model for domain behavior during mark_paid. It raises validation and lookup errors across the module boundary and provides an in-memory data source for higher-level services."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency commerce_ops.models", "external dependency typing"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["OrderRepository.__init__() constructs an empty repository", "OrderRepository.save(order: Order)", "OrderRepository.get(order_id)", "OrderRepository.list_by_customer(customer_id)", "OrderRepository.mark_paid(order_id, payment_id)"]
+    <REF> outputs </REF>: List [text] ["save mutates repository state; no return value", "get returns Order for the given order_id", "list_by_customer returns List[Order] filtered by customer_id", "mark_paid returns the updated Order after persisting"]
+    <REF> key_paths </REF>: List [text] ["cli.build_demo_service -> OrderRepository (instantiation)", "services.OrderService.checkout -> OrderRepository.save", "services.OrderService.customer_history -> OrderRepository.list_by_customer", "services.OrderService.cancel_order -> OrderRepository.get -> OrderRepository.save", "OrderRepository.mark_paid -> OrderRepository.get -> Order.mark_paid -> OrderRepository.save"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates internal orders mapping on save and mark_paid", "Overwrites existing entries on duplicate order_id in save", "Persists domain changes during mark_paid by delegating to Order.mark_paid and re-saving", "Raises exceptions on validation and lookup failures"]
+    <REF> errors </REF>: List [text] ["ValueError: order_id is required (save) when order.order_id is falsy", "KeyError: order {order_id} not found (get) when the id is absent", "AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer)", "AttributeError: The orders collection does not implement values() (list_by_customer)", "<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid)", "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid)", "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid)", "AttributeError: Attempting to call mark_paid on a None order value (mark_paid)", "Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)"]
+    <REF> initialization_order </REF>: List [text] ["Instantiate OrderRepository before OrderService methods invoke repository operations (constructed via cli.build_demo_service)"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

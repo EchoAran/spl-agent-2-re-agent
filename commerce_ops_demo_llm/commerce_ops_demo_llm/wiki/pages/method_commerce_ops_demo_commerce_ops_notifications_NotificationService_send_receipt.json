@@ -1,0 +1,110 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "slug": "commerce-ops-demo-commerce-ops-notifications-notificationservice-send-receipt",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-send-receipt",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl"
+  ],
+  "summary": "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt\n\nCompose a receipt message for a customer's order, append it to sent_messages, and return the message string.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.\" send_receipt]\n    [INPUTS]\n        <REF> self </REF>: object \"Object instance that must provide a sent_messages list-like attribute to append the message.\"\n        <REF> customer </REF>: Customer \"Customer object providing email used in the receipt message.\"\n        <REF> order </REF>: Order \"Order object providing order_id and total_cents used to compose and format the receipt.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> message </REF>: str \"The composed receipt message string that is returned.\"\n        <REF> self.sent_messages </REF>: List[str] \"Updated list after appending the composed receipt message.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct receipt message string using customer.email, order.order_id, and <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL>(order.total_cents). RESULT message]\n            [COMMAND Append message to self.sent_messages. RESULT self.sent_messages]\n            [COMMAND Return the composed message. RESULT message]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.]\n        [LOG \"Attribute access failed while composing the receipt message.\"]\n        [THROW AttributeError \"Raised when expected attributes are missing on customer or order.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.]\n        [LOG \"Formatting total_cents failed during receipt message construction.\"]\n        [THROW Exception \"Propagated exception from format_currency when formatting the total.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: self.sent_messages is missing or not list-like, causing append to fail.]\n        [LOG \"Failed to append the message to self.sent_messages.\"]\n        [THROW AttributeError or TypeError \"Raised when sent_messages attribute is absent or does not support append.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/notifications.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt\n\nCompose a receipt message for a customer's order, append it to sent_messages, and return the message string.\n\n## Inputs\n- self (object): Object instance that must provide a sent_messages list-like attribute to append the message.\n- customer (Customer): Customer object providing email used in the receipt message.\n- order (Order): Order object providing order_id and total_cents used to compose and format the receipt.\n\n## Outputs\n- message (str): The composed receipt message string that is returned.\n- self.sent_messages (List[str]): Updated list after appending the composed receipt message.\n\n## Main Effect\nReturn the composed message.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.notifications.format_currency\n- commerce_ops_demo.commerce_ops.services.OrderService._notify_customer\n\n## Side Effects\n- mutates self.sent_messages\n- mutates self.sent_messages via append\n- self.sent_messages (List[str]): Updated list after appending the composed receipt message.\n- self.sent_messages.append(message)\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.\n- AttributeError: Raised when expected attributes are missing on customer or order.\n- Exception: Propagated exception from format_currency when formatting the total.\n- customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.\n- self.sent_messages is missing or not list-like, causing append to fail.\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target_page_id": "file:commerce_ops/notifications.py",
+      "target_url": "/wiki/file/commerce-ops-notifications-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/notifications.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-format-currency",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.notifications.format_currency"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-format-currency",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.notifications.format_currency"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/notifications.py",
+      "url": "/wiki/file/commerce-ops-notifications-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/notifications.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.632183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "723ad3486332aab9e04678169ad930f7439351e5c5a579a04378c59c7cde3163",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl",
+  "spl_content": "[DEFINE_WORKER: \"Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.\" send_receipt]\n    [INPUTS]\n        <REF> self </REF>: object \"Object instance that must provide a sent_messages list-like attribute to append the message.\"\n        <REF> customer </REF>: Customer \"Customer object providing email used in the receipt message.\"\n        <REF> order </REF>: Order \"Order object providing order_id and total_cents used to compose and format the receipt.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> message </REF>: str \"The composed receipt message string that is returned.\"\n        <REF> self.sent_messages </REF>: List[str] \"Updated list after appending the composed receipt message.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct receipt message string using customer.email, order.order_id, and <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL>(order.total_cents). RESULT message]\n            [COMMAND Append message to self.sent_messages. RESULT self.sent_messages]\n            [COMMAND Return the composed message. RESULT message]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.]\n        [LOG \"Attribute access failed while composing the receipt message.\"]\n        [THROW AttributeError \"Raised when expected attributes are missing on customer or order.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.]\n        [LOG \"Formatting total_cents failed during receipt message construction.\"]\n        [THROW Exception \"Propagated exception from format_currency when formatting the total.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: self.sent_messages is missing or not list-like, causing append to fail.]\n        [LOG \"Failed to append the message to self.sent_messages.\"]\n        [THROW AttributeError or TypeError \"Raised when sent_messages attribute is absent or does not support append.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

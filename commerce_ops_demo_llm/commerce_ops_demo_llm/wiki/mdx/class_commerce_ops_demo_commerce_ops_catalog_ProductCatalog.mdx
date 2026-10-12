@@ -1,0 +1,143 @@
+---
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "page_type": "entity",
+  "entity_kind": "class",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "summary": "Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation.",
+  "tags": [
+    "class",
+    "repository, coordinator"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/__class__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog
+
+Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation.
+
+## SPL
+
+```spl
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" ProductCatalog]
+
+[DEFINE_PERSONA:]
+    ROLE: "repository, coordinator"
+    DOMAIN: "Commerce operations: product catalog, SKU lookup, and inventory reservation/release"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation."
+    Responsibility: "Primary: own an in-memory mapping from normalized SKU to Product and provide reliable retrieval by SKU. Secondary: expose available products (filter by tag, sorted) and orchestrate reservation/release across multiple items with compensating release on errors."
+    PublicBehavior: "Construction: __init__(products) builds a mapping from normalized SKU to Product.; Lookup: get(sku) -> Product; normalizes SKU and raises KeyError when not found.; Catalog listing: list_available(tag) -> List[Product] with positive stock, optional tag filter, sorted by product.sku ascending.; Reservation: reserve_items(items) -> List[Product]; validates items, retrieves products, reserves quantities, and compensates by releasing prior reservations on error.; Release: release_items(items) -> None; retrieves products and releases the specified quantities."
+    InternalMechanism: "On construction, normalize each Product.sku via <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> and index into an internal dictionary. Lookups normalize input SKUs and read from that index, raising a KeyError if the key is absent. Catalog listing iterates current products, filters to positive stock (and tag when provided), and sorts by product.sku. For reservations, iterate items, validate each, fetch the Product with get, and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>; if any error occurs, iterate previously reserved pairs and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with original quantities, then re-raise. Releases iterate items, fetch each Product, and call <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL>."
+    StateModel: "self.products: Dict[str, Product] — normalized SKU index owned by the class (writes in __init__; reads in get and list_available)."
+    Collaboration: "commerce_ops_demo.commerce_ops.catalog.normalize_sku; commerce_ops_demo.commerce_ops.models.Product.reserve; commerce_ops_demo.commerce_ops.models.Product.release; external.item.validate; external.sorted"
+    ErrorBoundary: "__init__: exceptions propagated from <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>, unhashable keys, missing product.sku attribute, or non-iterable products argument.; get: KeyError when the normalized SKU is not present in self.products.; reserve_items: any exception during item.validate, get, or Product.reserve triggers compensating releases via <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> and then re-raises.; release_items: exceptions propagated from get or Product.release; AttributeError when items lack sku or qty or the retrieved object lacks release; TypeError when items is not iterable."
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "ProductCatalog"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    <REF> source_file </REF>: text "commerce_ops/catalog.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation."
+    <REF> responsibility </REF>: text "Primary: own an in-memory mapping from normalized SKU to Product and provide reliable retrieval by SKU. Secondary: expose available products (filter by tag, sorted) and orchestrate reservation/release across multiple items with compensating release on errors."
+    <REF> role </REF>: text "repository, coordinator"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["Construction: __init__(products) builds a mapping from normalized SKU to Product.", "Lookup: get(sku) -> Product; normalizes SKU and raises KeyError when not found.", "Catalog listing: list_available(tag) -> List[Product] with positive stock, optional tag filter, sorted by product.sku ascending.", "Reservation: reserve_items(items) -> List[Product]; validates items, retrieves products, reserves quantities, and compensates by releasing prior reservations on error.", "Release: release_items(items) -> None; retrieves products and releases the specified quantities."]
+    <REF> entrypoints </REF>: List [text] ["__init__", "reserve_items", "release_items"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "On construction, normalize each Product.sku via <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> and index into an internal dictionary. Lookups normalize input SKUs and read from that index, raising a KeyError if the key is absent. Catalog listing iterates current products, filters to positive stock (and tag when provided), and sorts by product.sku. For reservations, iterate items, validate each, fetch the Product with get, and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>; if any error occurs, iterate previously reserved pairs and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with original quantities, then re-raise. Releases iterate items, fetch each Product, and call <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL>."
+    <REF> internal_structure </REF>: List [text] ["State index: self.products mapping normalized SKU -> Product (written in __init__, read by get and listing).", "Normalization dependency: <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> used in construction and lookup.", "Orchestration methods: reserve_items (validate items, get, reserve, compensate on error) and release_items (get, release).", "Shared helper: get is a high fan-in method used by reserve_items and release_items.", "No private methods or decorators."]
+    <REF> lifecycle </REF>: List [text] ["Creation: constructed with an iterable of Product and builds the normalized SKU index.", "Usage: get and list_available read from the index for retrieval and listing.", "Operational: reserve_items and release_items coordinate product state changes via Product.reserve/Product.release.", "Error handling: reservation path performs compensating releases on failure and re-raises the original exception."]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["self.products: Dict[str, Product] — normalized SKU index owned by the class (writes in __init__; reads in get and list_available)."]
+    <REF> inputs </REF>: List [text] ["products: Iterable[Product] (constructor).", "sku: str (get).", "items: List[CartItem] with sku and qty (reserve_items).", "items: List[CartItem] with sku and qty (release_items).", "tag: str (optional filter in list_available)."]
+    <REF> outputs </REF>: List [text] ["Product (from get).", "List[Product] filtered to positive stock, sorted by SKU (from list_available).", "List[Product] that were successfully reserved (from reserve_items).", "None (from release_items).", "Product inventory/reservation state is mutated via Product.reserve/Product.release."]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["commerce_ops_demo.commerce_ops.catalog.normalize_sku", "commerce_ops_demo.commerce_ops.models.Product.reserve", "commerce_ops_demo.commerce_ops.models.Product.release", "external.item.validate", "external.sorted"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService.checkout", "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"]
+    <REF> key_interactions </REF>: List [text] ["Calls <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> to build and query the SKU index.", "Delegates inventory changes to <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL> and <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL>.", "Exposed to OrderService: checkout uses reserve_items and release_items; cancel_order uses release_items.", "Raises KeyError in get when a normalized SKU is absent."]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates self.products during construction.", "Mutates Product inventory/reservations via Product.reserve in reserve_items.", "Mutates Product inventory/reservations via Product.release in release_items."]
+    <REF> errors </REF>: List [text] ["__init__: exceptions propagated from <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>, unhashable keys, missing product.sku attribute, or non-iterable products argument.", "get: KeyError when the normalized SKU is not present in self.products.", "reserve_items: any exception during item.validate, get, or Product.reserve triggers compensating releases via <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> and then re-raises.", "release_items: exceptions propagated from get or Product.release; AttributeError when items lack sku or qty or the retrieved object lacks release; TypeError when items is not iterable."]
+    <REF> invariants </REF>: List [text] ["Catalog keys are normalized via <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>.", "get requires the normalized SKU to exist in the index; otherwise a KeyError is raised.", "reserve_items performs compensating releases for all previously reserved products if any step fails, then re-raises the original error.", "list_available returns only products with positive stock and sorts results by product.sku ascending.", "Cart items provided to reservation/release expose sku and qty and are iterable."]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/list_available.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/release_items.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]
+```
+
+## Wiki Navigation
+
+- Page ID: `class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog`
+- Entity kind: `class`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/catalog.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog
+
+Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation.
+
+## Role and Responsibilities
+Primary: own an in-memory mapping from normalized SKU to Product and provide reliable retrieval by SKU. Secondary: expose available products (filter by tag, sorted) and orchestrate reservation/release across multiple items with compensating release on errors.
+
+## Public Surface
+- Construction: __init__(products) builds a mapping from normalized SKU to Product.
+- Lookup: get(sku) -> Product; normalizes SKU and raises KeyError when not found.
+- Catalog listing: list_available(tag) -> List[Product] with positive stock, optional tag filter, sorted by product.sku ascending.
+- Reservation: reserve_items(items) -> List[Product]; validates items, retrieves products, reserves quantities, and compensates by releasing prior reservations on error.
+- Release: release_items(items) -> None; retrieves products and releases the specified quantities.
+
+## State Model
+- self.products: Dict[str, Product] — normalized SKU index owned by the class (writes in __init__; reads in get and list_available).
+
+## Internal Mechanism
+On construction, normalize each Product.sku via <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> and index into an internal dictionary. Lookups normalize input SKUs and read from that index, raising a KeyError if the key is absent. Catalog listing iterates current products, filters to positive stock (and tag when provided), and sorts by product.sku. For reservations, iterate items, validate each, fetch the Product with get, and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>; if any error occurs, iterate previously reserved pairs and invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with original quantities, then re-raise. Releases iterate items, fetch each Product, and call <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL>.
+
+## Related Classes
+- {"source_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog", "target_class_id": "commerce_ops_demo.commerce_ops.models.Product", "relation_type": "uses", "evidence": "product.reserve(item.qty)", "direction": "this -> target", "confidence": "high"}
+- {"source_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog", "target_class_id": "commerce_ops_demo.commerce_ops.models.Product", "relation_type": "uses", "evidence": "product.release(item.qty)", "direction": "this -> target", "confidence": "high"}
+- {"source_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog", "target_class_id": "commerce_ops_demo.commerce_ops.models.Product", "relation_type": "uses", "evidence": "product.release(item.qty)", "direction": "this -> target", "confidence": "high"}
+
+## Source Evidence
+- <SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/__init__.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/list_available.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl</SPL>
+- <SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/release_items.spl</SPL>

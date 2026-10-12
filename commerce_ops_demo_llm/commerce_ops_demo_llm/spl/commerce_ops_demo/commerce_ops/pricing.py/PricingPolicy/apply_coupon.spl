@@ -1,0 +1,51 @@
+[DEFINE_WORKER: "Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal." apply_coupon]
+    [INPUTS]
+        <REF> self </REF>: object "Instance providing the coupons mapping used for lookup."
+        <REF> self.coupons </REF>: mapping[str, int] "Mapping of uppercase coupon codes to discount amounts in cents."
+        <REF> customer </REF>: Customer "Customer whose tier may trigger a VIP bonus."
+        <REF> subtotal_cents </REF>: int "Subtotal amount in cents used to cap the discount."
+        <REF> coupon </REF>: str "Coupon code string; empty or falsy means no discount."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> applied_discount_cents </REF>: int "Final discount in cents to apply, 0 if no coupon, includes VIP bonus when applicable and is capped to the subtotal."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Convert coupon to uppercase string RESULT code]
+            [COMMAND Verify code exists in self.coupons RESULT valid_code]
+            [COMMAND Retrieve base discount in cents from self.coupons[code] RESULT discount]
+            [COMMAND If customer.tier == 'vip', add 500 to discount; otherwise leave unchanged RESULT discount]
+            [COMMAND Return the minimum of discount and subtotal_cents RESULT applied_discount_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: coupon is empty or falsy]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Return 0 (no coupon provided) RESULT applied_discount_cents = 0]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [ALTERNATIVE_FLOW: customer.tier == 'vip']
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Increase discount by 500 before capping RESULT discount]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: Uppercased code not present in self.coupons]
+        [LOG "coupon is not supported"]
+        [THROW ValueError "coupon is not supported"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: coupon is truthy but lacks a callable upper() method during normalization]
+        [LOG "Failed to uppercase coupon"]
+        [THROW AttributeError "coupon.upper() is unavailable or not callable"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: upper() call on coupon fails due to incompatible type]
+        [LOG "Type error during coupon normalization"]
+        [THROW TypeError "upper() call failed on coupon"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

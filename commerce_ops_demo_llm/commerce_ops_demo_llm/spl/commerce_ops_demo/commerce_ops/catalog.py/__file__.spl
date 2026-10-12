@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" catalog.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "repository, coordinator"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings."
+    PublicSurface: "ProductCatalog; normalize_sku"
+    InternalOrganization: "['The module centers on ProductCatalog, which builds and owns a mapping from normalized SKU to Product. Catalog methods use normalize_sku for consistent lookups, expose listing of available products, and coordinate multi-item reservation and release by invoking Product.reserve and Product.release. The normalize_sku function provides the SKU normalization used by ProductCatalog.']"
+    ModuleMechanism: "At import and construction time, ProductCatalog normalizes provided Product SKUs to populate an internal map. Callers construct ProductCatalog and invoke reserve_items or release_items to mutate inventory via Product methods, with compensating releases on reservation errors. normalize_sku enforces SKU input quality by trimming and uppercasing values and raising ValueError when empty."
+    DependencyBoundary: "external dependency __future__; external dependency commerce_ops.models; external dependency typing"
+    ErrorBoundary: "__init__: exceptions propagated from normalize_sku, unhashable keys, missing product.sku attribute, or non-iterable products argument; get: KeyError when normalized SKU not present; reserve_items: any exception during item.validate, get, or Product.reserve triggers compensating releases via Product.release and then re-raises; release_items: exceptions propagated from get or Product.release; AttributeError when items lack sku or qty or the retrieved object lacks release; TypeError when items is not iterable; normalize_sku: AttributeError: object has no attribute 'strip'; normalize_sku: AttributeError: object has no attribute 'upper'; normalize_sku: The stripped value does not support upper(); normalize_sku: ValueError: sku is required; normalize_sku: invalid when not value or not value.strip(); normalize_sku: not value or not value.strip(); normalize_sku: raise ValueError('sku is required'); normalize_sku: value is truthy and does not support strip()"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "catalog.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.catalog"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\catalog.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings."
+    <REF> role </REF>: text "repository, coordinator"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["ProductCatalog", "normalize_sku"]
+    <REF> entrypoints </REF>: List [text] ["ProductCatalog", "ProductCatalog.reserve_items", "ProductCatalog.release_items"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["ProductCatalog: in-memory catalog repository and coordinator for Product retrieval, availability listing, and reservation/release orchestration with compensation on failure.", "normalize_sku: validation/normalization helper that trims and uppercases SKU strings."]
+    <REF> internal_structure </REF>: text "['The module centers on ProductCatalog, which builds and owns a mapping from normalized SKU to Product. Catalog methods use normalize_sku for consistent lookups, expose listing of available products, and coordinate multi-item reservation and release by invoking Product.reserve and Product.release. The normalize_sku function provides the SKU normalization used by ProductCatalog.']"
+    <REF> module_mechanism </REF>: text "At import and construction time, ProductCatalog normalizes provided Product SKUs to populate an internal map. Callers construct ProductCatalog and invoke reserve_items or release_items to mutate inventory via Product methods, with compensating releases on reservation errors. normalize_sku enforces SKU input quality by trimming and uppercasing values and raising ValueError when empty."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency commerce_ops.models", "external dependency typing"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["products: iterable of Product for ProductCatalog construction", "items: iterable of CartItem for ProductCatalog.reserve_items", "items: iterable of CartItem for ProductCatalog.release_items", "value (string): SKU input to normalize for normalize_sku"]
+    <REF> outputs </REF>: List [text] ["Product from ProductCatalog.get", "List[Product] with positive stock, optionally filtered by tag and sorted by SKU from ProductCatalog.list_available", "List[Product] successfully reserved from ProductCatalog.reserve_items", "None from ProductCatalog.release_items", "normalized_sku (string) from normalize_sku", "Inventory/reservation state mutations on Product via Product.reserve/Product.release"]
+    <REF> key_paths </REF>: List [text] ["Construction builds a normalized-SKU map of Product instances using normalize_sku", "Lookup path: ProductCatalog.get normalizes SKU then retrieves Product or raises KeyError", "Availability path: ProductCatalog.list_available filters positive stock (optional tag) and sorts by SKU", "Reservation path: ProductCatalog.reserve_items validates items, retrieves Products, reserves quantities, and compensates by releasing prior reservations on error", "Release path: ProductCatalog.release_items retrieves Products and releases specified quantities"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates internal product index during ProductCatalog construction", "Mutates Product inventory/reservations via Product.reserve in reserve_items", "Mutates Product inventory/reservations via Product.release in release_items"]
+    <REF> errors </REF>: List [text] ["__init__: exceptions propagated from normalize_sku, unhashable keys, missing product.sku attribute, or non-iterable products argument", "get: KeyError when normalized SKU not present", "reserve_items: any exception during item.validate, get, or Product.reserve triggers compensating releases via Product.release and then re-raises", "release_items: exceptions propagated from get or Product.release; AttributeError when items lack sku or qty or the retrieved object lacks release; TypeError when items is not iterable", "normalize_sku: AttributeError: object has no attribute 'strip'", "normalize_sku: AttributeError: object has no attribute 'upper'", "normalize_sku: The stripped value does not support upper()", "normalize_sku: ValueError: sku is required", "normalize_sku: invalid when not value or not value.strip()", "normalize_sku: not value or not value.strip()", "normalize_sku: raise ValueError('sku is required')", "normalize_sku: value is truthy and does not support strip()"]
+    <REF> initialization_order </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/normalize_sku.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

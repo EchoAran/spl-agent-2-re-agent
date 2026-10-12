@@ -1,0 +1,114 @@
+{
+  "file_name": "services.py",
+  "module_name": "commerce_ops_demo.commerce_ops.services",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\services.py",
+  "language": "python",
+  "purpose": "Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications.",
+  "role": "service module",
+  "exports": [
+    "OrderService"
+  ],
+  "entrypoints": [
+    "OrderService",
+    "OrderService.__init__",
+    "OrderService.checkout",
+    "OrderService.cancel_order",
+    "OrderService.customer_history"
+  ],
+  "components": [
+    "OrderService: service orchestrator for checkout, cancellation, and customer history; collaborates with ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, NotificationService, and Order model.",
+    "OrderService private helpers: _build_order, _charge, _notify_customer (invoked by checkout)."
+  ],
+  "internal_structure": [
+    "A single class-centric module. Consumers instantiate OrderService with required collaborators and invoke its public methods. Public methods delegate to internal helper methods and coordinate calls across catalog, pricing, payments, repository, and notifications. No additional top-level functions or module-level state are defined."
+  ],
+  "module_mechanism": "The module contributes a single orchestration class. At runtime, clients construct OrderService with injected dependencies. checkout uses internal helpers to build an Order (uuid4), reserve or release inventory, obtain a price quote, authorize payment, persist the order, and send notifications. cancel_order retrieves and updates an order, releases inventory, and persists changes. customer_history queries the repository and formats results. Dependency flow is inbound via constructor and outbound to domain and infrastructure collaborators during method calls.",
+  "imports": [
+    "external dependency __future__",
+    "external dependency commerce_ops.catalog",
+    "external dependency commerce_ops.models",
+    "external dependency commerce_ops.notifications",
+    "external dependency commerce_ops.payments",
+    "external dependency commerce_ops.pricing",
+    "external dependency commerce_ops.repository",
+    "external dependency typing",
+    "external dependency uuid"
+  ],
+  "internal_imports": [],
+  "globals": [],
+  "inputs": [
+    "OrderService.__init__(catalog: ProductCatalog, pricing: PricingPolicy, payments: PaymentGateway, repository: OrderRepository, notifications: NotificationService)",
+    "OrderService.checkout(customer: Customer, items: List[CartItem], coupon: str = '')",
+    "OrderService.cancel_order(order_id, reason)",
+    "OrderService.customer_history(customer_id)"
+  ],
+  "outputs": [
+    "checkout returns Order (paid and persisted)",
+    "cancel_order returns Order (cancelled and persisted)",
+    "customer_history returns List[dict] with order_id, status, total as string"
+  ],
+  "key_paths": [
+    "checkout: reserve items in ProductCatalog -> obtain PriceQuote from PricingPolicy -> authorize via PaymentGateway -> mark Order paid -> persist via OrderRepository -> notify customer and low-stock alerts via NotificationService; release items on failure path.",
+    "cancel_order: retrieve via OrderRepository.get -> mark order cancelled -> release items via ProductCatalog.release_items -> persist via OrderRepository.save.",
+    "customer_history: list orders via OrderRepository.list_by_customer and format string fields.",
+    "order construction: internal _build_order uses uuid4 and Order model, adding initial event."
+  ],
+  "side_effects": [
+    "Mutates self.last_receipt during charge",
+    "Reserves and releases inventory in catalog",
+    "Charges payment through external gateway",
+    "Persists orders to repository",
+    "Sends customer receipt notifications",
+    "Triggers low-stock alerts",
+    "Marks order as paid"
+  ],
+  "errors": [
+    "Propagates exceptions from ProductCatalog reserve/release",
+    "Propagates exceptions from PricingPolicy.quote",
+    "Propagates exceptions from PaymentGateway.authorize",
+    "Propagates exceptions from OrderRepository.get/save/list_by_customer",
+    "Propagates exceptions from NotificationService sending methods",
+    "Attribute errors if injected dependencies are missing or lack required methods",
+    "If checkout fails after reservation, items are released and the original error is re-raised",
+    "Type errors if iterable inputs (items, orders) are invalid",
+    "Order retrieval may return None leading to attribute access errors during cancellation"
+  ],
+  "initialization_order": [
+    "Instantiate OrderService with ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, and NotificationService before invoking checkout, cancel_order, or customer_history."
+  ],
+  "class_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__class__.spl</SPL>"
+  ],
+  "function_refs": [],
+  "id": "commerce_ops/services.py",
+  "path": "commerce_ops/services.py",
+  "incoming_files": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.services.OrderService",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "outgoing_files": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.list",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.str",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.uuid4",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge -> commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> external.order.mark_cancelled",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> external.str"
+  ],
+  "summary": "Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/__file__.spl"
+}

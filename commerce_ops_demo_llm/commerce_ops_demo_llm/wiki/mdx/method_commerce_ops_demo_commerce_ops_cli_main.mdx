@@ -1,0 +1,75 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+  "page_type": "entity",
+  "entity_kind": "function",
+  "title": "commerce_ops_demo.commerce_ops.cli.main",
+  "summary": "Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/main.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.cli.main
+
+Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value." main]
+    [INPUTS]
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> stdout </REF>: stdout "Printed representation of the value returned by <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> when invoked with the sample inputs."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with list ['BOOK-1:1', 'MUG-1:2'] and discount code 'SAVE10'. RESULT checkout_result]
+            [COMMAND Print checkout_result to standard output. RESULT stdout contains the textual representation of checkout_result]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.cli.main`
+- Entity kind: `function`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/cli.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.cli.main
+
+Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value.
+
+## Inputs
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Outputs
+- stdout (stdout): Printed representation of the value returned by <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> when invoked with the sample inputs.
+
+## Main Effect
+Print checkout_result to standard output.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.cli.run_checkout_demo
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

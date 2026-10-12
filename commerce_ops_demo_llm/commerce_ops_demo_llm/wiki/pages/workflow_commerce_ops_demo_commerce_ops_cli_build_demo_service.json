@@ -1,0 +1,66 @@
+{
+  "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "page_type": "workflow",
+  "title": "Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "slug": "commerce-ops-demo-commerce-ops-cli-build-demo-service",
+  "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+  "entity_kind": "workflow",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "source_refs": [
+    "graphs/repository_call_graph.json"
+  ],
+  "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.build_demo_service.",
+  "body_markdown": "# Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service\n\n## Path\n\n1. [[commerce_ops_demo.commerce_ops.cli.build_demo_service]]\n2. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog]]\n3. [[commerce_ops_demo.commerce_ops.models.Product]]\n\n## Evidence\n\n- source: static_call_graph\n- confidence: high_or_medium_edges_preferred\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Workflows",
+      "url": "/wiki/workflow"
+    }
+  ],
+  "tags": [
+    "workflow"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.models.Product"
+  ],
+  "graph_refs": [
+    "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.644133+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "70e83b04b493ef453b7f26cb3e8adac7d2600af6c458ee1c33fab205bd842774",
+  "spl_source_path": "",
+  "spl_content": ""
+}

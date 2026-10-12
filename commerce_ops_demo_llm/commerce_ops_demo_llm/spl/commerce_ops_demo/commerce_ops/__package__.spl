@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A package that groups related modules into a subsystem with public surface, internal structure, dependency direction, and repository role" commerce_ops]
+
+[DEFINE_PERSONA:]
+    ROLE: "subsystem; checkout and order management orchestration with domain models and in-memory adapters"
+    LAYER: "application service and domain subsystem with in-memory adapters"
+    ABSTRACTION_LEVEL: "Package-level; describes subsystem responsibility without expanding file, class, or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, extend, test, or integrate this package"
+    INTEREST: "Package purpose, public APIs, internal subsystems, dependency direction, workflows, boundaries, and repository role"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo."
+    PublicSurface: "CartItem; Customer; Order; Product; OrderService"
+    InternalSubsystems: "Public surface: __init__.py re-exports CartItem, Customer, Order, Product, OrderService; Application service: services.py OrderService orchestrates checkout, cancellation, and history; Domain models: models.py core entities and validation (Product, Customer, Order, CartItem); Catalog and SKU utilities: catalog.py product index, reservation/release, normalize_sku; Pricing policy and quotes: pricing.py PricingPolicy and PriceQuote; Payments gateway and types: payments.py PaymentGateway, PaymentReceipt, PaymentError; Order repository (in-memory): repository.py OrderRepository; Notifications and currency formatting: notifications.py NotificationService, format_currency; CLI demo and wiring: cli.py build_demo_service, parse_cart, run_checkout_demo, main"
+    PackageMechanism: "OrderService coordinates checkout, cancellation, and history by invoking ProductCatalog for inventory, PricingPolicy for quotes, PaymentGateway for authorization/refunds, OrderRepository for persistence, and NotificationService for receipts and alerts. Domain models encapsulate validation and state transitions. __init__.py defines the package-level surface via re-exports. cli.py wires demo components and executes a sample flow."
+    DependencyDirection: "No incoming package edges observed. Internal flow: CLI -> OrderService; OrderService -> {catalog, pricing, payments, repository, notifications}; these depend on domain models. Outgoing edges target Python standard library utilities (dataclasses, datetime, typing, uuid)."
+    RepositoryRole: "Demo commerce operations subsystem offering domain models, service orchestration, pricing, payments, catalog, repository, and notifications with a CLI example."
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> package_name </REF>: text "commerce_ops"
+    <REF> package_path </REF>: text "commerce_ops_demo.commerce_ops"
+    <REF> source_directory </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops"
+
+    <!-- Purpose and architecture -->
+    <REF> purpose </REF>: text "Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo."
+    <REF> role </REF>: text "subsystem; checkout and order management orchestration with domain models and in-memory adapters"
+    <REF> repository_role </REF>: text "Demo commerce operations subsystem offering domain models, service orchestration, pricing, payments, catalog, repository, and notifications with a CLI example."
+
+    <!-- Public surface -->
+    <REF> public_api </REF>: List [text] ["CartItem", "Customer", "Order", "Product", "OrderService"]
+    <REF> entrypoints </REF>: List [text] ["cli.main", "OrderService", "OrderService.checkout", "OrderService.cancel_order", "OrderService.customer_history"]
+
+    <!-- Internal structure -->
+    <REF> files </REF>: List [text] ["__init__.py: Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules.", "catalog.py: Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings.", "cli.py: Provide a small CLI/demo module that constructs a demo OrderService, parses 'sku:qty' cart items, performs a sample checkout, and prints a summary.", "models.py: Provide dataclass-backed domain models for commerce operations: Product inventory control, Customer balance management, Order status transitions with event logging, and CartItem validation. Expose validated, stateful operations used by catalog, payments, repository, services, and CLI layers.", "notifications.py: Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.", "payments.py: Provide a payment service API (PaymentGateway) with authorization and refund operations, a structured receipt type (PaymentReceipt), and a domain-specific error (PaymentError) for payment failures.", "pricing.py: Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.", "repository.py: Provide an in-memory repository for Order entities used by service-layer operations, supporting save, retrieval, customer-scoped listing, and a mark-paid workflow that coordinates with the Order domain model.", "services.py: Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications."]
+    <REF> subpackages </REF>: List [text] []
+    <REF> subsystem_groups </REF>: List [text] ["Public surface: __init__.py re-exports CartItem, Customer, Order, Product, OrderService", "Application service: services.py OrderService orchestrates checkout, cancellation, and history", "Domain models: models.py core entities and validation (Product, Customer, Order, CartItem)", "Catalog and SKU utilities: catalog.py product index, reservation/release, normalize_sku", "Pricing policy and quotes: pricing.py PricingPolicy and PriceQuote", "Payments gateway and types: payments.py PaymentGateway, PaymentReceipt, PaymentError", "Order repository (in-memory): repository.py OrderRepository", "Notifications and currency formatting: notifications.py NotificationService, format_currency", "CLI demo and wiring: cli.py build_demo_service, parse_cart, run_checkout_demo, main"]
+    <REF> package_mechanism </REF>: text "OrderService coordinates checkout, cancellation, and history by invoking ProductCatalog for inventory, PricingPolicy for quotes, PaymentGateway for authorization/refunds, OrderRepository for persistence, and NotificationService for receipts and alerts. Domain models encapsulate validation and state transitions. __init__.py defines the package-level surface via re-exports. cli.py wires demo components and executes a sample flow."
+
+    <!-- Dependencies -->
+    <REF> dependencies </REF>: List [text] ["Python stdlib: dataclasses", "Python stdlib: datetime", "Python stdlib: typing", "Python stdlib: uuid"]
+    <REF> dependency_direction </REF>: text "No incoming package edges observed. Internal flow: CLI -> OrderService; OrderService -> {catalog, pricing, payments, repository, notifications}; these depend on domain models. Outgoing edges target Python standard library utilities (dataclasses, datetime, typing, uuid)."
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["Customer instances for checkout and history", "Cart items (List[CartItem]) for checkout", "Raw cart item strings 'sku:qty' via CLI parse_cart", "Product list for ProductCatalog construction", "Coupon code for PricingPolicy.quote", "PricingPolicy configuration: tax_rate_bps and coupons mapping", "Order identifiers for repository operations and cancellation"]
+    <REF> outputs </REF>: List [text] ["Persisted and updated Order entities via OrderRepository", "PaymentReceipt from PaymentGateway.authorize", "PriceQuote from PricingPolicy.quote", "Composed receipt and low-stock alert messages recorded by NotificationService", "Reserved/released inventory state in Product entities", "CLI demo: printed checkout summary"]
+    <REF> key_workflows </REF>: List [text] ["Checkout: reserve items in ProductCatalog, compute quote via PricingPolicy.quote, authorize payment via PaymentGateway.authorize, mark order paid and persist via OrderRepository.save, send receipt and possible low-stock alerts via NotificationService; release reserved items on failure.", "Cancel order: retrieve order from OrderRepository.get, release reserved items via ProductCatalog.release_items, mark order cancelled, then save.", "Customer history: list orders for a customer via OrderRepository.list_by_customer (used by OrderService.customer_history).", "CLI demo: build_demo_service to assemble ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, NotificationService, and OrderService; parse raw items and run a sample checkout and summary print."]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Inventory reservation and release via Product.reserve and Product.release", "Customer balance debit/credit via Customer.debit and Customer.credit", "In-memory order persistence mutations in OrderRepository", "Recording sent messages in NotificationService.sent_messages", "PaymentGateway counters for authorized and refunded totals", "Order state transitions and event log appends", "CLI stdout printing"]
+    <REF> errors </REF>: List [text] ["ValueError from domain validations: Product.reserve/release, Customer.debit/credit, Order.mark_paid/mark_cancelled, CartItem.validate", "PaymentError for invalid amounts or wrapped Customer.debit/credit failures in PaymentGateway operations", "KeyError on missing entries in ProductCatalog.get and OrderRepository.get", "ValueError and AttributeError from PricingPolicy initialization and quote helpers (coupon normalization, subtotal, tax calculation)", "Exceptions from NotificationService formatting and attribute access when customer/order/product data is missing", "CLI parse_cart errors converting qty or splitting 'sku:qty' strings; propagation of constructor errors during demo wiring", "Propagation of exceptions across OrderService orchestration; compensating releases on checkout failure"]
+    <REF> architectural_assumptions </REF>: List [text] ["In-memory adapters (catalog, repository, notifications) with no external datastore", "Synchronous orchestration within a single process", "Package-level public surface is defined by __init__.py re-exports", "OrderService expects collaborators implementing the methods used in checkout, cancellation, and history", "Currency handled in integer cents; coupons normalized to uppercase", "SKU normalization is uppercase after trimming", "No external I/O beyond stdout in CLI; no network or persistence integrations in evidence"]
+
+    <!-- Traceability -->
+    <REF> file_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/__init__.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/cli.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/__file__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/__file__.spl</SPL>"]
+    <REF> subpackage_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines package-level reverse-engineering information.
+     It should let a developer understand what subsystem this package represents, what it exposes, how its files and subpackages cooperate, and how it fits into the repository.
+     Do NOT expand file internals.
+     Do NOT expand class or method details.
+     Use file_refs and subpackage_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    PackageLevelOnly: "Describe the package as a subsystem; do not expand individual files, classes, or methods" LOG "package_over_expansion"
+    BoundaryAccuracy: "Distinguish what the package owns from what it delegates to sibling, child, parent, or external packages" LOG "package_boundary_error"
+    DependencyDirection: "Preserve intended dependency direction and architectural layer" LOG "package_dependency_error"
+    WorkflowSummary: "Describe workflows only at package level without expanding implementation steps" LOG "package_workflow_over_detail"
+    Traceability: "Refer to file-level and subpackage-level SPL artifacts by reference instead of inlining them" LOG "subsystem_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

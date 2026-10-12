@@ -21,4 +21,17 @@ ENV/
 .idea/
 .vscode/
 spl_agent/node_modules/
+.spl_cache/
 .spl_i/
+multi_agent_interview/backend/runtime/
+spl_agent/.spl_cache/
+spl_agent/.spl_cache_interview/
+spl_agent/.spl_cache_demo_validation/
+spl_agent/.spl_cache_test/
+spl_agent/.tmp_check_cache/
+spl_agent/.tmp_check_cache2/
+spl_agent/.test_tmp/
+spl_agent/.spl_cache*/
+spl_agent/.tmp_check_cache*/
+*.log
+*.tmp

@@ -1,0 +1,16 @@
+[DEFINE_WORKER: "Initialize the instance by creating an empty orders mapping." __init__]
+    [INPUTS]
+        <REF> self </REF>: object "The instance being initialized."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.orders </REF>: Dict[str, Order] "Instance attribute initialized to an empty dictionary."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize the orders attribute as an empty dictionary on the instance. RESULT self.orders]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

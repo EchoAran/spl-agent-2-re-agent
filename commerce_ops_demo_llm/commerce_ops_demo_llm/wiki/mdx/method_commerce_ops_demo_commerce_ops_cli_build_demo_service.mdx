@@ -1,0 +1,100 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "page_type": "entity",
+  "entity_kind": "function",
+  "title": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "summary": "Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/build_demo_service.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.cli.build_demo_service
+
+Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies." build_demo_service]
+    [INPUTS]
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order_service </REF>: OrderService "A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Construct Product('BOOK-1', 'Clean Architecture', 3500, 4, ['book']), Product('MUG-1', 'SPL Mug', 1800, 3, ['gift']), and Product('TEE-1', 'Compiler Tee', 2500, 1, ['gift']) via <SPL>commerce_ops_demo.commerce_ops.models.Product</SPL> and aggregate them into a list RESULT product_list]
+            [COMMAND Create a product catalog from product_list via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL> RESULT catalog]
+            [COMMAND Create a pricing policy with base 825 and discounts {'SAVE10': 1000, 'VIP5': 500} via <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL> RESULT pricing]
+            [COMMAND Instantiate a payment gateway via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL> RESULT payments]
+            [COMMAND Instantiate an order repository via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL> RESULT repository]
+            [COMMAND Instantiate a notification service via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL> RESULT notifications]
+            [COMMAND Construct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL> RESULT order_service]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error]
+        [LOG "Constructor failure while building demo service; propagating exception"]
+        [THROW Exception "Underlying constructor exception is not handled and propagates to the caller."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.cli.build_demo_service`
+- Entity kind: `function`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/cli.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.cli.build_demo_service
+
+Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.
+
+## Inputs
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Outputs
+- order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.
+
+## Main Effect
+Construct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog
+- commerce_ops_demo.commerce_ops.models.Product
+- commerce_ops_demo.commerce_ops.notifications.NotificationService
+- commerce_ops_demo.commerce_ops.payments.PaymentGateway
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy
+- commerce_ops_demo.commerce_ops.repository.OrderRepository
+- commerce_ops_demo.commerce_ops.services.OrderService
+- commerce_ops_demo.commerce_ops.cli.run_checkout_demo
+
+## Side Effects
+- ProductCatalog(
+        [
+            Product("BOOK-1", "Clean Architecture", 3500, 4, ["book"]),
+            Product("MUG-1", "SPL Mug", 1800, 3, ["gift"]),
+            Product("TEE-1", "Compiler Tee", 2500, 1, ["gift"]),
+        ]
+    )
+- order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.
+
+## Errors
+- Exception: Underlying constructor exception is not handled and propagates to the caller.
+- If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

@@ -1,0 +1,93 @@
+{
+  "file_name": "notifications.py",
+  "module_name": "commerce_ops_demo.commerce_ops.notifications",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\notifications.py",
+  "language": "python",
+  "purpose": "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.",
+  "role": "service module",
+  "exports": [
+    "NotificationService",
+    "format_currency"
+  ],
+  "entrypoints": [
+    "NotificationService",
+    "format_currency"
+  ],
+  "components": [
+    "NotificationService: service class that composes receipt and low-stock alert messages and accumulates them in an in-memory sent_messages list; delegates total formatting to format_currency.",
+    "format_currency(cents) -> str: utility function formatting non-negative cent amounts into dollar strings; raises ValueError for negative input."
+  ],
+  "internal_structure": [
+    "The module exposes a service class and a small utility. NotificationService composes messages for downstream consumers and records them in an instance-level accumulator. When building receipts, it calls the module-level format_currency helper. The file maintains no module-level state and relies on callers (e.g., OrderService, CLI) to invoke the service."
+  ],
+  "module_mechanism": "At import, the module defines a service class and a formatter function. At runtime, external modules construct NotificationService and invoke its methods; send_receipt uses format_currency to build totals and appends composed messages to the instance accumulator. No external I/O is performed by this module.",
+  "imports": [
+    "external dependency __future__",
+    "external dependency commerce_ops.models",
+    "external dependency typing"
+  ],
+  "internal_imports": [],
+  "globals": [],
+  "inputs": [
+    "NotificationService.send_receipt(customer, order)",
+    "NotificationService.send_low_stock_alert(products, threshold=2)",
+    "format_currency(cents)"
+  ],
+  "outputs": [
+    "send_receipt: receipt message string recorded in self.sent_messages",
+    "send_low_stock_alert: list of low-stock alert strings recorded in self.sent_messages",
+    "format_currency: formatted currency string like '$12.34'",
+    "NotificationService: maintains an in-memory accumulator of composed messages (sent_messages)"
+  ],
+  "key_paths": [
+    "NotificationService.send_receipt -> format_currency",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> NotificationService.send_receipt",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> NotificationService"
+  ],
+  "side_effects": [
+    "Appends composed messages to NotificationService.sent_messages (in-memory state)",
+    "Maintains an in-memory log of composed messages across calls via NotificationService.sent_messages"
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.",
+    "Exception: Propagated exception from format_currency when formatting the total.",
+    "AttributeError: Raised when expected attributes are missing on customer or order.",
+    "customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.",
+    "self.sent_messages is missing or not list-like, causing append to fail.",
+    "A product lacks the 'sku' attribute when formatting the alert string",
+    "A product lacks the 'stock' attribute when evaluating the threshold condition",
+    "TypeError: Object is not iterable.",
+    "TypeError: Unsupported comparison between product.stock and threshold.",
+    "products is None or not iterable when entering the loop",
+    "ValueError: currency value cannot be negative",
+    "cents < 0",
+    "cents > 0",
+    "raise ValueError(\"currency value cannot be negative\")"
+  ],
+  "initialization_order": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "class_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__class__.spl</SPL>"
+  ],
+  "function_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/format_currency.spl</SPL>"
+  ],
+  "id": "commerce_ops/notifications.py",
+  "path": "commerce_ops/notifications.py",
+  "incoming_files": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "outgoing_files": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.alerts.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.self.sent_messages.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt -> external.self.sent_messages.append",
+    "commerce_ops_demo.commerce_ops.notifications.format_currency -> external.ValueError"
+  ],
+  "summary": "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/__file__.spl"
+}

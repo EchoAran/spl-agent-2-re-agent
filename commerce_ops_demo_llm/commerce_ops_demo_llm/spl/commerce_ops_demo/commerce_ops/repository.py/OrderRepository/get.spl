@@ -1,0 +1,23 @@
+[DEFINE_WORKER: "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent." get]
+    [INPUTS]
+        <REF> order_id </REF>: str "Identifier of the order to retrieve."
+        <REF> self.orders </REF>: Mapping[str, Order] "Internal mapping of orders keyed by order_id."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The order object corresponding to the provided order_id."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Check that order_id exists in self.orders RESULT validated_presence]
+            [COMMAND Retrieve the order via self.orders[order_id] RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: order_id not in self.orders]
+        [LOG "Exception information"]
+        [THROW KeyError "order {order_id} not found"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

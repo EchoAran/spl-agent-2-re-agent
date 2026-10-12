@@ -1,0 +1,76 @@
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "slug": "commerce-ops-demo-commerce-ops-payments-paymentreceipt",
+  "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentreceipt",
+  "entity_kind": "class",
+  "entity_id": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentReceipt/__class__.spl"
+  ],
+  "summary": "Represent structured payment receipt data with fields identifying the payment and its amount and provider.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.payments.PaymentReceipt\n\nRepresent structured payment receipt data with fields identifying the payment and its amount and provider.\n\n## SPL\n\n```spl\n[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" PaymentReceipt]\n\n[DEFINE_PERSONA:]\n    ROLE: \"value object\"\n    DOMAIN: \"commerce operations / payments\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent structured payment receipt data with fields identifying the payment and its amount and provider.\"\n    Responsibility: \"Encapsulate and transport payment receipt information as a simple structured data record.\"\n    PublicBehavior: \"dataclass-generated constructor for fields: payment_id, amount_cents, provider; public attributes: payment_id, amount_cents, provider\"\n    InternalMechanism: \"Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.\"\n    StateModel: \"payment_id: domain data; amount_cents: domain data; provider: domain data\"\n    Collaboration: \"evidence: missing; confidence: not_available; source: static_analysis\"\n    ErrorBoundary: \"evidence: missing; confidence: not_available; source: static_analysis\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"PaymentReceipt\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.payments.PaymentReceipt\"\n    <REF> source_file </REF>: text \"commerce_ops/payments.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent structured payment receipt data with fields identifying the payment and its amount and provider.\"\n    <REF> responsibility </REF>: text \"Encapsulate and transport payment receipt information as a simple structured data record.\"\n    <REF> role </REF>: text \"value object\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"dataclass-generated constructor for fields: payment_id, amount_cents, provider\", \"public attributes: payment_id, amount_cents, provider\"]\n    <REF> entrypoints </REF>: List [text] [\"dataclass-generated constructor for fields: payment_id, amount_cents, provider\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.\"\n    <REF> internal_structure </REF>: List [text] [\"No user-defined methods within class scope\", \"Dataclass decorator provides boilerplate initialization and representation\"]\n    <REF> lifecycle </REF>: List [text] [\"Creation via dataclass-generated constructor with receipt fields\", \"Used as a data carrier; no explicit reset or disposal behavior in evidence\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"payment_id: domain data\", \"amount_cents: domain data\", \"provider: domain data\"]\n    <REF> inputs </REF>: List [text] [\"payment_id\", \"amount_cents\", \"provider\"]\n    <REF> outputs </REF>: List [text] [\"Structured receipt data via attributes: payment_id, amount_cents, provider\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] []\n    <REF> used_by </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n    <REF> key_interactions </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] []\n    <REF> errors </REF>: List [text] []\n    <REF> invariants </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] []\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]\n```\n\n## Wiki Navigation\n\n- Page ID: `class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt`\n- Entity kind: `class`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/payments.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.payments.PaymentReceipt\n\nRepresent structured payment receipt data with fields identifying the payment and its amount and provider.\n\n## Role and Responsibilities\nEncapsulate and transport payment receipt information as a simple structured data record.\n\n## Public Surface\n- dataclass-generated constructor for fields: payment_id, amount_cents, provider\n- public attributes: payment_id, amount_cents, provider\n\n## State Model\n- payment_id: domain data\n- amount_cents: domain data\n- provider: domain data\n\n## Internal Mechanism\nUses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.\n\n## Related Classes\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Source Evidence\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    },
+    {
+      "source_page_id": "file:commerce_ops/payments.py",
+      "source_url": "/wiki/file/commerce-ops-payments-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.payments"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/payments.py",
+      "url": "/wiki/file/commerce-ops-payments-py"
+    }
+  ],
+  "tags": [
+    "class",
+    "value object"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/payments.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+  ],
+  "graph_refs": [
+    "class_scope:commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.637693+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "1e0edc1801892894c115d9f4b2bfc262b3982591e3073cc63c600a92375439df",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentReceipt/__class__.spl",
+  "spl_content": "[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" PaymentReceipt]\n\n[DEFINE_PERSONA:]\n    ROLE: \"value object\"\n    DOMAIN: \"commerce operations / payments\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent structured payment receipt data with fields identifying the payment and its amount and provider.\"\n    Responsibility: \"Encapsulate and transport payment receipt information as a simple structured data record.\"\n    PublicBehavior: \"dataclass-generated constructor for fields: payment_id, amount_cents, provider; public attributes: payment_id, amount_cents, provider\"\n    InternalMechanism: \"Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.\"\n    StateModel: \"payment_id: domain data; amount_cents: domain data; provider: domain data\"\n    Collaboration: \"evidence: missing; confidence: not_available; source: static_analysis\"\n    ErrorBoundary: \"evidence: missing; confidence: not_available; source: static_analysis\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"PaymentReceipt\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.payments.PaymentReceipt\"\n    <REF> source_file </REF>: text \"commerce_ops/payments.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent structured payment receipt data with fields identifying the payment and its amount and provider.\"\n    <REF> responsibility </REF>: text \"Encapsulate and transport payment receipt information as a simple structured data record.\"\n    <REF> role </REF>: text \"value object\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"dataclass-generated constructor for fields: payment_id, amount_cents, provider\", \"public attributes: payment_id, amount_cents, provider\"]\n    <REF> entrypoints </REF>: List [text] [\"dataclass-generated constructor for fields: payment_id, amount_cents, provider\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.\"\n    <REF> internal_structure </REF>: List [text] [\"No user-defined methods within class scope\", \"Dataclass decorator provides boilerplate initialization and representation\"]\n    <REF> lifecycle </REF>: List [text] [\"Creation via dataclass-generated constructor with receipt fields\", \"Used as a data carrier; no explicit reset or disposal behavior in evidence\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"payment_id: domain data\", \"amount_cents: domain data\", \"provider: domain data\"]\n    <REF> inputs </REF>: List [text] [\"payment_id\", \"amount_cents\", \"provider\"]\n    <REF> outputs </REF>: List [text] [\"Structured receipt data via attributes: payment_id, amount_cents, provider\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] []\n    <REF> used_by </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n    <REF> key_interactions </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] []\n    <REF> errors </REF>: List [text] []\n    <REF> invariants </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] []\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]"
+}

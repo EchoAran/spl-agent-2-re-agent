@@ -1,0 +1,82 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/cli.py",
+  "signature": "def parse_cart(raw_items: List[str]) -> List[CartItem]:",
+  "visibility": "public",
+  "summary": "Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.",
+  "purpose_hint": "",
+  "inputs": [
+    "raw_items (List[str]): Iterable of strings in the format 'sku:qty' to parse into CartItem objects."
+  ],
+  "outputs": [
+    "items (List[CartItem]): List of CartItem objects constructed from the parsed input strings."
+  ],
+  "main_effect": "Return the accumulated items list.",
+  "side_effects": [
+    "items.append(CartItem(sku.strip(), int(qty_text)))"
+  ],
+  "errors": [
+    "Exception: Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates.",
+    "The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.",
+    "ValueError: Invalid literal for int() with base 10.",
+    "ValueError: Not enough values to unpack (expected 2).",
+    "qty_text cannot be converted to an integer via int(qty_text).",
+    "raw is not a string-like object and does not support split(':', 1).",
+    "raw.split(':', 1) does not produce exactly two parts for unpacking."
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.CartItem",
+    "external.int",
+    "external.items.append",
+    "external.raw.split",
+    "external.sku.strip"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "external_calls": [
+    "external.int",
+    "external.items.append",
+    "external.raw.split",
+    "external.sku.strip"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [
+      {
+        "type": "for",
+        "lineno": 3,
+        "code": "for raw in raw_items:\n        sku, qty_text = raw.split(\":\", 1)\n        items.append(CartItem(sku.strip(), int(qty_text)))"
+      }
+    ],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "items = []"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 6,
+        "code": "return items"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": true,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/cli.py/parse_cart.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

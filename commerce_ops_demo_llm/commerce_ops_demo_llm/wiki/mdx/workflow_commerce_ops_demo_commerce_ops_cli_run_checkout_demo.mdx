@@ -1,0 +1,52 @@
+---
+{
+  "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "page_type": "workflow",
+  "entity_kind": "workflow",
+  "title": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.run_checkout_demo.",
+  "tags": [
+    "workflow"
+  ],
+  "source_refs": [
+    "graphs/repository_call_graph.json"
+  ]
+}
+---
+
+# Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo
+
+## Path
+
+1. [[commerce_ops_demo.commerce_ops.cli.run_checkout_demo]]
+2. [[commerce_ops_demo.commerce_ops.cli.build_demo_service]]
+3. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog]]
+4. [[commerce_ops_demo.commerce_ops.models.Product]]
+5. [[commerce_ops_demo.commerce_ops.models.Customer]]
+6. [[commerce_ops_demo.commerce_ops.cli.parse_cart]]
+7. [[commerce_ops_demo.commerce_ops.models.CartItem]]
+8. [[commerce_ops_demo.commerce_ops.services.OrderService.checkout]]
+9. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items]]
+10. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get]]
+11. [[commerce_ops_demo.commerce_ops.catalog.normalize_sku]]
+12. [[commerce_ops_demo.commerce_ops.models.Product.reserve]]
+13. [[commerce_ops_demo.commerce_ops.models.Product.release]]
+14. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote]]
+15. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal]]
+16. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon]]
+17. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax]]
+18. [[commerce_ops_demo.commerce_ops.pricing.PriceQuote]]
+19. [[commerce_ops_demo.commerce_ops.services.OrderService._build_order]]
+20. [[commerce_ops_demo.commerce_ops.models.Order]]
+21. [[commerce_ops_demo.commerce_ops.models.Order.add_event]]
+22. [[commerce_ops_demo.commerce_ops.services.OrderService._charge]]
+23. [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize]]
+24. [[commerce_ops_demo.commerce_ops.payments.PaymentError]]
+25. [[commerce_ops_demo.commerce_ops.models.Customer.debit]]
+26. [[commerce_ops_demo.commerce_ops.models.Customer.can_spend]]
+27. [[commerce_ops_demo.commerce_ops.payments.PaymentReceipt]]
+
+## Evidence
+
+- source: static_call_graph
+- confidence: high_or_medium_edges_preferred

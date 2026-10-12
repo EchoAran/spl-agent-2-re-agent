@@ -1,0 +1,40 @@
+[DEFINE_WORKER: "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order." mark_paid]
+    [INPUTS]
+        <REF> order_id </REF>: str "Identifier of the order to update."
+        <REF> payment_id </REF>: str "Identifier of the payment used to mark the order as paid."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The updated Order entity after being marked as paid and saved."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Fetch the order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> using order_id RESULT order]
+            [COMMAND Mark the retrieved order as paid using payment_id via <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> RESULT order]
+            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> RESULT saved]
+            [COMMAND Return the updated order RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order]
+        [LOG "Failed to retrieve order for the provided order_id."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Retrieved order is None, causing a failure on mark_paid invocation]
+        [LOG "Retrieved order is None; cannot mark it as paid."]
+        [THROW AttributeError "Attempting to call mark_paid on a None order value."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid]
+        [LOG "Error occurred while marking the order as paid."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order]
+        [LOG "Failed to persist the updated order."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

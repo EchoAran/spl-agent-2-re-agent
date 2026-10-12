@@ -1,0 +1,16 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "internal_edges": [],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge -> commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> external.str",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> external.uuid4",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.payments.PaymentError"
+  ]
+}

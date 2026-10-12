@@ -1,0 +1,84 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+  "slug": "commerce-ops-demo-commerce-ops-notifications-notificationservice-init",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-init",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__init__.spl"
+  ],
+  "summary": "Summarize method __init__ from static structure",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__\n\nSummarize method __init__ from static structure\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Summarize method __init__ from static structure\" __init__]\n    [INPUTS]\n        <REF> parameters </REF>: text \"Function or method signature parameters\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> result </REF>: text \"Return value or side effects inferred from static structure\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Use static evidence and resolved calls (no resolved internal callees) to understand behavior RESULT result]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/notifications.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__\n\nSummarize method __init__ from static structure\n\n## Inputs\n- parameters (text): Function or method signature parameters\n\n## Outputs\n- result (text): Return value or side effects inferred from static structure\n\n## Main Effect\nUse static evidence and resolved calls (no resolved internal callees) to understand behavior\n\n## Calls and Callers\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Side Effects\n- mutates self.sent_messages\n\n## Errors\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target_page_id": "file:commerce_ops/notifications.py",
+      "target_url": "/wiki/file/commerce-ops-notifications-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/notifications.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/notifications.py",
+      "url": "/wiki/file/commerce-ops-notifications-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/notifications.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.634181+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "6b98da182b0995cedeb95fa6b567ef1537989f8a3f12bcef47b62eaddbb2f8e4",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__init__.spl",
+  "spl_content": "[DEFINE_WORKER: \"Summarize method __init__ from static structure\" __init__]\n    [INPUTS]\n        <REF> parameters </REF>: text \"Function or method signature parameters\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> result </REF>: text \"Return value or side effects inferred from static structure\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Use static evidence and resolved calls (no resolved internal callees) to understand behavior RESULT result]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]"
+}

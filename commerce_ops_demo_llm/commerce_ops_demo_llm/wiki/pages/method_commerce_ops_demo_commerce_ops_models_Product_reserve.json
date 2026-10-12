@@ -1,0 +1,115 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "slug": "commerce-ops-demo-commerce-ops-models-product-reserve",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl"
+  ],
+  "summary": "Reserve a positive quantity from available stock by validating constraints and decrementing the stock value.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.Product.reserve\n\nReserve a positive quantity from available stock by validating constraints and decrementing the stock value.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Reserve a positive quantity from available stock by validating constraints and decrementing the stock value.\" reserve]\n    [INPUTS]\n        <REF> qty </REF>: int \"Requested quantity to reserve; must be > 0 and <= current stock.\"\n        <REF> self.stock </REF>: int \"Current available stock level read for validation and decremented on success.\"\n        <REF> self.sku </REF>: str \"SKU identifier used in error message when stock is insufficient.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.stock </REF>: int \"Updated stock after reservation; reduced by qty when validation passes.\"\n        <REF> return </REF>: None \"No return value.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Verify that qty is positive (qty > 0). RESULT qty_validated]\n            [COMMAND Verify that qty does not exceed available stock (qty <= self.stock). RESULT sufficiency_confirmed]\n            [COMMAND Subtract qty from self.stock to reserve the items. RESULT self.stock updated]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: qty <= 0]\n        [LOG \"Quantity must be positive; reservation aborted.\"]\n        [THROW ValueError \"qty must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: qty > self.stock]\n        [LOG \"Insufficient stock for requested reservation; reservation aborted.\"]\n        [THROW ValueError \"not enough stock for {self.sku}\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.models.Product.reserve`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.Product.reserve\n\nReserve a positive quantity from available stock by validating constraints and decrementing the stock value.\n\n## Inputs\n- qty (int): Requested quantity to reserve; must be > 0 and <= current stock.\n- self.stock (int): Current available stock level read for validation and decremented on success.\n- self.sku (str): SKU identifier used in error message when stock is insufficient.\n\n## Outputs\n- self.stock (int): Updated stock after reservation; reduced by qty when validation passes.\n- return (None): No return value.\n\n## Main Effect\nSubtract qty from self.stock to reserve the items.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n\n## Side Effects\n- mutates self.stock\n- self.stock (int): Updated stock after reservation; reduced by qty when validation passes.\n\n## Errors\n- ValueError: not enough stock for {self.sku}\n- ValueError: qty must be positive\n- invalid when qty > self.stock\n- qty <= 0\n- qty > 0\n- qty > self.stock\n- raise ValueError(\"qty must be positive\")\n- raise ValueError(f\"not enough stock for {self.sku}\")\n\n## Validation Rules\n- invalid when qty > self.stock\n- qty > 0\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.models.Product",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.Product.reserve"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.models.Product.reserve"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.630183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "89559cedcd368b6116de2d9e80236938d30caebf3bf44b58fa6149361ecaeb9a",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl",
+  "spl_content": "[DEFINE_WORKER: \"Reserve a positive quantity from available stock by validating constraints and decrementing the stock value.\" reserve]\n    [INPUTS]\n        <REF> qty </REF>: int \"Requested quantity to reserve; must be > 0 and <= current stock.\"\n        <REF> self.stock </REF>: int \"Current available stock level read for validation and decremented on success.\"\n        <REF> self.sku </REF>: str \"SKU identifier used in error message when stock is insufficient.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.stock </REF>: int \"Updated stock after reservation; reduced by qty when validation passes.\"\n        <REF> return </REF>: None \"No return value.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Verify that qty is positive (qty > 0). RESULT qty_validated]\n            [COMMAND Verify that qty does not exceed available stock (qty <= self.stock). RESULT sufficiency_confirmed]\n            [COMMAND Subtract qty from self.stock to reserve the items. RESULT self.stock updated]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: qty <= 0]\n        [LOG \"Quantity must be positive; reservation aborted.\"]\n        [THROW ValueError \"qty must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: qty > self.stock]\n        [LOG \"Insufficient stock for requested reservation; reservation aborted.\"]\n        [THROW ValueError \"not enough stock for {self.sku}\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

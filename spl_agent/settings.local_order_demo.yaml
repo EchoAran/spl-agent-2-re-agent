@@ -1,0 +1,18 @@
+OpenAI_API_Base: "https://api.rcouyi.com/v1"
+
+API_key_list:
+  - "sk-kMVPQRq57cqRm2oN7e26D7Ab8aCb481392207b3fAb7391D1"
+
+model_name: "gpt-5"
+
+project_path: "./demo_projects/local_order_demo"
+project_name: "local_order_demo"
+
+runtime:
+  cache_dir: ".spl_cache"
+  max_rounds: 15
+  export_spl: true
+  use_llm_for_build: false
+  tool_timeout_sec: 30
+
+user_question: "这个项目的整体功能是什么？用户提交一个订单后，库存和订单结果是怎么一步步生成的？中间涉及哪些关键函数？"

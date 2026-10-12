@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" PriceQuote]
+
+[DEFINE_PERSONA:]
+    ROLE: "value object"
+    DOMAIN: "commerce_ops_demo.commerce_ops.pricing"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Represent a price quote as a simple dataclass with fields for subtotal_cents, discount_cents, tax_cents, total_cents, and coupon."
+    Responsibility: "Hold and convey computed price components and final total as structured data."
+    PublicBehavior: "Dataclass-generated constructor to set: subtotal_cents, discount_cents, tax_cents, total_cents, coupon; Public attributes: subtotal_cents, discount_cents, tax_cents, total_cents, coupon"
+    InternalMechanism: "The @dataclass decorator provides initialization and attribute storage; the class defines no custom methods or internal logic."
+    StateModel: "subtotal_cents (domain data); discount_cents (domain data); tax_cents (domain data); total_cents (domain data); coupon (domain data)"
+    Collaboration: "evidence: missing; confidence: not_available; source: static_analysis"
+    ErrorBoundary: "No error-handling behavior in evidence"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "PriceQuote"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.pricing.PriceQuote"
+    <REF> source_file </REF>: text "commerce_ops/pricing.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Represent a price quote as a simple dataclass with fields for subtotal_cents, discount_cents, tax_cents, total_cents, and coupon."
+    <REF> responsibility </REF>: text "Hold and convey computed price components and final total as structured data."
+    <REF> role </REF>: text "value object"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["Dataclass-generated constructor to set: subtotal_cents, discount_cents, tax_cents, total_cents, coupon", "Public attributes: subtotal_cents, discount_cents, tax_cents, total_cents, coupon"]
+    <REF> entrypoints </REF>: List [text] ["Constructor (__init__)"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "The @dataclass decorator provides initialization and attribute storage; the class defines no custom methods or internal logic."
+    <REF> internal_structure </REF>: List [text] ["No inheritance and no private helpers", "No internal call graph edges; pure data holder"]
+    <REF> lifecycle </REF>: List [text] ["Created with pricing values; persists as an in-memory data record", "No explicit initialization beyond construction; no disposal/reset behavior in evidence"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["subtotal_cents (domain data)", "discount_cents (domain data)", "tax_cents (domain data)", "total_cents (domain data)", "coupon (domain data)"]
+    <REF> inputs </REF>: List [text] ["subtotal_cents", "discount_cents", "tax_cents", "total_cents", "coupon"]
+    <REF> outputs </REF>: List [text] ["Exposes pricing attributes via direct attribute access: subtotal_cents, discount_cents, tax_cents, total_cents, coupon"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] []
+    <REF> used_by </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> key_interactions </REF>: List [text] ["No incoming or outgoing edges in class scope graph; no observed collaborations"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["None observed in class scope graph; data-only container"]
+    <REF> errors </REF>: List [text] ["No error-handling behavior in evidence"]
+    <REF> invariants </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" PaymentReceipt]
+
+[DEFINE_PERSONA:]
+    ROLE: "value object"
+    DOMAIN: "commerce operations / payments"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Represent structured payment receipt data with fields identifying the payment and its amount and provider."
+    Responsibility: "Encapsulate and transport payment receipt information as a simple structured data record."
+    PublicBehavior: "dataclass-generated constructor for fields: payment_id, amount_cents, provider; public attributes: payment_id, amount_cents, provider"
+    InternalMechanism: "Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior."
+    StateModel: "payment_id: domain data; amount_cents: domain data; provider: domain data"
+    Collaboration: "evidence: missing; confidence: not_available; source: static_analysis"
+    ErrorBoundary: "evidence: missing; confidence: not_available; source: static_analysis"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "PaymentReceipt"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+    <REF> source_file </REF>: text "commerce_ops/payments.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Represent structured payment receipt data with fields identifying the payment and its amount and provider."
+    <REF> responsibility </REF>: text "Encapsulate and transport payment receipt information as a simple structured data record."
+    <REF> role </REF>: text "value object"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["dataclass-generated constructor for fields: payment_id, amount_cents, provider", "public attributes: payment_id, amount_cents, provider"]
+    <REF> entrypoints </REF>: List [text] ["dataclass-generated constructor for fields: payment_id, amount_cents, provider"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior."
+    <REF> internal_structure </REF>: List [text] ["No user-defined methods within class scope", "Dataclass decorator provides boilerplate initialization and representation"]
+    <REF> lifecycle </REF>: List [text] ["Creation via dataclass-generated constructor with receipt fields", "Used as a data carrier; no explicit reset or disposal behavior in evidence"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["payment_id: domain data", "amount_cents: domain data", "provider: domain data"]
+    <REF> inputs </REF>: List [text] ["payment_id", "amount_cents", "provider"]
+    <REF> outputs </REF>: List [text] ["Structured receipt data via attributes: payment_id, amount_cents, provider"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] []
+    <REF> used_by </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> key_interactions </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] []
+    <REF> errors </REF>: List [text] []
+    <REF> invariants </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

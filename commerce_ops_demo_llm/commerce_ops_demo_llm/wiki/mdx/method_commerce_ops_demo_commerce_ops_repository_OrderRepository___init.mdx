@@ -1,0 +1,76 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+  "summary": "Initialize the instance by creating an empty orders mapping.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__
+
+Initialize the instance by creating an empty orders mapping.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Initialize the instance by creating an empty orders mapping." __init__]
+    [INPUTS]
+        <REF> self </REF>: object "The instance being initialized."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.orders </REF>: Dict[str, Order] "Instance attribute initialized to an empty dictionary."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize the orders attribute as an empty dictionary on the instance. RESULT self.orders]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/repository.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__
+
+Initialize the instance by creating an empty orders mapping.
+
+## Inputs
+- self (object): The instance being initialized.
+
+## Outputs
+- self.orders (Dict[str, Order]): Instance attribute initialized to an empty dictionary.
+
+## Main Effect
+Initialize the orders attribute as an empty dictionary on the instance.
+
+## Calls and Callers
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Side Effects
+- mutates self.orders
+- self.orders (Dict[str, Order]): Instance attribute initialized to an empty dictionary.
+
+## Errors
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

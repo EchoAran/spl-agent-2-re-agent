@@ -1,0 +1,136 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "slug": "commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/release_items.spl"
+  ],
+  "summary": "Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\n\nIterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.\" release_items]\n    [INPUTS]\n        <REF> self </REF>: ProductCatalog \"Catalog instance providing get(sku) to retrieve products and orchestrate releases.\"\n        <REF> items </REF>: List[CartItem] \"Iterable of CartItem objects, each with sku and qty to release.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"This method returns None.\"\n        <REF> side_effects </REF>: SideEffect \"For each item, calls Product.release with the specified quantity, potentially mutating product inventory/reservation state.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND For each item in items, retrieve the corresponding product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku. RESULT product_for_item]\n            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with item.qty to release the quantity for the retrieved product. RESULT product_state_updated]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: items is empty]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Detect that there are no items to process and perform no operations. RESULT no_action]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [EXCEPTION_FLOW: items is not iterable and the for-loop cannot begin iteration]\n        [LOG \"Iteration over items failed due to a non-iterable input.\"]\n        [THROW TypeError \"Raised by Python when attempting to iterate over a non-iterable items argument.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: An element in items lacks sku or qty (e.g., item.sku or item.qty is missing)]\n        [LOG \"Access to item.sku or item.qty failed during loop processing.\"]\n        [THROW AttributeError \"Raised when item does not provide the expected attributes sku or qty.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> returns None or a non-product object lacking release]\n        [LOG \"Product retrieval returned an unexpected value, causing release invocation to fail.\"]\n        [THROW AttributeError \"Raised when the retrieved product is None or lacks a release method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> or <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> raises an underlying domain/runtime exception]\n        [LOG \"Dependency call failed while fetching product or releasing quantity.\"]\n        [THROW Exception \"Propagated exception from get or release indicating retrieval or release failure.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/catalog.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\n\nIterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.\n\n## Inputs\n- self (ProductCatalog): Catalog instance providing get(sku) to retrieve products and orchestrate releases.\n- items (List[CartItem]): Iterable of CartItem objects, each with sku and qty to release.\n\n## Outputs\n- return (None): This method returns None.\n- side_effects (SideEffect): For each item, calls Product.release with the specified quantity, potentially mutating product inventory/reservation state.\n\n## Main Effect\nInvoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with item.qty to release the quantity for the retrieved product.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get\n- commerce_ops_demo.commerce_ops.models.Product.release\n- commerce_ops_demo.commerce_ops.services.OrderService.cancel_order\n- commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> or <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> raises an underlying domain/runtime exception\n- <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> returns None or a non-product object lacking release\n- An element in items lacks sku or qty (e.g., item.sku or item.qty is missing)\n- AttributeError: Raised when item does not provide the expected attributes sku or qty.\n- AttributeError: Raised when the retrieved product is None or lacks a release method.\n- Exception: Propagated exception from get or release indicating retrieval or release failure.\n- TypeError: Raised by Python when attempting to iterate over a non-iterable items argument.\n- items is not iterable and the for-loop cannot begin iteration\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "file:commerce_ops/catalog.py",
+      "target_url": "/wiki/file/commerce-ops-catalog-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/catalog.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/catalog.py",
+      "url": "/wiki/file/commerce-ops-catalog-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/catalog.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.628185+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "5139332173075c100dd88423d397ca239a8ce262ea365f0356f4944014aaaa25",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/release_items.spl",
+  "spl_content": "[DEFINE_WORKER: \"Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.\" release_items]\n    [INPUTS]\n        <REF> self </REF>: ProductCatalog \"Catalog instance providing get(sku) to retrieve products and orchestrate releases.\"\n        <REF> items </REF>: List[CartItem] \"Iterable of CartItem objects, each with sku and qty to release.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"This method returns None.\"\n        <REF> side_effects </REF>: SideEffect \"For each item, calls Product.release with the specified quantity, potentially mutating product inventory/reservation state.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND For each item in items, retrieve the corresponding product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku. RESULT product_for_item]\n            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with item.qty to release the quantity for the retrieved product. RESULT product_state_updated]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: items is empty]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Detect that there are no items to process and perform no operations. RESULT no_action]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [EXCEPTION_FLOW: items is not iterable and the for-loop cannot begin iteration]\n        [LOG \"Iteration over items failed due to a non-iterable input.\"]\n        [THROW TypeError \"Raised by Python when attempting to iterate over a non-iterable items argument.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: An element in items lacks sku or qty (e.g., item.sku or item.qty is missing)]\n        [LOG \"Access to item.sku or item.qty failed during loop processing.\"]\n        [THROW AttributeError \"Raised when item does not provide the expected attributes sku or qty.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> returns None or a non-product object lacking release]\n        [LOG \"Product retrieval returned an unexpected value, causing release invocation to fail.\"]\n        [THROW AttributeError \"Raised when the retrieved product is None or lacks a release method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> or <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> raises an underlying domain/runtime exception]\n        [LOG \"Dependency call failed while fetching product or releasing quantity.\"]\n        [THROW Exception \"Propagated exception from get or release indicating retrieval or release failure.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

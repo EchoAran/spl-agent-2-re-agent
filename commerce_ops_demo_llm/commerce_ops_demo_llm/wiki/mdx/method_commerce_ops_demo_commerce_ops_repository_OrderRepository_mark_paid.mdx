@@ -1,0 +1,109 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "summary": "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid
+
+Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order." mark_paid]
+    [INPUTS]
+        <REF> order_id </REF>: str "Identifier of the order to update."
+        <REF> payment_id </REF>: str "Identifier of the payment used to mark the order as paid."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The updated Order entity after being marked as paid and saved."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Fetch the order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> using order_id RESULT order]
+            [COMMAND Mark the retrieved order as paid using payment_id via <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> RESULT order]
+            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> RESULT saved]
+            [COMMAND Return the updated order RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order]
+        [LOG "Failed to retrieve order for the provided order_id."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Retrieved order is None, causing a failure on mark_paid invocation]
+        [LOG "Retrieved order is None; cannot mark it as paid."]
+        [THROW AttributeError "Attempting to call mark_paid on a None order value."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid]
+        [LOG "Error occurred while marking the order as paid."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order]
+        [LOG "Failed to persist the updated order."]
+        [THROW Exception "Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/repository.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid
+
+Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.
+
+## Inputs
+- order_id (str): Identifier of the order to update.
+- payment_id (str): Identifier of the payment used to mark the order as paid.
+
+## Outputs
+- order (Order): The updated Order entity after being marked as paid and saved.
+
+## Main Effect
+Return the updated order
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Order.mark_paid
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.get
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.save
+
+## Side Effects
+- self.save(order)
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid
+- <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order
+- <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order
+- AttributeError: Attempting to call mark_paid on a None order value.
+- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.
+- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>.
+- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.
+- Retrieved order is None, causing a failure on mark_paid invocation
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

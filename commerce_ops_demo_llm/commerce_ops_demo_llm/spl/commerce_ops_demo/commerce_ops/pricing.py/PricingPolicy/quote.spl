@@ -1,0 +1,40 @@
+[DEFINE_WORKER: "Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code." quote]
+    [INPUTS]
+        <REF> self </REF>: PricingPolicy "Instance providing pricing calculations for subtotal, coupon application, and tax."
+        <REF> customer </REF>: Customer "Customer for whom discounts may apply."
+        <REF> items </REF>: List[CartItem] "Shopping cart items to be priced."
+        <REF> products </REF>: List[Product] "Product catalog data used to compute item prices."
+        <REF> coupon </REF>: str "Optional coupon code used to compute a discount; defaults to empty string."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> price_quote </REF>: PriceQuote "Price breakdown including subtotal, discount, tax, total, and the coupon code uppercased."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal</SPL> with items and products to compute subtotal RESULT subtotal]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon</SPL> with customer, subtotal, and coupon to compute discount RESULT discount]
+            [COMMAND Compute taxable as max(subtotal - discount, 0) to clamp negative taxable amounts to zero RESULT taxable]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax</SPL> with taxable to compute tax RESULT tax]
+            [COMMAND Compute total as taxable + tax RESULT total]
+            [COMMAND Validate that total > 0 RESULT validated_total]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper()) RESULT price_quote]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: discount >= subtotal (i.e., subtotal - discount <= 0), so taxable is clamped to 0]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Set taxable to 0 via max(subtotal - discount, 0) RESULT taxable]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax</SPL> with taxable (0) to compute tax RESULT tax]
+            [COMMAND Compute total as taxable + tax (total = tax) RESULT total]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper()) RESULT price_quote]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: total <= 0 after computing total]
+        [LOG "No log"]
+        [THROW ValueError "total must be positive"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

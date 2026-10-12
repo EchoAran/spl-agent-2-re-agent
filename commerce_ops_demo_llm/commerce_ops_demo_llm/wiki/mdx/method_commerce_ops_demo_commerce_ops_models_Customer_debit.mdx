@@ -1,0 +1,94 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+  "summary": "Debits the customer's balance by amount_cents after verifying via <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>, otherwise raises ValueError for insufficient balance.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Customer/debit.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Customer.debit
+
+Debits the customer's balance by amount_cents after verifying via <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>, otherwise raises ValueError for insufficient balance.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Debits the customer's balance by amount_cents after verifying via <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>, otherwise raises ValueError for insufficient balance." debit]
+    [INPUTS]
+        <REF> amount_cents </REF>: int "Amount in cents to deduct from the customer's balance."
+        <REF> self.balance_cents </REF>: int (state) "Current stored balance in cents used to compute the new balance."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "No return value on success."
+        <REF> self.balance_cents </REF>: int (state) "Decremented by amount_cents when the debit succeeds."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents) to verify available balance RESULT is_allowed]
+            [COMMAND Subtract amount_cents from self.balance_cents RESULT updated self.balance_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: not <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents)]
+        [LOG "customer has insufficient balance"]
+        [THROW ValueError "Raised when the customer has insufficient balance."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Exception raised by <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents)]
+        [LOG "Propagate exception from can_spend"]
+        [THROW Exception "Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL> propagates."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Customer.debit`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Customer.debit
+
+Debits the customer's balance by amount_cents after verifying via <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>, otherwise raises ValueError for insufficient balance.
+
+## Inputs
+- amount_cents (int): Amount in cents to deduct from the customer's balance.
+
+## Outputs
+- return (None): No return value on success.
+
+## Main Effect
+Subtract amount_cents from self.balance_cents
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Customer.can_spend
+- commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize
+
+## Side Effects
+- mutates self.balance_cents
+
+## Errors
+- Exception raised by <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents)
+- Exception: Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL> propagates.
+- ValueError: Raised when the customer has insufficient balance.
+- invalid when not self.can_spend(amount_cents)
+- not <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents)
+- raise ValueError("customer has insufficient balance")
+
+## Validation Rules
+- invalid when not self.can_spend(amount_cents)

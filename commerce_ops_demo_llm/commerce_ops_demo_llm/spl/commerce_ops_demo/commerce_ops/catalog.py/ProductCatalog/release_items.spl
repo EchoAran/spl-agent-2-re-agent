@@ -1,0 +1,45 @@
+[DEFINE_WORKER: "Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state." release_items]
+    [INPUTS]
+        <REF> self </REF>: ProductCatalog "Catalog instance providing get(sku) to retrieve products and orchestrate releases."
+        <REF> items </REF>: List[CartItem] "Iterable of CartItem objects, each with sku and qty to release."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "This method returns None."
+        <REF> side_effects </REF>: SideEffect "For each item, calls Product.release with the specified quantity, potentially mutating product inventory/reservation state."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND For each item in items, retrieve the corresponding product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku. RESULT product_for_item]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with item.qty to release the quantity for the retrieved product. RESULT product_state_updated]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: items is empty]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Detect that there are no items to process and perform no operations. RESULT no_action]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: items is not iterable and the for-loop cannot begin iteration]
+        [LOG "Iteration over items failed due to a non-iterable input."]
+        [THROW TypeError "Raised by Python when attempting to iterate over a non-iterable items argument."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: An element in items lacks sku or qty (e.g., item.sku or item.qty is missing)]
+        [LOG "Access to item.sku or item.qty failed during loop processing."]
+        [THROW AttributeError "Raised when item does not provide the expected attributes sku or qty."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> returns None or a non-product object lacking release]
+        [LOG "Product retrieval returned an unexpected value, causing release invocation to fail."]
+        [THROW AttributeError "Raised when the retrieved product is None or lacks a release method."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> or <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> raises an underlying domain/runtime exception]
+        [LOG "Dependency call failed while fetching product or releasing quantity."]
+        [THROW Exception "Propagated exception from get or release indicating retrieval or release failure."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

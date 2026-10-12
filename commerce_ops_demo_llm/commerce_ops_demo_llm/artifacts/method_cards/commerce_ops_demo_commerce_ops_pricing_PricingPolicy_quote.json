@@ -1,0 +1,104 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "owner_file_id": "commerce_ops/pricing.py",
+  "signature": "def quote(self, customer: Customer, items: List[CartItem], products: List[Product], coupon: str = \"\") -> PriceQuote:",
+  "visibility": "public",
+  "summary": "Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (PricingPolicy): Instance providing pricing calculations for subtotal, coupon application, and tax.",
+    "customer (Customer): Customer for whom discounts may apply.",
+    "items (List[CartItem]): Shopping cart items to be priced.",
+    "products (List[Product]): Product catalog data used to compute item prices.",
+    "coupon (str): Optional coupon code used to compute a discount; defaults to empty string."
+  ],
+  "outputs": [
+    "price_quote (PriceQuote): Price breakdown including subtotal, discount, tax, total, and the coupon code uppercased."
+  ],
+  "main_effect": "Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper())",
+  "side_effects": [],
+  "errors": [
+    "ValueError: total must be positive",
+    "raise ValueError(\"total must be positive\")",
+    "total <= 0 after computing total",
+    "total > 0"
+  ],
+  "validation_rules": [
+    "total > 0"
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "external.ValueError",
+    "external.coupon.upper",
+    "external.max"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [
+    "external.ValueError",
+    "external.coupon.upper",
+    "external.max"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 7,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 7,
+        "code": "if total <= 0:\n            raise ValueError(\"total must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "subtotal = self.calculate_subtotal(items, products)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 3,
+        "code": "discount = self.apply_coupon(customer, subtotal, coupon)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "taxable = max(subtotal - discount, 0)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 5,
+        "code": "tax = self.calculate_tax(taxable)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 6,
+        "code": "total = taxable + tax"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 9,
+        "code": "return PriceQuote(subtotal, discount, tax, total, coupon.upper())"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/quote.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

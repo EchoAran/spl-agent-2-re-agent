@@ -1,0 +1,43 @@
+{
+  "layer": "repository root container",
+  "purpose": "Provide a repository-level container for a demo commerce operations subsystem.",
+  "role": "Container package for a commerce operations demo subsystem",
+  "repository_role": "Top-level package grouping the commerce_ops demo subsystem for checkout, order management, and customer interactions.",
+  "public_api": [],
+  "entrypoints": [],
+  "subsystem_groups": [
+    "Subpackage: commerce_ops — self-contained commerce operations subsystem with checkout and order management orchestration, domain models, in-memory adapters, and a CLI demo"
+  ],
+  "package_mechanism": "Acts as a container; all functionality and public surface are provided by the commerce_ops subpackage; this package adds no additional coordination or APIs.",
+  "dependencies": [],
+  "dependency_direction": "No incoming or outgoing package edges observed at this level; functionality and dependency flow are delegated to the commerce_ops child package.",
+  "inputs": [],
+  "outputs": [],
+  "key_workflows": [
+    "Delegates workflows such as checkout, cancellation, customer history, and CLI demo to the commerce_ops subpackage"
+  ],
+  "side_effects": [],
+  "errors": [],
+  "architectural_assumptions": [
+    "All operational logic and public surface reside in the commerce_ops subpackage",
+    "This package does not re-export symbols from child packages",
+    "External integrations should import from the commerce_ops subpackage for functionality"
+  ],
+  "file_refs": [],
+  "subpackage_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/__package__.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo",
+  "package_name": "commerce_ops_demo",
+  "package_path": "commerce_ops_demo",
+  "source_directory": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo",
+  "files": [],
+  "subpackages": [
+    "commerce_ops: Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo."
+  ],
+  "incoming_packages": [],
+  "outgoing_packages": [],
+  "summary": "Provide a repository-level container for a demo commerce operations subsystem.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/__package__.spl"
+}

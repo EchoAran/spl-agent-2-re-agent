@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import platform
 import re
 import subprocess
 from typing import Optional
@@ -87,7 +88,11 @@ class SourceResolver:
         return result.strip()
 
     def _run_git(self, command: list[str]) -> str:
-        proc = subprocess.run(command, capture_output=True, text=True, check=False)
+        run_cmd = command
+        if platform.system().lower().startswith("win") and command and command[0].lower() == "git":
+            # Force long-path support for this invocation to reduce Windows filename-too-long failures.
+            run_cmd = ["git", "-c", "core.longpaths=true", *command[1:]]
+        proc = subprocess.run(run_cmd, capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             stderr = proc.stderr.strip() or proc.stdout.strip()
             raise RuntimeError(f"Git command failed: {' '.join(command)}\n{stderr}")

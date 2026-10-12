@@ -1,0 +1,135 @@
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.Product",
+  "slug": "commerce-ops-demo-commerce-ops-models-product",
+  "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+  "entity_kind": "class",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.Product",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Product/__class__.spl"
+  ],
+  "summary": "Represent a product and manage available inventory by providing validated reservation and release operations on stock.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.Product\n\nRepresent a product and manage available inventory by providing validated reservation and release operations on stock.\n\n## SPL\n\n```spl\n[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" Product]\n\n[DEFINE_PERSONA:]\n    ROLE: \"entity\"\n    DOMAIN: \"E-commerce inventory and catalog model\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent a product and manage available inventory by providing validated reservation and release operations on stock.\"\n    Responsibility: \"Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).\"\n    PublicBehavior: \"reserve(qty: int) -> None; release(qty: int) -> None\"\n    InternalMechanism: \"A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.\"\n    StateModel: \"sku: product identifier (read by methods); name: product name (declared); price_cents: price in cents (declared); tags: label collection (declared); stock: available quantity (read and written by methods)\"\n    Collaboration: \"dataclasses.dataclass (decorator); ValueError (exception type raised for validation failures)\"\n    ErrorBoundary: \"ValueError: qty must be positive (reserve, release); ValueError: not enough stock for {self.sku} (reserve)\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"Product\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.models.Product\"\n    <REF> source_file </REF>: text \"commerce_ops/models.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent a product and manage available inventory by providing validated reservation and release operations on stock.\"\n    <REF> responsibility </REF>: text \"Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).\"\n    <REF> role </REF>: text \"entity\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"reserve(qty: int) -> None\", \"release(qty: int) -> None\"]\n    <REF> entrypoints </REF>: List [text] [\"reserve(qty: int)\", \"release(qty: int)\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.\"\n    <REF> internal_structure </REF>: List [text] [\"Domain data fields: sku, name, price_cents, tags\", \"Inventory field: stock (mutable; read/write)\", \"No private helpers; validation and mutation occur within public methods\", \"Decorator: dataclass\"]\n    <REF> lifecycle </REF>: List [text] [\"Instantiated with product attributes and initial stock via dataclass construction\", \"Stock evolves through reserve and release calls\", \"No explicit teardown or disposal behavior\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"sku: product identifier (read by methods)\", \"name: product name (declared)\", \"price_cents: price in cents (declared)\", \"tags: label collection (declared)\", \"stock: available quantity (read and written by methods)\"]\n    <REF> inputs </REF>: List [text] [\"qty (int) for reserve\", \"qty (int) for release\", \"Initial construction fields: sku, name, price_cents, stock, tags\"]\n    <REF> outputs </REF>: List [text] [\"Updated stock via in-place mutation\", \"No return values from reserve or release\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"dataclasses.dataclass (decorator)\", \"ValueError (exception type raised for validation failures)\"]\n    <REF> used_by </REF>: List [text] [\"commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\", \"commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\"]\n    <REF> key_interactions </REF>: List [text] [\"Called by ProductCatalog to reserve or release product units\", \"Raises ValueError to signal invalid quantity or insufficient stock\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"Mutates in-memory state: self.stock\"]\n    <REF> errors </REF>: List [text] [\"ValueError: qty must be positive (reserve, release)\", \"ValueError: not enough stock for {self.sku} (reserve)\"]\n    <REF> invariants </REF>: List [text] [\"Reservation requires qty > 0 and qty <= current stock\", \"Release requires qty > 0\", \"Stock is not reduced below zero by reserve due to validation\", \"Only reserve and release modify stock in this class\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]\n```\n\n## Wiki Navigation\n\n- Page ID: `class:commerce_ops_demo.commerce_ops.models.Product`\n- Entity kind: `class`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.Product\n\nRepresent a product and manage available inventory by providing validated reservation and release operations on stock.\n\n## Role and Responsibilities\nPrimary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).\n\n## Public Surface\n- reserve(qty: int) -> None\n- release(qty: int) -> None\n\n## State Model\n- sku: product identifier (read by methods)\n- name: product name (declared)\n- price_cents: price in cents (declared)\n- tags: label collection (declared)\n- stock: available quantity (read and written by methods)\n\n## Internal Mechanism\nA dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.\n\n## Related Classes\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Source Evidence\n- <SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl</SPL>\n- <SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl</SPL>\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "file:commerce_ops/models.py",
+      "source_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.models"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    }
+  ],
+  "tags": [
+    "class",
+    "entity"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.Product",
+    "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "commerce_ops_demo.commerce_ops.models.Product.release"
+  ],
+  "graph_refs": [
+    "class_scope:commerce_ops_demo.commerce_ops.models.Product"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.636693+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "02ceb03a1f562d629e751e16c6c9e56045c5a586f45abe5ac9b6b88e874cb887",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/__class__.spl",
+  "spl_content": "[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" Product]\n\n[DEFINE_PERSONA:]\n    ROLE: \"entity\"\n    DOMAIN: \"E-commerce inventory and catalog model\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent a product and manage available inventory by providing validated reservation and release operations on stock.\"\n    Responsibility: \"Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).\"\n    PublicBehavior: \"reserve(qty: int) -> None; release(qty: int) -> None\"\n    InternalMechanism: \"A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.\"\n    StateModel: \"sku: product identifier (read by methods); name: product name (declared); price_cents: price in cents (declared); tags: label collection (declared); stock: available quantity (read and written by methods)\"\n    Collaboration: \"dataclasses.dataclass (decorator); ValueError (exception type raised for validation failures)\"\n    ErrorBoundary: \"ValueError: qty must be positive (reserve, release); ValueError: not enough stock for {self.sku} (reserve)\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"Product\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.models.Product\"\n    <REF> source_file </REF>: text \"commerce_ops/models.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent a product and manage available inventory by providing validated reservation and release operations on stock.\"\n    <REF> responsibility </REF>: text \"Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).\"\n    <REF> role </REF>: text \"entity\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"reserve(qty: int) -> None\", \"release(qty: int) -> None\"]\n    <REF> entrypoints </REF>: List [text] [\"reserve(qty: int)\", \"release(qty: int)\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.\"\n    <REF> internal_structure </REF>: List [text] [\"Domain data fields: sku, name, price_cents, tags\", \"Inventory field: stock (mutable; read/write)\", \"No private helpers; validation and mutation occur within public methods\", \"Decorator: dataclass\"]\n    <REF> lifecycle </REF>: List [text] [\"Instantiated with product attributes and initial stock via dataclass construction\", \"Stock evolves through reserve and release calls\", \"No explicit teardown or disposal behavior\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"sku: product identifier (read by methods)\", \"name: product name (declared)\", \"price_cents: price in cents (declared)\", \"tags: label collection (declared)\", \"stock: available quantity (read and written by methods)\"]\n    <REF> inputs </REF>: List [text] [\"qty (int) for reserve\", \"qty (int) for release\", \"Initial construction fields: sku, name, price_cents, stock, tags\"]\n    <REF> outputs </REF>: List [text] [\"Updated stock via in-place mutation\", \"No return values from reserve or release\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"dataclasses.dataclass (decorator)\", \"ValueError (exception type raised for validation failures)\"]\n    <REF> used_by </REF>: List [text] [\"commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\", \"commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\"]\n    <REF> key_interactions </REF>: List [text] [\"Called by ProductCatalog to reserve or release product units\", \"Raises ValueError to signal invalid quantity or insufficient stock\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"Mutates in-memory state: self.stock\"]\n    <REF> errors </REF>: List [text] [\"ValueError: qty must be positive (reserve, release)\", \"ValueError: not enough stock for {self.sku} (reserve)\"]\n    <REF> invariants </REF>: List [text] [\"Reservation requires qty > 0 and qty <= current stock\", \"Release requires qty > 0\", \"Stock is not reduced below zero by reserve due to validation\", \"Only reserve and release modify stock in this class\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]"
+}

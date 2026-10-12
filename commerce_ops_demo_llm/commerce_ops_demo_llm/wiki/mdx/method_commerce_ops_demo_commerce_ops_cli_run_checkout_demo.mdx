@@ -1,0 +1,121 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "page_type": "entity",
+  "entity_kind": "function",
+  "title": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "summary": "Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/run_checkout_demo.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.cli.run_checkout_demo
+
+Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string." run_checkout_demo]
+    [INPUTS]
+        <REF> raw_items </REF>: List[str] "List of raw item strings to parse into cart items."
+        <REF> coupon </REF>: str "Optional coupon code applied during checkout; empty string when none."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> summary </REF>: str "Formatted summary string: 'created={order_id}; status={status}; history_count={count}'."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> to construct the order service instance. RESULT service]
+            [COMMAND Instantiate <SPL>commerce_ops_demo.commerce_ops.models.Customer</SPL> with id 'cust-100', email 'reader@example.com', balance 20000, and tier 'vip'. RESULT customer]
+            [COMMAND Parse raw cart items via <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items). RESULT items]
+            [COMMAND Perform checkout via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(customer, items, coupon). RESULT order]
+            [COMMAND Fetch customer order history via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id). RESULT history]
+            [COMMAND Format the return message as "created={order.order_id}; status={order.status}; history_count={len(history)}". RESULT summary]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.]
+        [LOG "Failed to initialize demo order service."]
+        [THROW Exception "Service initialization error."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.]
+        [LOG "Failed to parse raw_items into cart items."]
+        [THROW Exception "Invalid cart items."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.]
+        [LOG "Checkout failed for given customer/items/coupon."]
+        [THROW Exception "Checkout operation error."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.]
+        [LOG "Retrieving customer history failed."]
+        [THROW Exception "Customer history retrieval error."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: If order lacks order_id or status attributes when formatting the summary string.]
+        [LOG "Order object missing expected attributes."]
+        [THROW AttributeError "order.order_id or order.status not available."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo`
+- Entity kind: `function`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/cli.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.cli.run_checkout_demo
+
+Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.
+
+## Inputs
+- raw_items (List[str]): List of raw item strings to parse into cart items.
+- coupon (str): Optional coupon code applied during checkout; empty string when none.
+
+## Outputs
+- summary (str): Formatted summary string: 'created={order_id}; status={status}; history_count={count}'.
+
+## Main Effect
+Format the return message as "created={order.order_id}; status={order.status}; history_count={len(history)}".
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.cli.build_demo_service
+- commerce_ops_demo.commerce_ops.cli.parse_cart
+- commerce_ops_demo.commerce_ops.models.Customer
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+- commerce_ops_demo.commerce_ops.services.OrderService.customer_history
+- commerce_ops_demo.commerce_ops.cli.main
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- AttributeError: order.order_id or order.status not available.
+- Exception: Checkout operation error.
+- Exception: Customer history retrieval error.
+- Exception: Invalid cart items.
+- Exception: Service initialization error.
+- If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.
+- If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.
+- If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.
+- If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.
+- If order lacks order_id or status attributes when formatting the summary string.
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

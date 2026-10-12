@@ -1,0 +1,81 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Product",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def reserve(self, qty: int) -> None:",
+  "visibility": "public",
+  "summary": "Reserve a positive quantity from available stock by validating constraints and decrementing the stock value.",
+  "purpose_hint": "",
+  "inputs": [
+    "qty (int): Requested quantity to reserve; must be > 0 and <= current stock.",
+    "self.stock (int): Current available stock level read for validation and decremented on success.",
+    "self.sku (str): SKU identifier used in error message when stock is insufficient."
+  ],
+  "outputs": [
+    "self.stock (int): Updated stock after reservation; reduced by qty when validation passes.",
+    "return (None): No return value."
+  ],
+  "main_effect": "Subtract qty from self.stock to reserve the items.",
+  "side_effects": [
+    "mutates self.stock",
+    "self.stock (int): Updated stock after reservation; reduced by qty when validation passes."
+  ],
+  "errors": [
+    "ValueError: not enough stock for {self.sku}",
+    "ValueError: qty must be positive",
+    "invalid when qty > self.stock",
+    "qty <= 0",
+    "qty > 0",
+    "qty > self.stock",
+    "raise ValueError(\"qty must be positive\")",
+    "raise ValueError(f\"not enough stock for {self.sku}\")"
+  ],
+  "validation_rules": [
+    "invalid when qty > self.stock",
+    "qty > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "sku",
+    "stock"
+  ],
+  "state_writes": [
+    "stock"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if qty <= 0:\n            raise ValueError(\"qty must be positive\")"
+      },
+      {
+        "type": "if",
+        "lineno": 4,
+        "code": "if qty > self.stock:\n            raise ValueError(f\"not enough stock for {self.sku}\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

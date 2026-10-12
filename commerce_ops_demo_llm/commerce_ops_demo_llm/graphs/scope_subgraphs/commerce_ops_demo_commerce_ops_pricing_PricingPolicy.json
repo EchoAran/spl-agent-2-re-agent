@@ -1,0 +1,26 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.code.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.coupons.items",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.min",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.item.sku.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.max"
+  ]
+}

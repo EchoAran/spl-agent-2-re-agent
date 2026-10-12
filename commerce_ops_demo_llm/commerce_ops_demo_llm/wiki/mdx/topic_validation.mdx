@@ -1,0 +1,101 @@
+---
+{
+  "page_id": "topic:validation",
+  "page_type": "topic",
+  "entity_kind": "topic",
+  "title": "Validation",
+  "summary": "Entities related to Validation.",
+  "tags": [
+    "topic"
+  ],
+  "source_refs": [
+    "artifacts/*_cards"
+  ]
+}
+---
+
+# Validation
+
+## Validation Rules
+
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__]]
+  - products must contain normalize_sku(product.sku
+- [[commerce_ops_demo.commerce_ops.catalog.normalize_sku]]
+  - invalid when not value or not value.strip(
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get]]
+  - invalid when normalized not in self.products
+- [[commerce_ops_demo.commerce_ops.models.Product.reserve]]
+  - invalid when qty > self.stock
+  - qty > 0
+- [[commerce_ops_demo.commerce_ops.models.Customer.debit]]
+  - invalid when not self.can_spend(amount_cents
+- [[commerce_ops_demo.commerce_ops.models.Order.mark_paid]]
+  - invalid when self.status != "created
+- [[commerce_ops_demo.commerce_ops.models.CartItem.validate]]
+  - invalid when not self.sku
+  - self.qty > 0
+- [[commerce_ops_demo.commerce_ops.models.Order.mark_cancelled]]
+  - invalid when self.status == "paid
+- [[commerce_ops_demo.commerce_ops.models.Customer.credit]]
+  - amount_cents > 0
+- [[commerce_ops_demo.commerce_ops.notifications.format_currency]]
+  - cents > 0
+- [[commerce_ops_demo.commerce_ops.models.Product.release]]
+  - qty > 0
+- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize]]
+  - amount_cents > 0
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote]]
+  - total > 0
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax]]
+  - taxable_cents > 0
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon]]
+  - invalid when code not in self.coupons
+- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.save]]
+  - invalid when not order.order_id
+  - orders must contain order.order_id
+- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund]]
+  - receipt.amount_cents > 0
+- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.get]]
+  - invalid when order_id not in self.orders
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__]]
+  - tax_rate_bps > 0
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal]]
+  - item.qty > 0
+  - item.sku.upper( > 0
+
+## Related Entities
+
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__]]
+- [[commerce_ops_demo.commerce_ops.catalog.normalize_sku]]
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items]]
+- [[commerce_ops_demo.commerce_ops.cli.main]]
+- [[commerce_ops_demo.commerce_ops.cli.run_checkout_demo]]
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get]]
+- [[commerce_ops_demo.commerce_ops.models.CartItem.validate]]
+- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.save]]
+- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund]]
+- [[commerce_ops_demo.commerce_ops.services.OrderService.checkout]]
+- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog]]
+- [[commerce_ops_demo.commerce_ops.models.Product]]
+- [[commerce_ops_demo.commerce_ops.models.CartItem]]
+- [[commerce_ops_demo.commerce_ops.models.Customer]]
+- [[commerce_ops_demo.commerce_ops.services.OrderService]]
+- [[commerce_ops/catalog.py]]
+- [[commerce_ops/cli.py]]
+- [[commerce_ops/models.py]]
+- [[commerce_ops/services.py]]
+- [[commerce_ops_demo.commerce_ops]]
+- [[commerce_ops_demo.commerce_ops.models.Product.reserve]]
+- [[commerce_ops_demo.commerce_ops.models.Customer.debit]]
+- [[commerce_ops_demo.commerce_ops.models.Order.mark_paid]]
+- [[commerce_ops_demo.commerce_ops.models.Order.mark_cancelled]]
+- [[commerce_ops_demo.commerce_ops.models.Customer.credit]]
+- [[commerce_ops_demo.commerce_ops.notifications.format_currency]]
+- [[commerce_ops_demo.commerce_ops.models.Product.release]]
+- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize]]
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote]]
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax]]
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon]]
+- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.get]]
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__]]
+- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal]]

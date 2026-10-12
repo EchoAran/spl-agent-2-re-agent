@@ -1,0 +1,266 @@
+{
+  "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+  "page_type": "workflow",
+  "title": "Workflow from commerce_ops_demo.commerce_ops.cli.main",
+  "slug": "commerce-ops-demo-commerce-ops-cli-main",
+  "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+  "entity_kind": "workflow",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.main",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.main",
+  "source_refs": [
+    "graphs/repository_call_graph.json"
+  ],
+  "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.main.",
+  "body_markdown": "# Workflow from commerce_ops_demo.commerce_ops.cli.main\n\n## Path\n\n1. [[commerce_ops_demo.commerce_ops.cli.main]]\n2. [[commerce_ops_demo.commerce_ops.cli.run_checkout_demo]]\n3. [[commerce_ops_demo.commerce_ops.cli.build_demo_service]]\n4. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog]]\n5. [[commerce_ops_demo.commerce_ops.models.Product]]\n6. [[commerce_ops_demo.commerce_ops.models.Customer]]\n7. [[commerce_ops_demo.commerce_ops.cli.parse_cart]]\n8. [[commerce_ops_demo.commerce_ops.models.CartItem]]\n9. [[commerce_ops_demo.commerce_ops.services.OrderService.checkout]]\n10. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items]]\n11. [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get]]\n12. [[commerce_ops_demo.commerce_ops.catalog.normalize_sku]]\n13. [[commerce_ops_demo.commerce_ops.models.Product.reserve]]\n14. [[commerce_ops_demo.commerce_ops.models.Product.release]]\n15. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote]]\n16. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal]]\n17. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon]]\n18. [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax]]\n19. [[commerce_ops_demo.commerce_ops.pricing.PriceQuote]]\n20. [[commerce_ops_demo.commerce_ops.services.OrderService._build_order]]\n21. [[commerce_ops_demo.commerce_ops.models.Order]]\n22. [[commerce_ops_demo.commerce_ops.models.Order.add_event]]\n23. [[commerce_ops_demo.commerce_ops.services.OrderService._charge]]\n24. [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize]]\n25. [[commerce_ops_demo.commerce_ops.payments.PaymentError]]\n26. [[commerce_ops_demo.commerce_ops.models.Customer.debit]]\n27. [[commerce_ops_demo.commerce_ops.models.Customer.can_spend]]\n28. [[commerce_ops_demo.commerce_ops.payments.PaymentReceipt]]\n\n## Evidence\n\n- source: static_call_graph\n- confidence: high_or_medium_edges_preferred\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-normalize-sku",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-subtotal",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-apply-coupon",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-tax",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricequote",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PriceQuote"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Order"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymenterror",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentError"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-debit",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.debit"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-can-spend",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentreceipt",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Workflows",
+      "url": "/wiki/workflow"
+    }
+  ],
+  "tags": [
+    "workflow"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.main",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.models.Product",
+    "commerce_ops_demo.commerce_ops.models.Customer",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "commerce_ops_demo.commerce_ops.models.CartItem",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "commerce_ops_demo.commerce_ops.models.Order",
+    "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+  ],
+  "graph_refs": [
+    "workflow:commerce_ops_demo.commerce_ops.cli.main"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.644133+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "2382370d91557a3eaff88fa98df9a728dda71b6eb0c6a6aa377eb8aae333fb1b",
+  "spl_source_path": "",
+  "spl_content": ""
+}

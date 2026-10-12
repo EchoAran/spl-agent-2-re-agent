@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
 from .config import LLMConfig
-from .llm_runtime import create_openai_client
+from .llm_runtime import chat_completion_with_logging, create_openai_client
 from .models import SPLTree
 from .tools import SPLToolset
 
@@ -196,11 +196,14 @@ class SPLAgentLoop:
         }
 
     def _request_json_response(self, messages: List[Dict[str, str]]) -> Dict[str, Any]:
-        response = self.client.chat.completions.create(
+        response = chat_completion_with_logging(
+            self.client,
+            self.llm_config,
+            messages,
             model=self.llm_config.model,
-            messages=messages,
             temperature=self.llm_config.temperature,
             timeout=self.llm_config.timeout_sec,
+            context={"component": "SPLAgentLoop._request_json_response"},
         )
         text = response.choices[0].message.content or ""
         return json.loads(self._extract_json_payload(text))

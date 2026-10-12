@@ -1,0 +1,110 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+  "summary": "Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/quote.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote
+
+Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code." quote]
+    [INPUTS]
+        <REF> self </REF>: PricingPolicy "Instance providing pricing calculations for subtotal, coupon application, and tax."
+        <REF> customer </REF>: Customer "Customer for whom discounts may apply."
+        <REF> items </REF>: List[CartItem] "Shopping cart items to be priced."
+        <REF> products </REF>: List[Product] "Product catalog data used to compute item prices."
+        <REF> coupon </REF>: str "Optional coupon code used to compute a discount; defaults to empty string."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> price_quote </REF>: PriceQuote "Price breakdown including subtotal, discount, tax, total, and the coupon code uppercased."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal</SPL> with items and products to compute subtotal RESULT subtotal]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon</SPL> with customer, subtotal, and coupon to compute discount RESULT discount]
+            [COMMAND Compute taxable as max(subtotal - discount, 0) to clamp negative taxable amounts to zero RESULT taxable]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax</SPL> with taxable to compute tax RESULT tax]
+            [COMMAND Compute total as taxable + tax RESULT total]
+            [COMMAND Validate that total > 0 RESULT validated_total]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper()) RESULT price_quote]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: discount >= subtotal (i.e., subtotal - discount <= 0), so taxable is clamped to 0]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Set taxable to 0 via max(subtotal - discount, 0) RESULT taxable]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax</SPL> with taxable (0) to compute tax RESULT tax]
+            [COMMAND Compute total as taxable + tax (total = tax) RESULT total]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper()) RESULT price_quote]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: total <= 0 after computing total]
+        [LOG "No log"]
+        [THROW ValueError "total must be positive"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/pricing.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote
+
+Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code.
+
+## Inputs
+- self (PricingPolicy): Instance providing pricing calculations for subtotal, coupon application, and tax.
+- customer (Customer): Customer for whom discounts may apply.
+- items (List[CartItem]): Shopping cart items to be priced.
+- products (List[Product]): Product catalog data used to compute item prices.
+- coupon (str): Optional coupon code used to compute a discount; defaults to empty string.
+
+## Outputs
+- price_quote (PriceQuote): Price breakdown including subtotal, discount, tax, total, and the coupon code uppercased.
+
+## Main Effect
+Construct <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> with (subtotal, discount, tax, total, coupon.upper())
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.pricing.PriceQuote
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- ValueError: total must be positive
+- raise ValueError("total must be positive")
+- total <= 0 after computing total
+- total > 0
+
+## Validation Rules
+- total > 0

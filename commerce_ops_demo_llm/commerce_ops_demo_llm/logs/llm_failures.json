@@ -1,0 +1,8 @@
+[
+  {
+    "level": "method",
+    "symbol_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "error": "# JSON_PARSE_ERROR: No JSON object/array found in LLM output\n# RAW_LLM_OUTPUT:\n分析失败: No LLM client slot available"
+  }
+]

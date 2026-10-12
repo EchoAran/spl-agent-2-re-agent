@@ -1,0 +1,926 @@
+[
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-init",
+    "summary": "Initializes the instance by creating a dictionary mapping normalized SKUs to the provided Product objects from the input iterable.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-normalize-sku",
+    "summary": "Validates that a SKU string is present and returns it trimmed of whitespace and uppercased.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+    "summary": "Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+    "summary": "Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+    "summary": "Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.cli.main",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main",
+    "summary": "Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+    "summary": "Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+    "summary": "Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+    "summary": "Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+    "summary": "Reserve a positive quantity from available stock by validating constraints and decrementing the stock value.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-debit",
+    "summary": "Debits the customer's balance by amount_cents after verifying via <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>, otherwise raises ValueError for insufficient balance.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+    "summary": "Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-cartitem-validate",
+    "summary": "Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-can-spend",
+    "summary": "Returns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-cancelled",
+    "summary": "Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-credit",
+    "summary": "Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "page_type": "entity",
+    "entity_kind": "function",
+    "title": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-format-currency",
+    "summary": "Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Product.release",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+    "summary": "Increases the object's stock by the given quantity after validating the quantity is positive.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-list-available",
+    "summary": "Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-send-low-stock-alert",
+    "summary": "Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-init",
+    "summary": "Initialize the instance by setting the payment provider and zeroing authorized and refunded totals.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event",
+    "summary": "Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+    "summary": "Authorize a payment by validating the amount, debiting the customer, updating the authorized total, and returning a new payment receipt.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-send-receipt",
+    "summary": "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+    "summary": "Computes a customer's cart price quote by calculating subtotal, applying a coupon, clamping taxable to non-negative, computing tax, validating total is positive, and returning a PriceQuote with an uppercased coupon code.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-tax",
+    "summary": "Computes tax in cents from a non-negative taxable amount using self.tax_rate_bps (basis points) with integer floor division by 10000.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-init",
+    "summary": "Initialize the instance by creating an empty orders mapping.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-apply-coupon",
+    "summary": "Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-init",
+    "summary": "Summarize method __init__ from static structure",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+    "summary": "Validates the order has a truthy order_id and stores the order in the instance's orders mapping under that key.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-refund",
+    "summary": "Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+    "summary": "Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-init",
+    "summary": "Constructs the instance by storing injected services on the object and initializing last_receipt to None.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+    "summary": "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+    "summary": "Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-init",
+    "summary": "Initialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+    "summary": "Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.",
+    "tags": [
+      "method",
+      "private"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+    "summary": "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer",
+    "summary": "Send a purchase receipt to the customer and trigger a low-stock alert for the provided products using the instance's notifications service.",
+    "tags": [
+      "method",
+      "private"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+    "summary": "Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+    "summary": "Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.",
+    "tags": [
+      "method",
+      "private"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+    "summary": "Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "page_type": "entity",
+    "entity_kind": "method",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-subtotal",
+    "summary": "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.",
+    "tags": [
+      "method",
+      "public"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+    "summary": "Maintain a normalized-SKU index of Product objects for lookups and expose catalog operations, including listing available items and coordinating reservation/release of quantities for cart items with failure compensation.",
+    "tags": [
+      "class",
+      "repository, coordinator"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.models.Product",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+    "summary": "Represent a product and manage available inventory by providing validated reservation and release operations on stock.",
+    "tags": [
+      "class",
+      "entity"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.models.CartItem",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+    "summary": "Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.",
+    "tags": [
+      "class",
+      "value object"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.models.Customer",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer",
+    "summary": "Represent a customer account with a cents-based balance, providing validated debit and credit operations and a spend check used by payment flows.",
+    "tags": [
+      "class",
+      "entity"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.models.Order",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+    "summary": "Represent an order with core fields, enforce simple status transitions (to paid or cancelled) with validation, and record a timestamped event log for significant changes.",
+    "tags": [
+      "class",
+      "entity"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+    "summary": "Compose and record notification messages such as order receipts and low-stock alerts, accumulating them in an internal list for later use; invoked by OrderService._notify_customer.",
+    "tags": [
+      "class",
+      "service"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway",
+    "summary": "Provide payment authorization and refund operations with provider tagging, delegating balance changes to customer accounts, producing payment receipts, and tracking authorized and refunded totals.",
+    "tags": [
+      "class",
+      "service"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricequote",
+    "summary": "Represent a price quote as a simple dataclass with fields for subtotal_cents, discount_cents, tax_cents, total_cents, and coupon.",
+    "tags": [
+      "class",
+      "value object"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+    "summary": "Encapsulate pricing rules for shopping carts by computing a price quote that combines item subtotal, coupon-based discounts, and tax using configured policy state.",
+    "tags": [
+      "class",
+      "service"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+    "summary": "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.",
+    "tags": [
+      "class",
+      "repository"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentreceipt",
+    "summary": "Represent structured payment receipt data with fields identifying the payment and its amount and provider.",
+    "tags": [
+      "class",
+      "value object"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+    "summary": "Coordinate checkout, cancellation, and customer order history by orchestrating catalog, pricing, payments, persistence, and notifications.",
+    "tags": [
+      "class",
+      "service"
+    ]
+  },
+  {
+    "page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "page_type": "entity",
+    "entity_kind": "class",
+    "title": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymenterror",
+    "summary": "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.",
+    "tags": [
+      "class",
+      "value object"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/catalog.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.catalog",
+    "url": "/wiki/file/commerce-ops-catalog-py",
+    "summary": "Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings.",
+    "tags": [
+      "file",
+      "python",
+      "repository, coordinator"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/__init__.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops",
+    "url": "/wiki/file/commerce-ops-init-py",
+    "summary": "Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules.",
+    "tags": [
+      "file",
+      "python",
+      "re-export module"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/notifications.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.notifications",
+    "url": "/wiki/file/commerce-ops-notifications-py",
+    "summary": "Provide a notification service that composes and records order-related messages (receipts and low-stock alerts) and a helper to format currency amounts used in receipts.",
+    "tags": [
+      "file",
+      "python",
+      "service module"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/cli.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.cli",
+    "url": "/wiki/file/commerce-ops-cli-py",
+    "summary": "Provide a small CLI/demo module that constructs a demo OrderService, parses 'sku:qty' cart items, performs a sample checkout, and prints a summary.",
+    "tags": [
+      "entrypoint (CLI demo utility)",
+      "file",
+      "python"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/models.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.models",
+    "url": "/wiki/file/commerce-ops-models-py",
+    "summary": "Provide dataclass-backed domain models for commerce operations: Product inventory control, Customer balance management, Order status transitions with event logging, and CartItem validation. Expose validated, stateful operations used by catalog, payments, repository, services, and CLI layers.",
+    "tags": [
+      "file",
+      "model module",
+      "python"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/services.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.services",
+    "url": "/wiki/file/commerce-ops-services-py",
+    "summary": "Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications.",
+    "tags": [
+      "file",
+      "python",
+      "service module"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/payments.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.payments",
+    "url": "/wiki/file/commerce-ops-payments-py",
+    "summary": "Provide a payment service API (PaymentGateway) with authorization and refund operations, a structured receipt type (PaymentReceipt), and a domain-specific error (PaymentError) for payment failures.",
+    "tags": [
+      "file",
+      "python",
+      "service module"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/pricing.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.pricing",
+    "url": "/wiki/file/commerce-ops-pricing-py",
+    "summary": "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.",
+    "tags": [
+      "file",
+      "python",
+      "service module"
+    ]
+  },
+  {
+    "page_id": "file:commerce_ops/repository.py",
+    "page_type": "entity",
+    "entity_kind": "file",
+    "title": "commerce_ops_demo.commerce_ops.repository",
+    "url": "/wiki/file/commerce-ops-repository-py",
+    "summary": "Provide an in-memory repository for Order entities used by service-layer operations, supporting save, retrieval, customer-scoped listing, and a mark-paid workflow that coordinates with the Order domain model.",
+    "tags": [
+      "file",
+      "python",
+      "repository module; in-memory data access adapter for the Order domain"
+    ]
+  },
+  {
+    "page_id": "package:commerce_ops_demo.commerce_ops",
+    "page_type": "entity",
+    "entity_kind": "package",
+    "title": "commerce_ops_demo.commerce_ops",
+    "url": "/wiki/package/commerce-ops-demo-commerce-ops",
+    "summary": "Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo.",
+    "tags": [
+      "package",
+      "subsystem; checkout and order management orchestration with domain models and in-memory adapters"
+    ]
+  },
+  {
+    "page_id": "package:commerce_ops_demo",
+    "page_type": "entity",
+    "entity_kind": "package",
+    "title": "commerce_ops_demo",
+    "url": "/wiki/package/commerce-ops-demo",
+    "summary": "Provide a repository-level container for a demo commerce operations subsystem.",
+    "tags": [
+      "Container package for a commerce operations demo subsystem",
+      "package"
+    ]
+  },
+  {
+    "page_id": "home:root",
+    "page_type": "navigation",
+    "entity_kind": "home",
+    "title": "Repository Wiki",
+    "url": "/wiki/",
+    "summary": "Compiled code repository LLM Wiki.",
+    "tags": [
+      "home",
+      "overview"
+    ]
+  },
+  {
+    "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "page_type": "workflow",
+    "entity_kind": "workflow",
+    "title": "Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-parse-cart",
+    "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.parse_cart.",
+    "tags": [
+      "workflow"
+    ]
+  },
+  {
+    "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "page_type": "workflow",
+    "entity_kind": "workflow",
+    "title": "Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+    "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.build_demo_service.",
+    "tags": [
+      "workflow"
+    ]
+  },
+  {
+    "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "page_type": "workflow",
+    "entity_kind": "workflow",
+    "title": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+    "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.run_checkout_demo.",
+    "tags": [
+      "workflow"
+    ]
+  },
+  {
+    "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+    "page_type": "workflow",
+    "entity_kind": "workflow",
+    "title": "Workflow from commerce_ops_demo.commerce_ops.cli.main",
+    "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+    "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.main.",
+    "tags": [
+      "workflow"
+    ]
+  },
+  {
+    "page_id": "topic:authentication",
+    "page_type": "topic",
+    "entity_kind": "topic",
+    "title": "Authentication",
+    "url": "/wiki/topic/authentication",
+    "summary": "Entities related to Authentication.",
+    "tags": [
+      "topic"
+    ]
+  },
+  {
+    "page_id": "topic:configuration",
+    "page_type": "topic",
+    "entity_kind": "topic",
+    "title": "Configuration",
+    "url": "/wiki/topic/configuration",
+    "summary": "Entities related to Configuration.",
+    "tags": [
+      "topic"
+    ]
+  },
+  {
+    "page_id": "topic:external-integration",
+    "page_type": "topic",
+    "entity_kind": "topic",
+    "title": "External Integration",
+    "url": "/wiki/topic/external-integration",
+    "summary": "Entities related to External Integration.",
+    "tags": [
+      "topic"
+    ]
+  },
+  {
+    "page_id": "topic:persistence",
+    "page_type": "topic",
+    "entity_kind": "topic",
+    "title": "Persistence",
+    "url": "/wiki/topic/persistence",
+    "summary": "Entities related to Persistence.",
+    "tags": [
+      "topic"
+    ]
+  },
+  {
+    "page_id": "topic:validation",
+    "page_type": "topic",
+    "entity_kind": "topic",
+    "title": "Validation",
+    "url": "/wiki/topic/validation",
+    "summary": "Entities related to Validation.",
+    "tags": [
+      "topic"
+    ]
+  }
+]

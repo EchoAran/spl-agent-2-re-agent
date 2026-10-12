@@ -60,7 +60,6 @@ async def create_session(request: CreateSessionRequest) -> SessionResponse:
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     logger.info("session_created id=%s enabled_agents=%s", session.id, session.enabled_agent_ids)
-    await session_manager.push_user_input(session.id, "请开始需求访谈。")
     await session_manager.start_runner_if_needed(session.id)
     return SessionResponse(
         session_id=session.id,
@@ -140,8 +139,8 @@ async def ws_chat(websocket: WebSocket, session_id: str) -> None:
             data = json.loads(raw_data)
             event = ClientEvent.model_validate(data)
             if event.type == "user_message" and event.text:
-                logger.info("ws_user_message session_id=%s text_preview=%s", session_id, event.text[:200])
-                await session_manager.push_user_input(session_id, event.text)
+                logger.info("ws_user_message_blocked session_id=%s", session_id)
+                await websocket.send_json({"type": "error", "text": "用户输入功能已禁用"})
                 continue
             if event.type == "pause":
                 await session_manager.pause(session_id, "用户手动暂停")

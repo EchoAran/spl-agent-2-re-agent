@@ -1,0 +1,19 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.models.Order",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled -> commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid -> commerce_ops_demo.commerce_ops.models.Order.add_event"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.models.Order.add_event -> external.datetime.now",
+    "commerce_ops_demo.commerce_ops.models.Order.add_event -> external.datetime.now(timezone.utc).isoformat",
+    "commerce_ops_demo.commerce_ops.models.Order.add_event -> external.self.events.append",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid -> external.ValueError"
+  ]
+}

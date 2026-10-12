@@ -1,0 +1,219 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "slug": "commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/checkout.spl"
+  ],
+  "summary": "Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\nReserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.\" checkout]\n    [INPUTS]\n        <REF> customer </REF>: Customer \"Customer placing the order; used for pricing, charging, and notification.\"\n        <REF> items </REF>: List[CartItem] \"Cart items to purchase; used for reservation and pricing.\"\n        <REF> coupon </REF>: str \"Optional coupon code applied during pricing; defaults to empty string.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"Final paid order object that has been saved and returned.\"\n        <REF> inventory_reserved </REF>: side_effect \"Items reserved via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL>; on failure, reservations are released via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>.\"\n        <REF> payment_charged </REF>: side_effect \"Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\"\n        <REF> order_persisted </REF>: side_effect \"Order persisted via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\"\n        <REF> customer_notified </REF>: side_effect \"Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL> with items to reserve inventory. RESULT reserved_products]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote</SPL> with customer, items, reserved_products, and coupon to compute a pricing quote. RESULT quote]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._build_order</SPL> with customer, items, and quote to construct the order. RESULT order]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> with customer and quote to process payment. RESULT receipt]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> on order with receipt.payment_id to mark the order as paid. RESULT order_paid]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> with order to persist it. RESULT order_saved]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL> with customer, order, and reserved_products to send a notification. RESULT customer_notified]\n            [COMMAND Return the completed order. RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If any exception occurs after reserving items during quoting, building the order, charging payment, marking as paid, saving, or notifying.]\n        [LOG \"Release item reservations by calling <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> with items, then re-raise the original exception.\"]\n        [THROW Exception \"Original exception is propagated to the caller.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService.checkout`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/services.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\nReserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.\n\n## Inputs\n- customer (Customer): Customer placing the order; used for pricing, charging, and notification.\n- items (List[CartItem]): Cart items to purchase; used for reservation and pricing.\n- coupon (str): Optional coupon code applied during pricing; defaults to empty string.\n\n## Outputs\n- order (Order): Final paid order object that has been saved and returned.\n- inventory_reserved (side_effect): Items reserved via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL>; on failure, reservations are released via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>.\n- payment_charged (side_effect): Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\n- order_persisted (side_effect): Order persisted via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\n- customer_notified (side_effect): Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>.\n\n## Main Effect\nReturn the completed order.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n- commerce_ops_demo.commerce_ops.models.Order.mark_paid\n- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote\n- commerce_ops_demo.commerce_ops.repository.OrderRepository.save\n- commerce_ops_demo.commerce_ops.services.OrderService._build_order\n- commerce_ops_demo.commerce_ops.services.OrderService._charge\n- commerce_ops_demo.commerce_ops.services.OrderService._notify_customer\n- commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\n## Side Effects\n- customer_notified (side_effect): Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>.\n- payment_charged (side_effect): Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\n- self.catalog.release_items(items)\n- self.catalog.reserve_items(items)\n- self.repository.save(order)\n\n## Errors\n- Exception: Original exception is propagated to the caller.\n- If any exception occurs after reserving items during quoting, building the order, charging payment, marking as paid, saving, or notifying.\n- raise\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/services.py",
+      "url": "/wiki/file/commerce-ops-services-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/services.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635182+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "2cb5105702c2ffd0c2cb44f3f35ed76ed217c4db21c7d6ba49b2dbfff31d317a",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/checkout.spl",
+  "spl_content": "[DEFINE_WORKER: \"Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.\" checkout]\n    [INPUTS]\n        <REF> customer </REF>: Customer \"Customer placing the order; used for pricing, charging, and notification.\"\n        <REF> items </REF>: List[CartItem] \"Cart items to purchase; used for reservation and pricing.\"\n        <REF> coupon </REF>: str \"Optional coupon code applied during pricing; defaults to empty string.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"Final paid order object that has been saved and returned.\"\n        <REF> inventory_reserved </REF>: side_effect \"Items reserved via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL>; on failure, reservations are released via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>.\"\n        <REF> payment_charged </REF>: side_effect \"Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\"\n        <REF> order_persisted </REF>: side_effect \"Order persisted via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\"\n        <REF> customer_notified </REF>: side_effect \"Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL> with items to reserve inventory. RESULT reserved_products]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote</SPL> with customer, items, reserved_products, and coupon to compute a pricing quote. RESULT quote]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._build_order</SPL> with customer, items, and quote to construct the order. RESULT order]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> with customer and quote to process payment. RESULT receipt]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> on order with receipt.payment_id to mark the order as paid. RESULT order_paid]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> with order to persist it. RESULT order_saved]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL> with customer, order, and reserved_products to send a notification. RESULT customer_notified]\n            [COMMAND Return the completed order. RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If any exception occurs after reserving items during quoting, building the order, charging payment, marking as paid, saving, or notifying.]\n        [LOG \"Release item reservations by calling <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> with items, then re-raise the original exception.\"]\n        [THROW Exception \"Original exception is propagated to the caller.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

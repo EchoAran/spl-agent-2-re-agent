@@ -31,9 +31,7 @@ class InterviewSession:
     status: str = "running"
     complete_reason: str | None = None
     websockets: set[WebSocket] = field(default_factory=set)
-    input_queue: asyncio.Queue[str] = field(default_factory=asyncio.Queue)
     runner_task: asyncio.Task[None] | None = None
-    last_user_input: str = ""
     messages: list[ChatMessageResponse] = field(default_factory=list)
     cache_file_path: Path | None = None
 
@@ -52,6 +50,7 @@ class SessionManager:
         if not github_repo_url:
             raise ValueError("github_repo_url is required")
         project_name = (request.project_name or "").strip() or None
+        interview_skill_name = (request.interview_skill_name or "").strip() or "requirements-elicitation"
         session_id = str(uuid.uuid4())
         timeout = aiohttp.ClientTimeout(total=300)
         aiohttp_session = aiohttp.ClientSession(timeout=timeout)
@@ -59,16 +58,15 @@ class SessionManager:
         llm = LLMServices(session=aiohttp_session, config=config)
 
         all_skills = scan_skills(self.skill_roots)
-        skills = [item for item in all_skills if item.name == "requirements-elicitation"]
+        skills = [item for item in all_skills if item.name == interview_skill_name]
         if not skills:
             await aiohttp_session.close()
-            raise ValueError("missing required skill: requirements-elicitation")
+            raise ValueError(f"missing required skill: {interview_skill_name}")
         sandbox = FileSandbox(allowed_roots=self.skill_roots + [self.workspace_root], skills=skills)
         interviewer = InterviewerSkillAgent(
             llm=llm,
             skills=skills,
             sandbox=sandbox,
-            state_root=Path(skills[0].location),
             session_id=session_id,
         )
 
@@ -139,10 +137,7 @@ class SessionManager:
         session.websockets.discard(websocket)
 
     async def push_user_input(self, session_id: str, text: str) -> None:
-        session = self.get(session_id)
-        if not session:
-            return
-        await session.input_queue.put(text)
+        raise ValueError("用户输入功能已禁用")
 
     async def pause(self, session_id: str, reason: str | None = None) -> None:
         session = self.get(session_id)
@@ -218,23 +213,9 @@ class SessionManager:
                 await asyncio.sleep(0.15)
                 continue
 
-            has_input = False
-            newest_input = session.last_user_input
-            try:
-                newest_input = session.input_queue.get_nowait()
-                has_input = True
-                while True:
-                    newest_input = session.input_queue.get_nowait()
-            except asyncio.QueueEmpty:
-                pass
-            if not has_input:
-                await asyncio.sleep(0.15)
-                continue
-            session.last_user_input = newest_input
-
             try:
                 async for item, is_complete, reason in session.orchestrator.run_round_stream(
-                    user_input=newest_input,
+                    user_input="",
                     enabled_agent_ids=session.enabled_agent_ids,
                     session_status=session.status,
                     session_id=session.id,

@@ -1,0 +1,90 @@
+{
+  "class_name": "Product",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product",
+  "source_file": "commerce_ops/models.py",
+  "domain": "E-commerce inventory and catalog model",
+  "purpose": "Represent a product and manage available inventory by providing validated reservation and release operations on stock.",
+  "responsibility": "Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags).",
+  "role": "entity",
+  "public_surface": [
+    "reserve(qty: int) -> None",
+    "release(qty: int) -> None"
+  ],
+  "entrypoints": [
+    "reserve(qty: int)",
+    "release(qty: int)"
+  ],
+  "mechanism": "A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes.",
+  "internal_structure": [
+    "Domain data fields: sku, name, price_cents, tags",
+    "Inventory field: stock (mutable; read/write)",
+    "No private helpers; validation and mutation occur within public methods",
+    "Decorator: dataclass"
+  ],
+  "lifecycle": [
+    "Instantiated with product attributes and initial stock via dataclass construction",
+    "Stock evolves through reserve and release calls",
+    "No explicit teardown or disposal behavior"
+  ],
+  "state": [
+    "sku: product identifier (read by methods)",
+    "name: product name (declared)",
+    "price_cents: price in cents (declared)",
+    "tags: label collection (declared)",
+    "stock: available quantity (read and written by methods)"
+  ],
+  "inputs": [
+    "qty (int) for reserve",
+    "qty (int) for release",
+    "Initial construction fields: sku, name, price_cents, stock, tags"
+  ],
+  "outputs": [
+    "Updated stock via in-place mutation",
+    "No return values from reserve or release"
+  ],
+  "dependencies": [
+    "dataclasses.dataclass (decorator)",
+    "ValueError (exception type raised for validation failures)"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+  ],
+  "key_interactions": [
+    "Called by ProductCatalog to reserve or release product units",
+    "Raises ValueError to signal invalid quantity or insufficient stock"
+  ],
+  "side_effects": [
+    "Mutates in-memory state: self.stock"
+  ],
+  "errors": [
+    "ValueError: qty must be positive (reserve, release)",
+    "ValueError: not enough stock for {self.sku} (reserve)"
+  ],
+  "invariants": [
+    "Reservation requires qty > 0 and qty <= current stock",
+    "Release requires qty > 0",
+    "Stock is not reduced below zero by reserve due to validation",
+    "Only reserve and release modify stock in this class"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.models.Product",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.reserve"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.models.Product.release -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.models.Product.reserve -> external.ValueError"
+  ],
+  "key_internal_flows": [],
+  "summary": "Represent a product and manage available inventory by providing validated reservation and release operations on stock.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/__class__.spl"
+}

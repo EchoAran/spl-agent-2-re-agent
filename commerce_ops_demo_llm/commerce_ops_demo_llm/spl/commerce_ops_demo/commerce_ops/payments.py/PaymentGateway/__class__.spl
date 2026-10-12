@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" PaymentGateway]
+
+[DEFINE_PERSONA:]
+    ROLE: "service"
+    DOMAIN: "Commerce payments"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide payment authorization and refund operations with provider tagging, delegating balance changes to customer accounts, producing payment receipts, and tracking authorized and refunded totals."
+    Responsibility: "Primary: authorize payments, debit the customer, return a receipt, and accumulate authorized_total_cents. Secondary: process refunds by crediting the customer and accumulating refunded_total_cents while enforcing positive amounts and signaling failures via PaymentError."
+    PublicBehavior: "__init__(provider='internal-wallet'); authorize(customer, amount_cents) -> PaymentReceipt; refund(customer, receipt) -> None"
+    InternalMechanism: "Maintains a provider identifier and running counters for authorized and refunded amounts. For authorization, validates a positive amount, debits the customer, increments authorized_total_cents, and constructs a PaymentReceipt with a generated UUID and the provider. For refunds, validates a positive receipt amount, credits the customer, and increments refunded_total_cents. Validation failures and debit errors are communicated via PaymentError."
+    StateModel: "provider: configuration string set during __init__; authorized_total_cents: running total of authorized amounts in cents; refunded_total_cents: running total of refunded amounts in cents"
+    Collaboration: "<SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>; <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>; <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL>; <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>; external.uuid4; external.str"
+    ErrorBoundary: "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'amount must be positive' when amount_cents <= 0 in authorize; <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: wraps ValueError from <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> during authorize; <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'receipt amount must be positive' when receipt.amount_cents <= 0 in refund"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "PaymentGateway"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.payments.PaymentGateway"
+    <REF> source_file </REF>: text "commerce_ops/payments.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Provide payment authorization and refund operations with provider tagging, delegating balance changes to customer accounts, producing payment receipts, and tracking authorized and refunded totals."
+    <REF> responsibility </REF>: text "Primary: authorize payments, debit the customer, return a receipt, and accumulate authorized_total_cents. Secondary: process refunds by crediting the customer and accumulating refunded_total_cents while enforcing positive amounts and signaling failures via PaymentError."
+    <REF> role </REF>: text "service"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["__init__(provider='internal-wallet')", "authorize(customer, amount_cents) -> PaymentReceipt", "refund(customer, receipt) -> None"]
+    <REF> entrypoints </REF>: List [text] ["__init__", "authorize", "refund"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Maintains a provider identifier and running counters for authorized and refunded amounts. For authorization, validates a positive amount, debits the customer, increments authorized_total_cents, and constructs a PaymentReceipt with a generated UUID and the provider. For refunds, validates a positive receipt amount, credits the customer, and increments refunded_total_cents. Validation failures and debit errors are communicated via PaymentError."
+    <REF> internal_structure </REF>: List [text] ["Configuration: provider identifier stored at initialization and included in receipts", "Accumulators: authorized_total_cents and refunded_total_cents updated on successful operations", "Delegation to customer account methods: <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> and <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>", "Receipt construction: <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with external.uuid4 and provider", "Validation and error signaling via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>"]
+    <REF> lifecycle </REF>: List [text] ["Construction sets provider and initializes authorized_total_cents and refunded_total_cents to 0", "During use, authorize and refund update running totals across the instance lifetime"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["provider: configuration string set during __init__", "authorized_total_cents: running total of authorized amounts in cents", "refunded_total_cents: running total of refunded amounts in cents"]
+    <REF> inputs </REF>: List [text] ["constructor: provider (defaults to 'internal-wallet')", "authorize: customer and amount_cents (> 0)", "refund: customer and receipt with receipt.amount_cents (> 0)"]
+    <REF> outputs </REF>: List [text] ["authorize: returns <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> containing id, amount_cents, and provider", "authorize: increments authorized_total_cents", "authorize: debits customer via <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>", "refund: increments refunded_total_cents", "refund: credits customer via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>", "refund: no return value"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>", "<SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>", "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL>", "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>", "external.uuid4", "external.str"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService._charge"]
+    <REF> key_interactions </REF>: List [text] ["authorize calls <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> to reduce customer funds", "refund calls <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL> to restore customer funds", "authorize constructs <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with provider and a UUID from external.uuid4", "Validation and error translation via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates authorized_total_cents on successful authorization", "Mutates refunded_total_cents on successful refund", "Debits customer balance via <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>", "Credits customer balance via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>"]
+    <REF> errors </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'amount must be positive' when amount_cents <= 0 in authorize", "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: wraps ValueError from <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> during authorize", "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'receipt amount must be positive' when receipt.amount_cents <= 0 in refund"]
+    <REF> invariants </REF>: List [text] ["authorize requires amount_cents > 0", "refund requires receipt.amount_cents > 0", "authorized_total_cents increases by amount_cents on successful authorization", "refunded_total_cents increases by receipt.amount_cents on successful refund"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/authorize.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/refund.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

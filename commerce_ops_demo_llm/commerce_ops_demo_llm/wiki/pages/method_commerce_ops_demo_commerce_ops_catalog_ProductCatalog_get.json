@@ -1,0 +1,141 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "slug": "commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl"
+  ],
+  "summary": "Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get\n\nRetrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.\" get]\n    [INPUTS]\n        <REF> sku </REF>: string \"The raw SKU string to be looked up.\"\n        <REF> self.products </REF>: Mapping[str, Product] \"Internal mapping from normalized SKU to Product used for lookup.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> product </REF>: Product \"The Product associated with the normalized SKU.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Normalize the input SKU using <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>. RESULT normalized]\n            [COMMAND Retrieve the product from self.products using the key normalized. RESULT product]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If normalized is not present as a key in self.products.]\n        [LOG \"No product found for normalized SKU; raising KeyError.\"]\n        [THROW KeyError \"Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/catalog.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get\n\nRetrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.\n\n## Inputs\n- sku (string): The raw SKU string to be looked up.\n- self.products (Mapping[str, Product]): Internal mapping from normalized SKU to Product used for lookup.\n\n## Outputs\n- product (Product): The Product associated with the normalized SKU.\n\n## Main Effect\nRetrieve the product from self.products using the key normalized.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.normalize_sku\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- If normalized is not present as a key in self.products.\n- KeyError: Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping.\n- invalid when normalized not in self.products\n- raise KeyError(f\"unknown sku {normalized}\")\n\n## Validation Rules\n- invalid when normalized not in self.products\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "file:commerce_ops/catalog.py",
+      "target_url": "/wiki/file/commerce-ops-catalog-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/catalog.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-normalize-sku",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-normalize-sku",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/catalog.py",
+      "url": "/wiki/file/commerce-ops-catalog-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/catalog.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.630183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "5cdb268bc5d1ae6bb6d543f0ed4c5ab1ff7602e3ee40afef5c835a7792051b15",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl",
+  "spl_content": "[DEFINE_WORKER: \"Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.\" get]\n    [INPUTS]\n        <REF> sku </REF>: string \"The raw SKU string to be looked up.\"\n        <REF> self.products </REF>: Mapping[str, Product] \"Internal mapping from normalized SKU to Product used for lookup.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> product </REF>: Product \"The Product associated with the normalized SKU.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Normalize the input SKU using <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>. RESULT normalized]\n            [COMMAND Retrieve the product from self.products using the key normalized. RESULT product]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If normalized is not present as a key in self.products.]\n        [LOG \"No product found for normalized SKU; raising KeyError.\"]\n        [THROW KeyError \"Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

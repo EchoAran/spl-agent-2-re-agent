@@ -1,0 +1,128 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "slug": "commerce-ops-demo-commerce-ops-models-product-release",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl"
+  ],
+  "summary": "Increases the object's stock by the given quantity after validating the quantity is positive.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.Product.release\n\nIncreases the object's stock by the given quantity after validating the quantity is positive.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Increases the object's stock by the given quantity after validating the quantity is positive.\" release]\n    [INPUTS]\n        <REF> qty </REF>: int \"Quantity to add; must be greater than 0.\"\n        <REF> self.stock </REF>: int \"Current stock value prior to update.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.stock </REF>: int \"Updated stock after adding qty.\"\n        <REF> return </REF>: None \"No return value.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Validate that qty is greater than 0 RESULT validation_passed]\n            [COMMAND Add qty to self.stock RESULT updated_stock]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: qty <= 0]\n        [LOG \"Invalid quantity: qty must be positive\"]\n        [THROW ValueError \"Raised when qty is not positive with message 'qty must be positive'.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.models.Product.release`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.Product.release\n\nIncreases the object's stock by the given quantity after validating the quantity is positive.\n\n## Inputs\n- qty (int): Quantity to add; must be greater than 0.\n- self.stock (int): Current stock value prior to update.\n\n## Outputs\n- self.stock (int): Updated stock after adding qty.\n- return (None): No return value.\n\n## Main Effect\nAdd qty to self.stock\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n\n## Side Effects\n- mutates self.stock\n- self.stock (int): Updated stock after adding qty.\n\n## Errors\n- ValueError: Raised when qty is not positive with message 'qty must be positive'.\n- qty <= 0\n- qty > 0\n- raise ValueError(\"qty must be positive\")\n\n## Validation Rules\n- qty > 0\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.models.Product",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.Product.release"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.models.Product.release"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.631184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "ff279d73faf3b64a17ea623d6b4de739483a41a8deffa454a546a39646408a34",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl",
+  "spl_content": "[DEFINE_WORKER: \"Increases the object's stock by the given quantity after validating the quantity is positive.\" release]\n    [INPUTS]\n        <REF> qty </REF>: int \"Quantity to add; must be greater than 0.\"\n        <REF> self.stock </REF>: int \"Current stock value prior to update.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.stock </REF>: int \"Updated stock after adding qty.\"\n        <REF> return </REF>: None \"No return value.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Validate that qty is greater than 0 RESULT validation_passed]\n            [COMMAND Add qty to self.stock RESULT updated_stock]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: qty <= 0]\n        [LOG \"Invalid quantity: qty must be positive\"]\n        [THROW ValueError \"Raised when qty is not positive with message 'qty must be positive'.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

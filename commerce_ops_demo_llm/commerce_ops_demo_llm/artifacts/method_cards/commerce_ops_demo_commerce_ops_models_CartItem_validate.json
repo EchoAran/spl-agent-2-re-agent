@@ -1,0 +1,73 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def validate(self) -> None:",
+  "visibility": "public",
+  "summary": "Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Instance whose attributes are validated.",
+    "self.sku (any): SKU value; must be truthy to pass validation.",
+    "self.qty (number): Quantity value; must be greater than 0."
+  ],
+  "outputs": [
+    "return (None): Returns None if both validations pass without raising an exception."
+  ],
+  "main_effect": "Complete method execution without returning a value.",
+  "side_effects": [],
+  "errors": [
+    "ValueError: Raised when qty is non-positive.",
+    "ValueError: Raised when sku is missing or falsy.",
+    "invalid when not self.sku",
+    "not self.sku",
+    "raise ValueError(\"qty must be positive\")",
+    "raise ValueError(\"sku is required\")",
+    "self.qty <= 0",
+    "self.qty > 0"
+  ],
+  "validation_rules": [
+    "invalid when not self.sku",
+    "self.qty > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "qty",
+    "sku"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if not self.sku:\n            raise ValueError(\"sku is required\")"
+      },
+      {
+        "type": "if",
+        "lineno": 4,
+        "code": "if self.qty <= 0:\n            raise ValueError(\"qty must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

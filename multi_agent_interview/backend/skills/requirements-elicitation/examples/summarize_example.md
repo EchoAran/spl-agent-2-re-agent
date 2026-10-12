@@ -497,8 +497,8 @@
 After this summarize flow finishes, execute cleanup of runtime context files for the current interview session.
 
 1. Confirm final summary has been generated successfully.
-2. Delete `state/sessions/{session_id}/` recursively, including:
-`framework.json`, `history.json`, and `metadata.json`.
-3. If deletion fails:
-Set `cleanup_pending = true` in session state and perform cleanup retry at the next skill invocation before processing new interview turns.
-4. Do not retain session context files by default after summary completion.
+2. Execute cleanup script: `clear_framework_state.py --action clear --session-id <id>`.
+3. Confirm `{system_temp}/requirements_elicitation_state/{session_id}.json` is deleted.
+4. If deletion fails:
+Perform one cleanup retry at the next skill invocation before processing new interview turns.
+5. Do not retain session context files by default after summary completion.

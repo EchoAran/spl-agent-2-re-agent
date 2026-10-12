@@ -1,0 +1,251 @@
+{
+  "class_name": "OrderService",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "source_file": "commerce_ops/services.py",
+  "domain": "E-commerce order processing and checkout orchestration",
+  "purpose": "Coordinate checkout, cancellation, and customer order history by orchestrating catalog, pricing, payments, persistence, and notifications.",
+  "responsibility": "Primary: End-to-end checkout orchestration. Secondary: Order cancellation and customer order history summarization.",
+  "role": "service",
+  "public_surface": [
+    "__init__(catalog, pricing, payments, repository, notifications)",
+    "checkout(customer, items, coupon='') -> Order",
+    "cancel_order(order_id, reason) -> Order",
+    "customer_history(customer_id) -> List[dict]"
+  ],
+  "entrypoints": [
+    "__init__",
+    "checkout",
+    "cancel_order",
+    "customer_history"
+  ],
+  "mechanism": "Acts as an orchestrator across injected services: reserves inventory via a catalog, requests a price quote, constructs an Order via an internal builder, authorizes payment while storing the last receipt, marks the order paid, persists it, and sends customer and stock notifications. On post-reservation failures during checkout, it releases inventory and lets the error propagate. Cancellation retrieves and updates an order, releases items, and saves. Customer history delegates to the repository and returns a simplified projection.",
+  "internal_structure": [
+    "Public orchestrator: checkout(...) coordinates inventory, pricing, payment, persistence, and notifications",
+    "Private helper: _build_order(...) constructs Order and records a quoted event",
+    "Private helper: _charge(...) authorizes payment and updates last_receipt",
+    "Private helper: _notify_customer(...) sends receipt and low-stock alerts",
+    "Public maintenance: cancel_order(...) releases items and persists cancellation",
+    "Public query: customer_history(...) lists orders as summary dicts"
+  ],
+  "lifecycle": [
+    "Constructed with catalog, pricing, payments, repository, notifications; initializes last_receipt=None",
+    "Used per checkout/cancel/query invocation; no persistent sessions maintained",
+    "No explicit teardown or disposal behavior in evidence"
+  ],
+  "state": [
+    "catalog: dependency (ProductCatalog)",
+    "pricing: dependency (PricingPolicy)",
+    "payments: dependency (PaymentGateway)",
+    "repository: dependency (OrderRepository)",
+    "notifications: dependency (NotificationService)",
+    "last_receipt: runtime state (last payment receipt)"
+  ],
+  "inputs": [
+    "constructor: catalog, pricing, payments, repository, notifications",
+    "checkout: customer, items, coupon",
+    "cancel_order: order_id, reason",
+    "customer_history: customer_id"
+  ],
+  "outputs": [
+    "checkout returns Order (paid and persisted)",
+    "cancel_order returns Order (cancelled and persisted)",
+    "customer_history returns List[dict] with order_id, status, total as string"
+  ],
+  "dependencies": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "commerce_ops_demo.commerce_ops.models.Order"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "key_interactions": [
+    "Reserve and release inventory via ProductCatalog",
+    "Quote pricing via PricingPolicy",
+    "Construct orders and add events via Order",
+    "Authorize payments via PaymentGateway and store last_receipt",
+    "Mark orders paid via Order.mark_paid",
+    "Persist orders via OrderRepository.save and fetch via get/list_by_customer",
+    "Send receipt and low-stock alerts via NotificationService"
+  ],
+  "side_effects": [
+    "Mutates self.last_receipt during charge",
+    "Reserves and releases inventory in catalog",
+    "Charges payment through external gateway",
+    "Persists orders to repository",
+    "Sends customer receipt notifications",
+    "Triggers low-stock alerts",
+    "Marks order as paid"
+  ],
+  "errors": [
+    "Propagates exceptions from ProductCatalog reserve/release",
+    "Propagates exceptions from PricingPolicy.quote",
+    "Propagates exceptions from PaymentGateway.authorize",
+    "Propagates exceptions from OrderRepository.get/save/list_by_customer",
+    "Propagates exceptions from NotificationService sending methods",
+    "Attribute errors if injected dependencies are missing or lack required methods",
+    "If checkout fails after reservation, items are released and the original error is re-raised",
+    "Type errors if iterable inputs (items, orders) are invalid",
+    "Order retrieval may return None leading to attribute access errors during cancellation"
+  ],
+  "invariants": [
+    "Dependencies catalog, pricing, payments, repository, notifications must be set before use",
+    "Inventory reserved during checkout is released on any subsequent failure",
+    "Order is marked paid only after successful payment authorization",
+    "last_receipt reflects the most recent payment authorization in this instance",
+    "Order changes are persisted via the repository for checkout and cancellation"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__init__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/checkout.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/cancel_order.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/customer_history.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_notify_customer.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "class_type": "service",
+  "related_classes": [
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "relation_type": "uses",
+      "evidence": "self.catalog.reserve_items(items)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "relation_type": "uses",
+      "evidence": "self.pricing.quote(customer, items, reserved_products, coupon)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+      "relation_type": "uses",
+      "evidence": "order.mark_paid(receipt.payment_id)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "relation_type": "uses",
+      "evidence": "self.repository.save(order)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "relation_type": "uses",
+      "evidence": "self.catalog.release_items(items)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "relation_type": "uses",
+      "evidence": "self.repository.get(order_id)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "relation_type": "uses",
+      "evidence": "self.catalog.release_items(order.items)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "relation_type": "uses",
+      "evidence": "self.repository.save(order)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "relation_type": "uses",
+      "evidence": "self.repository.list_by_customer(customer_id)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+      "relation_type": "uses",
+      "evidence": "order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "relation_type": "uses",
+      "evidence": "self.payments.authorize(customer, quote.total_cents)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "relation_type": "uses",
+      "evidence": "self.notifications.send_receipt(customer, order)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "relation_type": "uses",
+      "evidence": "self.notifications.send_low_stock_alert(products)",
+      "direction": "this -> target",
+      "confidence": "high"
+    }
+  ],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.list",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.str",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.uuid4",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge -> commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> external.order.mark_cancelled",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> external.str"
+  ],
+  "key_internal_flows": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "summary": "Coordinate checkout, cancellation, and customer order history by orchestrating catalog, pricing, payments, persistence, and notifications.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__class__.spl"
+}

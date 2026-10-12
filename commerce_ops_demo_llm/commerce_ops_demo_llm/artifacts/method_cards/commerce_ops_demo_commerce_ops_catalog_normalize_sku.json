@@ -1,0 +1,75 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/catalog.py",
+  "signature": "def normalize_sku(value: str) -> str:",
+  "visibility": "public",
+  "summary": "Validates that a SKU string is present and returns it trimmed of whitespace and uppercased.",
+  "purpose_hint": "",
+  "inputs": [
+    "value (string): SKU input string to normalize."
+  ],
+  "outputs": [
+    "normalized_sku (string): Uppercased SKU string with leading and trailing whitespace removed."
+  ],
+  "main_effect": "Strip leading and trailing whitespace from value and convert to uppercase.",
+  "side_effects": [],
+  "errors": [
+    "AttributeError: object has no attribute 'strip'",
+    "AttributeError: object has no attribute 'upper'",
+    "The stripped value does not support upper()",
+    "ValueError: sku is required",
+    "invalid when not value or not value.strip()",
+    "not value or not value.strip()",
+    "raise ValueError(\"sku is required\")",
+    "value is truthy and does not support strip()"
+  ],
+  "validation_rules": [
+    "invalid when not value or not value.strip()"
+  ],
+  "direct_callees": [
+    "external.ValueError",
+    "external.value.strip",
+    "external.value.strip().upper"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+  ],
+  "external_calls": [
+    "external.ValueError",
+    "external.value.strip",
+    "external.value.strip().upper"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if not value or not value.strip():\n        raise ValueError(\"sku is required\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return value.strip().upper()"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/normalize_sku.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

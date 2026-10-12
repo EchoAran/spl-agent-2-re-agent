@@ -1,0 +1,64 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "owner_file_id": "commerce_ops/catalog.py",
+  "signature": "def release_items(self, items: List[CartItem]) -> None:",
+  "visibility": "public",
+  "summary": "Iterates over provided cart items, fetching each product by SKU and invoking its release with the item quantity to update product state.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (ProductCatalog): Catalog instance providing get(sku) to retrieve products and orchestrate releases.",
+    "items (List[CartItem]): Iterable of CartItem objects, each with sku and qty to release."
+  ],
+  "outputs": [
+    "return (None): This method returns None.",
+    "side_effects (SideEffect): For each item, calls Product.release with the specified quantity, potentially mutating product inventory/reservation state."
+  ],
+  "main_effect": "Invoke <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with item.qty to release the quantity for the retrieved product.",
+  "side_effects": [],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> or <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> raises an underlying domain/runtime exception",
+    "<SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> returns None or a non-product object lacking release",
+    "An element in items lacks sku or qty (e.g., item.sku or item.qty is missing)",
+    "AttributeError: Raised when item does not provide the expected attributes sku or qty.",
+    "AttributeError: Raised when the retrieved product is None or lacks a release method.",
+    "Exception: Propagated exception from get or release indicating retrieval or release failure.",
+    "TypeError: Raised by Python when attempting to iterate over a non-iterable items argument.",
+    "items is not iterable and the for-loop cannot begin iteration"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "commerce_ops_demo.commerce_ops.models.Product.release"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 1,
+    "control_structures": [],
+    "loops": [
+      {
+        "type": "for",
+        "lineno": 2,
+        "code": "for item in items:\n            product = self.get(item.sku)\n            product.release(item.qty)"
+      }
+    ],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/release_items.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

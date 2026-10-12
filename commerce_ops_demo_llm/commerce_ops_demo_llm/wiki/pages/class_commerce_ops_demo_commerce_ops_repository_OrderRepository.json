@@ -1,0 +1,172 @@
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "slug": "commerce-ops-demo-commerce-ops-repository-orderrepository",
+  "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+  "entity_kind": "class",
+  "entity_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__class__.spl"
+  ],
+  "summary": "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.repository.OrderRepository\n\nProvide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\n\n## SPL\n\n```spl\n[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" OrderRepository]\n\n[DEFINE_PERSONA:]\n    ROLE: \"repository\"\n    DOMAIN: \"Commerce operations / order management\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\"\n    Responsibility: \"Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.\"\n    PublicBehavior: \"Constructor: __init__() initializes an empty orders mapping; save(order): validate order.order_id is truthy and store in the internal mapping under that key; get(order_id): return the stored Order for the given id or raise KeyError; list_by_customer(customer_id): return a new list of orders whose customer_id matches; mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity\"\n    InternalMechanism: \"Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.\"\n    StateModel: \"orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)\"\n    Collaboration: \"commerce_ops_demo.commerce_ops.models.Order (used by mark_paid); external.ValueError (thrown by save on missing order_id); external.KeyError (thrown by get when order_id not found)\"\n    ErrorBoundary: \"ValueError: order_id is required (save) when order.order_id is falsy; KeyError: order {order_id} not found (get) when the id is absent; AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer); AttributeError: The orders collection does not implement values() (list_by_customer); <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid); AttributeError: Attempting to call mark_paid on a None order value (mark_paid); Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"OrderRepository\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.repository.OrderRepository\"\n    <REF> source_file </REF>: text \"commerce_ops/repository.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\"\n    <REF> responsibility </REF>: text \"Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.\"\n    <REF> role </REF>: text \"repository\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"Constructor: __init__() initializes an empty orders mapping\", \"save(order): validate order.order_id is truthy and store in the internal mapping under that key\", \"get(order_id): return the stored Order for the given id or raise KeyError\", \"list_by_customer(customer_id): return a new list of orders whose customer_id matches\", \"mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity\"]\n    <REF> entrypoints </REF>: List [text] [\"__init__\", \"save\", \"get\", \"list_by_customer\", \"mark_paid\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.\"\n    <REF> internal_structure </REF>: List [text] [\"In-memory orders mapping keyed by order_id (state store)\", \"Shared helpers with high fan-in: save (write path), get (read path)\", \"Orchestration method: mark_paid -> get + Order.mark_paid + save\", \"Filtering operation: list_by_customer iterates self.orders.values() to build a new list\"]\n    <REF> lifecycle </REF>: List [text] [\"Creation: __init__ sets self.orders to an empty mapping\", \"Usage: save adds/updates orders; get retrieves by order_id; list_by_customer queries by customer_id\", \"Update workflow: mark_paid updates the domain entity then persists via save\", \"State persists within the repository instance across calls until overwritten on save\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)\"]\n    <REF> inputs </REF>: List [text] [\"order (Order) with a truthy order_id for save\", \"order_id (str) for get and mark_paid\", \"customer_id (str) for list_by_customer\", \"payment_id (str) for mark_paid\"]\n    <REF> outputs </REF>: List [text] [\"get returns Order for the given order_id\", \"list_by_customer returns List[Order] filtered by customer_id\", \"mark_paid returns the updated Order after persisting\", \"save returns no value and mutates repository state\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"commerce_ops_demo.commerce_ops.models.Order (used by mark_paid)\", \"external.ValueError (thrown by save on missing order_id)\", \"external.KeyError (thrown by get when order_id not found)\"]\n    <REF> used_by </REF>: List [text] [\"commerce_ops_demo.commerce_ops.services.OrderService.checkout -> save\", \"commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> get, save\", \"commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> list_by_customer\"]\n    <REF> key_interactions </REF>: List [text] [\"Service layer uses repository to persist and query orders across checkout, cancellation, and history features\", \"Repository invokes commerce_ops_demo.commerce_ops.models.Order.mark_paid during the mark-paid workflow\", \"Repository enforces validation and existence via ValueError and KeyError on invalid operations\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"Mutates self.orders mapping\", \"Overwrites existing entries on duplicate order_id in save\", \"Persists domain changes during mark_paid by calling save\", \"Raises exceptions on validation and lookup failures\"]\n    <REF> errors </REF>: List [text] [\"ValueError: order_id is required (save) when order.order_id is falsy\", \"KeyError: order {order_id} not found (get) when the id is absent\", \"AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer)\", \"AttributeError: The orders collection does not implement values() (list_by_customer)\", \"<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid)\", \"<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid)\", \"<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid)\", \"AttributeError: Attempting to call mark_paid on a None order value (mark_paid)\", \"Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)\"]\n    <REF> invariants </REF>: List [text] [\"orders mapping is keyed by order.order_id\", \"save requires a truthy order.order_id and writes to orders[order.order_id]\", \"get requires order_id to exist in the internal mapping\", \"list_by_customer relies on orders having Order objects with a customer_id attribute\", \"After mark_paid, the updated Order is persisted via save\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]\n```\n\n## Wiki Navigation\n\n- Page ID: `class:commerce_ops_demo.commerce_ops.repository.OrderRepository`\n- Entity kind: `class`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/repository.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.repository.OrderRepository\n\nProvide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\n\n## Role and Responsibilities\nPrimary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.\n\n## Public Surface\n- Constructor: __init__() initializes an empty orders mapping\n- save(order): validate order.order_id is truthy and store in the internal mapping under that key\n- get(order_id): return the stored Order for the given id or raise KeyError\n- list_by_customer(customer_id): return a new list of orders whose customer_id matches\n- mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity\n\n## State Model\n- orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)\n\n## Internal Mechanism\nMaintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.\n\n## Related Classes\n- {\"source_class_id\": \"commerce_ops_demo.commerce_ops.repository.OrderRepository\", \"target_class_id\": \"commerce_ops_demo.commerce_ops.models.Order\", \"relation_type\": \"uses\", \"evidence\": \"order.mark_paid(payment_id)\", \"direction\": \"this -> target\", \"confidence\": \"high\"}\n\n## Source Evidence\n- <SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl</SPL>\n- <SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl</SPL>\n- <SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl</SPL>\n- <SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl</SPL>\n- <SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl</SPL>\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-init",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.models.Order"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-init",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "uses",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "file:commerce_ops/repository.py",
+      "source_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.repository"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/repository.py",
+      "url": "/wiki/file/commerce-ops-repository-py"
+    }
+  ],
+  "tags": [
+    "class",
+    "repository"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/repository.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+  ],
+  "graph_refs": [
+    "class_scope:commerce_ops_demo.commerce_ops.repository.OrderRepository"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.637693+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "f82e5d9ba3cf3b6857701ab1934e3661df141e1c1f8945c04a58d9e98a52d4fd",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__class__.spl",
+  "spl_content": "[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" OrderRepository]\n\n[DEFINE_PERSONA:]\n    ROLE: \"repository\"\n    DOMAIN: \"Commerce operations / order management\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\"\n    Responsibility: \"Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.\"\n    PublicBehavior: \"Constructor: __init__() initializes an empty orders mapping; save(order): validate order.order_id is truthy and store in the internal mapping under that key; get(order_id): return the stored Order for the given id or raise KeyError; list_by_customer(customer_id): return a new list of orders whose customer_id matches; mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity\"\n    InternalMechanism: \"Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.\"\n    StateModel: \"orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)\"\n    Collaboration: \"commerce_ops_demo.commerce_ops.models.Order (used by mark_paid); external.ValueError (thrown by save on missing order_id); external.KeyError (thrown by get when order_id not found)\"\n    ErrorBoundary: \"ValueError: order_id is required (save) when order.order_id is falsy; KeyError: order {order_id} not found (get) when the id is absent; AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer); AttributeError: The orders collection does not implement values() (list_by_customer); <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid); AttributeError: Attempting to call mark_paid on a None order value (mark_paid); Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"OrderRepository\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.repository.OrderRepository\"\n    <REF> source_file </REF>: text \"commerce_ops/repository.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.\"\n    <REF> responsibility </REF>: text \"Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.\"\n    <REF> role </REF>: text \"repository\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"Constructor: __init__() initializes an empty orders mapping\", \"save(order): validate order.order_id is truthy and store in the internal mapping under that key\", \"get(order_id): return the stored Order for the given id or raise KeyError\", \"list_by_customer(customer_id): return a new list of orders whose customer_id matches\", \"mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity\"]\n    <REF> entrypoints </REF>: List [text] [\"__init__\", \"save\", \"get\", \"list_by_customer\", \"mark_paid\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.\"\n    <REF> internal_structure </REF>: List [text] [\"In-memory orders mapping keyed by order_id (state store)\", \"Shared helpers with high fan-in: save (write path), get (read path)\", \"Orchestration method: mark_paid -> get + Order.mark_paid + save\", \"Filtering operation: list_by_customer iterates self.orders.values() to build a new list\"]\n    <REF> lifecycle </REF>: List [text] [\"Creation: __init__ sets self.orders to an empty mapping\", \"Usage: save adds/updates orders; get retrieves by order_id; list_by_customer queries by customer_id\", \"Update workflow: mark_paid updates the domain entity then persists via save\", \"State persists within the repository instance across calls until overwritten on save\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)\"]\n    <REF> inputs </REF>: List [text] [\"order (Order) with a truthy order_id for save\", \"order_id (str) for get and mark_paid\", \"customer_id (str) for list_by_customer\", \"payment_id (str) for mark_paid\"]\n    <REF> outputs </REF>: List [text] [\"get returns Order for the given order_id\", \"list_by_customer returns List[Order] filtered by customer_id\", \"mark_paid returns the updated Order after persisting\", \"save returns no value and mutates repository state\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"commerce_ops_demo.commerce_ops.models.Order (used by mark_paid)\", \"external.ValueError (thrown by save on missing order_id)\", \"external.KeyError (thrown by get when order_id not found)\"]\n    <REF> used_by </REF>: List [text] [\"commerce_ops_demo.commerce_ops.services.OrderService.checkout -> save\", \"commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> get, save\", \"commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> list_by_customer\"]\n    <REF> key_interactions </REF>: List [text] [\"Service layer uses repository to persist and query orders across checkout, cancellation, and history features\", \"Repository invokes commerce_ops_demo.commerce_ops.models.Order.mark_paid during the mark-paid workflow\", \"Repository enforces validation and existence via ValueError and KeyError on invalid operations\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"Mutates self.orders mapping\", \"Overwrites existing entries on duplicate order_id in save\", \"Persists domain changes during mark_paid by calling save\", \"Raises exceptions on validation and lookup failures\"]\n    <REF> errors </REF>: List [text] [\"ValueError: order_id is required (save) when order.order_id is falsy\", \"KeyError: order {order_id} not found (get) when the id is absent\", \"AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer)\", \"AttributeError: The orders collection does not implement values() (list_by_customer)\", \"<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid)\", \"<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid)\", \"<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid)\", \"AttributeError: Attempting to call mark_paid on a None order value (mark_paid)\", \"Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)\"]\n    <REF> invariants </REF>: List [text] [\"orders mapping is keyed by order.order_id\", \"save requires a truthy order.order_id and writes to orders[order.order_id]\", \"get requires order_id to exist in the internal mapping\", \"list_by_customer relies on orders having Order objects with a customer_id attribute\", \"After mark_paid, the updated Order is persisted via save\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl</SPL>\", \"<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]"
+}

@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" models.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "model module"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide dataclass-backed domain models for commerce operations: Product inventory control, Customer balance management, Order status transitions with event logging, and CartItem validation. Expose validated, stateful operations used by catalog, payments, repository, services, and CLI layers."
+    PublicSurface: "CartItem; Customer; Order; Product"
+    InternalOrganization: "['The module groups four dataclass-based domain types. Each class encapsulates its own state and validation. Internal collaboration occurs within classes only (e.g., Customer.debit calls Customer.can_spend; Order status methods call Order.add_event). There are no cross-class calls within this file. Methods mutate instance fields and may raise ValueError; Order uses datetime.now(timezone.utc) for timestamps.']"
+    ModuleMechanism: "On import, it defines dataclass-based models without side effects. At runtime, consumers construct these models and invoke their public methods. Methods validate inputs; on success they mutate in-memory state and, for Order, append timestamped events; on invalid inputs they raise ValueError. The module’s public surface is the set of exported classes."
+    DependencyBoundary: "external dependency __future__; external dependency dataclasses; external dependency datetime; external dependency typing"
+    ErrorBoundary: "ValueError: qty must be positive (Product.reserve, Product.release); ValueError: not enough stock for {self.sku} (Product.reserve); ValueError: customer has insufficient balance (Customer.debit); ValueError: amount must be positive (Customer.credit); TypeError: invalid amount comparisons during validation in Customer.credit; ValueError: sku is required (CartItem.validate); ValueError: qty must be positive (CartItem.validate); ValueError: only created orders can be marked paid (Order.mark_paid); ValueError: paid orders cannot be cancelled here (Order.mark_cancelled); AttributeError: events does not support append (Order.add_event); NameError: datetime or timezone is not defined (Order.add_event)"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "models.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.models"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\models.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Provide dataclass-backed domain models for commerce operations: Product inventory control, Customer balance management, Order status transitions with event logging, and CartItem validation. Expose validated, stateful operations used by catalog, payments, repository, services, and CLI layers."
+    <REF> role </REF>: text "model module"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["CartItem", "Customer", "Order", "Product"]
+    <REF> entrypoints </REF>: List [text] ["Product.reserve", "Product.release", "Customer.debit", "Customer.credit", "Customer.can_spend", "Order.mark_paid", "Order.mark_cancelled", "Order.add_event", "CartItem.validate"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["Product: entity; stock reservation and release with validation", "Customer: entity; balance management with debit/credit and spend checks", "Order: entity; status transitions (paid/cancelled) and timestamped event log", "CartItem: value object; SKU and quantity validation"]
+    <REF> internal_structure </REF>: text "['The module groups four dataclass-based domain types. Each class encapsulates its own state and validation. Internal collaboration occurs within classes only (e.g., Customer.debit calls Customer.can_spend; Order status methods call Order.add_event). There are no cross-class calls within this file. Methods mutate instance fields and may raise ValueError; Order uses datetime.now(timezone.utc) for timestamps.']"
+    <REF> module_mechanism </REF>: text "On import, it defines dataclass-based models without side effects. At runtime, consumers construct these models and invoke their public methods. Methods validate inputs; on success they mutate in-memory state and, for Order, append timestamped events; on invalid inputs they raise ValueError. The module’s public surface is the set of exported classes."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency dataclasses", "external dependency datetime", "external dependency typing"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["Product.reserve(qty: int)", "Product.release(qty: int)", "Customer.can_spend(amount_cents)", "Customer.debit(amount_cents)", "Customer.credit(amount_cents)", "CartItem(sku, qty)", "CartItem.validate()", "Order.mark_paid(payment_id)", "Order.mark_cancelled(reason)", "Order.add_event(kind, detail)", "Order(order_id, customer_id, items, total_cents, status, events, created_at)"]
+    <REF> outputs </REF>: List [text] ["Product: mutates stock; reserve/release return None", "Customer.can_spend: returns bool indicating spend eligibility", "Customer.debit: mutates balance_cents; returns None", "Customer.credit: mutates balance_cents; returns None", "Order: mutates status; appends event entries with timestamps; methods return None", "CartItem.validate: returns None on success; signals failures via exceptions"]
+    <REF> key_paths </REF>: List [text] ["Customer.debit -> Customer.can_spend", "Order.mark_paid -> Order.add_event", "Order.mark_cancelled -> Order.add_event", "ProductCatalog.reserve_items -> Product.reserve", "ProductCatalog.release_items -> Product.release", "PaymentGateway.authorize -> Customer.debit", "PaymentGateway.refund -> Customer.credit", "OrderRepository.mark_paid -> Order.mark_paid", "OrderService._build_order -> Order", "OrderService._build_order -> Order.add_event", "OrderService.checkout -> Order.mark_paid", "cli.parse_cart -> CartItem", "cli.build_demo_service -> Product"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates instance state: Product.stock", "Mutates instance state: Customer.balance_cents", "Mutates instance state: Order.status", "Appends to Order.events with timestamped entries", "Raises ValueError on validation failures", "Reads current time via datetime.now(timezone.utc) for event timestamps"]
+    <REF> errors </REF>: List [text] ["ValueError: qty must be positive (Product.reserve, Product.release)", "ValueError: not enough stock for {self.sku} (Product.reserve)", "ValueError: customer has insufficient balance (Customer.debit)", "ValueError: amount must be positive (Customer.credit)", "TypeError: invalid amount comparisons during validation in Customer.credit", "ValueError: sku is required (CartItem.validate)", "ValueError: qty must be positive (CartItem.validate)", "ValueError: only created orders can be marked paid (Order.mark_paid)", "ValueError: paid orders cannot be cancelled here (Order.mark_cancelled)", "AttributeError: events does not support append (Order.add_event)", "NameError: datetime or timezone is not defined (Order.add_event)"]
+    <REF> initialization_order </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/__class__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Customer/__class__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/CartItem/__class__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Order/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

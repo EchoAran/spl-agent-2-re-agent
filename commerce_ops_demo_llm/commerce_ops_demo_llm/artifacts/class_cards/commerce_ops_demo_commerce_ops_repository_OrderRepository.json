@@ -1,0 +1,128 @@
+{
+  "class_name": "OrderRepository",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "source_file": "commerce_ops/repository.py",
+  "domain": "Commerce operations / order management",
+  "purpose": "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.",
+  "responsibility": "Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change.",
+  "role": "repository",
+  "public_surface": [
+    "Constructor: __init__() initializes an empty orders mapping",
+    "save(order): validate order.order_id is truthy and store in the internal mapping under that key",
+    "get(order_id): return the stored Order for the given id or raise KeyError",
+    "list_by_customer(customer_id): return a new list of orders whose customer_id matches",
+    "mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity"
+  ],
+  "entrypoints": [
+    "__init__",
+    "save",
+    "get",
+    "list_by_customer",
+    "mark_paid"
+  ],
+  "mechanism": "Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save.",
+  "internal_structure": [
+    "In-memory orders mapping keyed by order_id (state store)",
+    "Shared helpers with high fan-in: save (write path), get (read path)",
+    "Orchestration method: mark_paid -> get + Order.mark_paid + save",
+    "Filtering operation: list_by_customer iterates self.orders.values() to build a new list"
+  ],
+  "lifecycle": [
+    "Creation: __init__ sets self.orders to an empty mapping",
+    "Usage: save adds/updates orders; get retrieves by order_id; list_by_customer queries by customer_id",
+    "Update workflow: mark_paid updates the domain entity then persists via save",
+    "State persists within the repository instance across calls until overwritten on save"
+  ],
+  "state": [
+    "orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)"
+  ],
+  "inputs": [
+    "order (Order) with a truthy order_id for save",
+    "order_id (str) for get and mark_paid",
+    "customer_id (str) for list_by_customer",
+    "payment_id (str) for mark_paid"
+  ],
+  "outputs": [
+    "get returns Order for the given order_id",
+    "list_by_customer returns List[Order] filtered by customer_id",
+    "mark_paid returns the updated Order after persisting",
+    "save returns no value and mutates repository state"
+  ],
+  "dependencies": [
+    "commerce_ops_demo.commerce_ops.models.Order (used by mark_paid)",
+    "external.ValueError (thrown by save on missing order_id)",
+    "external.KeyError (thrown by get when order_id not found)"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> get, save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> list_by_customer"
+  ],
+  "key_interactions": [
+    "Service layer uses repository to persist and query orders across checkout, cancellation, and history features",
+    "Repository invokes commerce_ops_demo.commerce_ops.models.Order.mark_paid during the mark-paid workflow",
+    "Repository enforces validation and existence via ValueError and KeyError on invalid operations"
+  ],
+  "side_effects": [
+    "Mutates self.orders mapping",
+    "Overwrites existing entries on duplicate order_id in save",
+    "Persists domain changes during mark_paid by calling save",
+    "Raises exceptions on validation and lookup failures"
+  ],
+  "errors": [
+    "ValueError: order_id is required (save) when order.order_id is falsy",
+    "KeyError: order {order_id} not found (get) when the id is absent",
+    "AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer)",
+    "AttributeError: The orders collection does not implement values() (list_by_customer)",
+    "<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid)",
+    "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid)",
+    "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid)",
+    "AttributeError: Attempting to call mark_paid on a None order value (mark_paid)",
+    "Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)"
+  ],
+  "invariants": [
+    "orders mapping is keyed by order.order_id",
+    "save requires a truthy order.order_id and writes to orders[order.order_id]",
+    "get requires order_id to exist in the internal mapping",
+    "list_by_customer relies on orders having Order objects with a customer_id attribute",
+    "After mark_paid, the updated Order is persisted via save"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "class_type": "repository",
+  "related_classes": [
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+      "relation_type": "uses",
+      "evidence": "order.mark_paid(payment_id)",
+      "direction": "this -> target",
+      "confidence": "high"
+    }
+  ],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get -> external.KeyError",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer -> external.self.orders.values",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save -> external.ValueError"
+  ],
+  "key_internal_flows": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+  ],
+  "summary": "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__class__.spl"
+}

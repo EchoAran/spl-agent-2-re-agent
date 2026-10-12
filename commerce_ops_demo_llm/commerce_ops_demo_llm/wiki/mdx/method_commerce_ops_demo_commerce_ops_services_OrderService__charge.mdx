@@ -1,0 +1,105 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "summary": "Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.",
+  "tags": [
+    "method",
+    "private"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.services.OrderService._charge
+
+Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it." _charge]
+    [INPUTS]
+        <REF> customer </REF>: Customer "Customer to be charged; passed to the payment gateway."
+        <REF> quote </REF>: PriceQuote "Quote containing total_cents; quote.total_cents is used as the amount to authorize."
+        <REF> self.payments </REF>: PaymentGateway "Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents)."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> receipt </REF>: PaymentReceipt "Payment receipt returned from the authorization call."
+        <REF> self.last_receipt </REF>: PaymentReceipt "Instance state updated to reference the same receipt object."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> via self.payments with (customer, quote.total_cents) RESULT receipt]
+            [COMMAND Assign receipt to self.last_receipt RESULT self.last_receipt]
+            [COMMAND Return receipt RESULT receipt]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.payments is None or does not provide authorize]
+        [LOG "Payment gateway unavailable or missing authorize()"]
+        [THROW AttributeError "Raised when self.payments is not set or lacks an authorize method."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: quote is None or quote.total_cents attribute access fails]
+        [LOG "Invalid quote or missing total_cents"]
+        [THROW AttributeError "Raised when quote is missing or does not have total_cents."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure]
+        [LOG "Authorization failed during payment processing"]
+        [THROW Exception "Propagated exception from the payment gateway authorization call."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService._charge`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/services.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.services.OrderService._charge
+
+Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.
+
+## Inputs
+- customer (Customer): Customer to be charged; passed to the payment gateway.
+- quote (PriceQuote): Quote containing total_cents; quote.total_cents is used as the amount to authorize.
+- self.payments (PaymentGateway): Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents).
+
+## Outputs
+- receipt (PaymentReceipt): Payment receipt returned from the authorization call.
+- self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object.
+
+## Main Effect
+Return receipt
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- mutates self.last_receipt
+- self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object.
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure
+- AttributeError: Raised when quote is missing or does not have total_cents.
+- AttributeError: Raised when self.payments is not set or lacks an authorize method.
+- Exception: Propagated exception from the payment gateway authorization call.
+- quote is None or quote.total_cents attribute access fails
+- self.payments is None or does not provide authorize
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

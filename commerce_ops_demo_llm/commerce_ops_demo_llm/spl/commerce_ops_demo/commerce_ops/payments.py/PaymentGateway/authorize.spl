@@ -1,0 +1,33 @@
+[DEFINE_WORKER: "Authorize a payment by validating the amount, debiting the customer, updating the authorized total, and returning a new payment receipt." authorize]
+    [INPUTS]
+        <REF> customer </REF>: Customer "Customer account to be debited; must support <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>."
+        <REF> amount_cents </REF>: int "Positive amount in cents to authorize."
+        <REF> self.provider </REF>: Provider "Provider identifier read from instance state and included in <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL>."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> receipt </REF>: PaymentReceipt "A new <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> constructed with a generated UUID string, amount_cents, and self.provider."
+        <REF> self.authorized_total_cents </REF>: int "Instance state incremented by amount_cents."
+        <REF> customer_balance </REF>: mutation "Side effect: customer.debit(amount_cents) invoked to reduce available funds on the customer."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that amount_cents is greater than 0. RESULT validated_amount]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> on customer with amount_cents. RESULT debited_customer]
+            [COMMAND Add amount_cents to self.authorized_total_cents. RESULT updated_authorized_total_cents]
+            [COMMAND Generate a new UUID string via uuid4() and construct <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with (id, amount_cents, self.provider); return it. RESULT receipt]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: amount_cents <= 0]
+        [LOG "Invalid authorization amount: non-positive value."]
+        [THROW <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL> "Raised with message 'amount must be positive' when the amount is not greater than zero."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> raises ValueError]
+        [LOG "Customer debit failed with ValueError; rewrapping in PaymentError."]
+        [THROW <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL> "Re-raised as PaymentError with the original ValueError message."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

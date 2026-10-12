@@ -1,0 +1,80 @@
+{
+  "page_id": "topic:external-integration",
+  "page_type": "topic",
+  "title": "External Integration",
+  "slug": "external-integration",
+  "url": "/wiki/topic/external-integration",
+  "entity_kind": "topic",
+  "entity_id": "External Integration",
+  "qualified_name": "External Integration",
+  "source_refs": [
+    "artifacts/*_cards"
+  ],
+  "summary": "Entities related to External Integration.",
+  "body_markdown": "# External Integration\n\n- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items]]\n- [[commerce_ops_demo.commerce_ops.models.Customer.can_spend]]\n- [[commerce_ops/payments.py]]\n- [[commerce_ops/repository.py]]\n- [[commerce_ops_demo.commerce_ops]]\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "topic:external-integration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-can-spend",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "target_page_id": "file:commerce_ops/payments.py",
+      "target_url": "/wiki/file/commerce-ops-payments-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/payments.py"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "target_page_id": "file:commerce_ops/repository.py",
+      "target_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/repository.py"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Topics",
+      "url": "/wiki/topic"
+    }
+  ],
+  "tags": [
+    "topic"
+  ],
+  "owners": [],
+  "package_path": "",
+  "file_path": "",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "commerce_ops/payments.py",
+    "commerce_ops/repository.py",
+    "commerce_ops_demo.commerce_ops"
+  ],
+  "graph_refs": [],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.648640+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "b32a41f91d5a487d4bbb0f0dc39cb24744edd5d4d4ecfe040eb4e3e89432c670",
+  "spl_source_path": "",
+  "spl_content": ""
+}

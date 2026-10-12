@@ -1,0 +1,19 @@
+[DEFINE_WORKER: "Compute the cart subtotal by summing int(price_cents, default 0) * int(qty, default 1) for each item, then apply a coupon discount via apply_discount and return the final amount in integer cents." calc_total]
+    [INPUTS]
+        <REF> cart </REF>: list[dict] "List of item dictionaries; each item may provide 'price_cents' and 'qty'."
+        <REF> coupon </REF>: str | None "Optional coupon code to apply as a discount."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> total_cents </REF>: int "Final total after discount, expressed in integer cents."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize the running subtotal to 0 (integer). RESULT subtotal]
+            [COMMAND For each item in cart, read price_cents defaulting to 0 and qty defaulting to 1, convert both to int, multiply to get the line total, and add it to subtotal. RESULT subtotal]
+            [COMMAND Call apply_discount with subtotal and coupon to compute the final total in integer cents. RESULT total_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

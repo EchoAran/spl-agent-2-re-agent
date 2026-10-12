@@ -1,0 +1,16 @@
+[DEFINE_WORKER: "Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value." main]
+    [INPUTS]
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> stdout </REF>: stdout "Printed representation of the value returned by <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> when invoked with the sample inputs."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with list ['BOOK-1:1', 'MUG-1:2'] and discount code 'SAVE10'. RESULT checkout_result]
+            [COMMAND Print checkout_result to standard output. RESULT stdout contains the textual representation of checkout_result]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

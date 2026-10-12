@@ -1,0 +1,24 @@
+[DEFINE_WORKER: "Increases the object's stock by the given quantity after validating the quantity is positive." release]
+    [INPUTS]
+        <REF> qty </REF>: int "Quantity to add; must be greater than 0."
+        <REF> self.stock </REF>: int "Current stock value prior to update."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.stock </REF>: int "Updated stock after adding qty."
+        <REF> return </REF>: None "No return value."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that qty is greater than 0 RESULT validation_passed]
+            [COMMAND Add qty to self.stock RESULT updated_stock]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: qty <= 0]
+        [LOG "Invalid quantity: qty must be positive"]
+        [THROW ValueError "Raised when qty is not positive with message 'qty must be positive'."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

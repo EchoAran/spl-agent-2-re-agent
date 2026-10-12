@@ -1,0 +1,15 @@
+
+body { margin: 0; font-family: Inter, Segoe UI, Arial, sans-serif; display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; color: #172026; background: #f7f8fa; }
+aside { border-right: 1px solid #d9dee7; padding: 18px; background: #ffffff; overflow: auto; }
+h1 { font-size: 20px; margin: 0 0 16px; }
+input { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #c9d1dc; border-radius: 6px; margin-bottom: 14px; }
+.nav-item { padding: 8px 6px; border-radius: 6px; cursor: pointer; }
+.nav-item:hover, .nav-item.active { background: #eef4ff; }
+.kind { color: #687385; font-size: 12px; text-transform: uppercase; }
+main { padding: 28px 42px; overflow: auto; }
+#meta { color: #687385; margin-bottom: 16px; }
+article { max-width: 980px; line-height: 1.62; background: #fff; padding: 26px 30px; border: 1px solid #dfe5ee; border-radius: 8px; }
+pre { white-space: pre-wrap; background: #f1f4f8; padding: 12px; border-radius: 6px; }
+a { color: #155ac2; }
+.link-list { display: grid; gap: 6px; margin-top: 18px; max-width: 980px; }
+.pill { display: inline-block; padding: 2px 8px; border: 1px solid #cbd5e1; border-radius: 999px; margin-right: 6px; font-size: 12px; }

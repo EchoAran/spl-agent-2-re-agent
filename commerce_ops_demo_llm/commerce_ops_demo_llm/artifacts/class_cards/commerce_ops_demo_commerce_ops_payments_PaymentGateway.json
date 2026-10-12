@@ -1,0 +1,124 @@
+{
+  "class_name": "PaymentGateway",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "source_file": "commerce_ops/payments.py",
+  "domain": "Commerce payments",
+  "purpose": "Provide payment authorization and refund operations with provider tagging, delegating balance changes to customer accounts, producing payment receipts, and tracking authorized and refunded totals.",
+  "responsibility": "Primary: authorize payments, debit the customer, return a receipt, and accumulate authorized_total_cents. Secondary: process refunds by crediting the customer and accumulating refunded_total_cents while enforcing positive amounts and signaling failures via PaymentError.",
+  "role": "service",
+  "public_surface": [
+    "__init__(provider='internal-wallet')",
+    "authorize(customer, amount_cents) -> PaymentReceipt",
+    "refund(customer, receipt) -> None"
+  ],
+  "entrypoints": [
+    "__init__",
+    "authorize",
+    "refund"
+  ],
+  "mechanism": "Maintains a provider identifier and running counters for authorized and refunded amounts. For authorization, validates a positive amount, debits the customer, increments authorized_total_cents, and constructs a PaymentReceipt with a generated UUID and the provider. For refunds, validates a positive receipt amount, credits the customer, and increments refunded_total_cents. Validation failures and debit errors are communicated via PaymentError.",
+  "internal_structure": [
+    "Configuration: provider identifier stored at initialization and included in receipts",
+    "Accumulators: authorized_total_cents and refunded_total_cents updated on successful operations",
+    "Delegation to customer account methods: <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> and <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>",
+    "Receipt construction: <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with external.uuid4 and provider",
+    "Validation and error signaling via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>"
+  ],
+  "lifecycle": [
+    "Construction sets provider and initializes authorized_total_cents and refunded_total_cents to 0",
+    "During use, authorize and refund update running totals across the instance lifetime"
+  ],
+  "state": [
+    "provider: configuration string set during __init__",
+    "authorized_total_cents: running total of authorized amounts in cents",
+    "refunded_total_cents: running total of refunded amounts in cents"
+  ],
+  "inputs": [
+    "constructor: provider (defaults to 'internal-wallet')",
+    "authorize: customer and amount_cents (> 0)",
+    "refund: customer and receipt with receipt.amount_cents (> 0)"
+  ],
+  "outputs": [
+    "authorize: returns <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> containing id, amount_cents, and provider",
+    "authorize: increments authorized_total_cents",
+    "authorize: debits customer via <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>",
+    "refund: increments refunded_total_cents",
+    "refund: credits customer via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>",
+    "refund: no return value"
+  ],
+  "dependencies": [
+    "<SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>",
+    "<SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL>",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>",
+    "external.uuid4",
+    "external.str"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+  ],
+  "key_interactions": [
+    "authorize calls <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> to reduce customer funds",
+    "refund calls <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL> to restore customer funds",
+    "authorize constructs <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with provider and a UUID from external.uuid4",
+    "Validation and error translation via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>"
+  ],
+  "side_effects": [
+    "Mutates authorized_total_cents on successful authorization",
+    "Mutates refunded_total_cents on successful refund",
+    "Debits customer balance via <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>",
+    "Credits customer balance via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>"
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'amount must be positive' when amount_cents <= 0 in authorize",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: wraps ValueError from <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> during authorize",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: 'receipt amount must be positive' when receipt.amount_cents <= 0 in refund"
+  ],
+  "invariants": [
+    "authorize requires amount_cents > 0",
+    "refund requires receipt.amount_cents > 0",
+    "authorized_total_cents increases by amount_cents on successful authorization",
+    "refunded_total_cents increases by receipt.amount_cents on successful refund"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__init__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/authorize.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/refund.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "class_type": "class",
+  "related_classes": [
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+      "relation_type": "uses",
+      "evidence": "customer.debit(amount_cents)",
+      "direction": "this -> target",
+      "confidence": "high"
+    },
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+      "relation_type": "uses",
+      "evidence": "customer.credit(receipt.amount_cents)",
+      "direction": "this -> target",
+      "confidence": "high"
+    }
+  ],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge -> commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> external.str",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> external.uuid4",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.payments.PaymentError"
+  ],
+  "key_internal_flows": [],
+  "summary": "Provide payment authorization and refund operations with provider tagging, delegating balance changes to customer accounts, producing payment receipts, and tracking authorized and refunded totals.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__class__.spl"
+}

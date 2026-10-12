@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" OrderRepository]
+
+[DEFINE_PERSONA:]
+    ROLE: "repository"
+    DOMAIN: "Commerce operations / order management"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations."
+    Responsibility: "Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change."
+    PublicBehavior: "Constructor: __init__() initializes an empty orders mapping; save(order): validate order.order_id is truthy and store in the internal mapping under that key; get(order_id): return the stored Order for the given id or raise KeyError; list_by_customer(customer_id): return a new list of orders whose customer_id matches; mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity"
+    InternalMechanism: "Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save."
+    StateModel: "orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)"
+    Collaboration: "commerce_ops_demo.commerce_ops.models.Order (used by mark_paid); external.ValueError (thrown by save on missing order_id); external.KeyError (thrown by get when order_id not found)"
+    ErrorBoundary: "ValueError: order_id is required (save) when order.order_id is falsy; KeyError: order {order_id} not found (get) when the id is absent; AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer); AttributeError: The orders collection does not implement values() (list_by_customer); <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid); <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid); AttributeError: Attempting to call mark_paid on a None order value (mark_paid); Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "OrderRepository"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    <REF> source_file </REF>: text "commerce_ops/repository.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Provide an in-memory repository for Order entities keyed by order_id, enabling save, retrieval, customer-based listing, and a paid-marking workflow used by service-layer operations."
+    <REF> responsibility </REF>: text "Primary: manage storage and retrieval of Order entities in an internal mapping keyed by order_id. Secondary: support filtered queries by customer_id and coordinate the mark-paid update by invoking the Order domain method and persisting the change."
+    <REF> role </REF>: text "repository"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["Constructor: __init__() initializes an empty orders mapping", "save(order): validate order.order_id is truthy and store in the internal mapping under that key", "get(order_id): return the stored Order for the given id or raise KeyError", "list_by_customer(customer_id): return a new list of orders whose customer_id matches", "mark_paid(order_id, payment_id): retrieve Order, invoke domain mark_paid, persist via save, and return the updated entity"]
+    <REF> entrypoints </REF>: List [text] ["__init__", "save", "get", "list_by_customer", "mark_paid"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Maintains a per-instance dictionary mapping order_id to Order. Operations read and write this mapping: save validates a truthy order_id before inserting/updating; get indexes by key and raises KeyError when absent; list_by_customer filters values() by customer_id into a new list; mark_paid orchestrates get, delegates to Order.mark_paid(payment_id), then persists with save."
+    <REF> internal_structure </REF>: List [text] ["In-memory orders mapping keyed by order_id (state store)", "Shared helpers with high fan-in: save (write path), get (read path)", "Orchestration method: mark_paid -> get + Order.mark_paid + save", "Filtering operation: list_by_customer iterates self.orders.values() to build a new list"]
+    <REF> lifecycle </REF>: List [text] ["Creation: __init__ sets self.orders to an empty mapping", "Usage: save adds/updates orders; get retrieves by order_id; list_by_customer queries by customer_id", "Update workflow: mark_paid updates the domain entity then persists via save", "State persists within the repository instance across calls until overwritten on save"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["orders: Dict[str, Order] (runtime in-memory store; writes in __init__ and save; reads in save/get/list_by_customer)"]
+    <REF> inputs </REF>: List [text] ["order (Order) with a truthy order_id for save", "order_id (str) for get and mark_paid", "customer_id (str) for list_by_customer", "payment_id (str) for mark_paid"]
+    <REF> outputs </REF>: List [text] ["get returns Order for the given order_id", "list_by_customer returns List[Order] filtered by customer_id", "mark_paid returns the updated Order after persisting", "save returns no value and mutates repository state"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["commerce_ops_demo.commerce_ops.models.Order (used by mark_paid)", "external.ValueError (thrown by save on missing order_id)", "external.KeyError (thrown by get when order_id not found)"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService.checkout -> save", "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> get, save", "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> list_by_customer"]
+    <REF> key_interactions </REF>: List [text] ["Service layer uses repository to persist and query orders across checkout, cancellation, and history features", "Repository invokes commerce_ops_demo.commerce_ops.models.Order.mark_paid during the mark-paid workflow", "Repository enforces validation and existence via ValueError and KeyError on invalid operations"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates self.orders mapping", "Overwrites existing entries on duplicate order_id in save", "Persists domain changes during mark_paid by calling save", "Raises exceptions on validation and lookup failures"]
+    <REF> errors </REF>: List [text] ["ValueError: order_id is required (save) when order.order_id is falsy", "KeyError: order {order_id} not found (get) when the id is absent", "AttributeError: Encountered an order without a customer_id attribute while filtering (list_by_customer)", "AttributeError: The orders collection does not implement values() (list_by_customer)", "<SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid (mark_paid)", "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order (mark_paid)", "<SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order (mark_paid)", "AttributeError: Attempting to call mark_paid on a None order value (mark_paid)", "Retrieved order is None, causing a failure on mark_paid invocation (mark_paid)"]
+    <REF> invariants </REF>: List [text] ["orders mapping is keyed by order.order_id", "save requires a truthy order.order_id and writes to orders[order.order_id]", "get requires order_id to exist in the internal mapping", "list_by_customer relies on orders having Order objects with a customer_id attribute", "After mark_paid, the updated Order is persisted via save"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/save.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

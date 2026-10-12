@@ -1,0 +1,73 @@
+{
+  "class_name": "CartItem",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "source_file": "commerce_ops/models.py",
+  "domain": "E-commerce cart and order modeling",
+  "purpose": "Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.",
+  "responsibility": "Hold SKU and quantity as domain data and validate that both are present and logically valid.",
+  "role": "value object",
+  "public_surface": [
+    "Dataclass constructor with fields: sku, qty",
+    "validate()"
+  ],
+  "entrypoints": [
+    "Dataclass constructor: CartItem(sku, qty)",
+    "validate()"
+  ],
+  "mechanism": "A dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.",
+  "internal_structure": [
+    "Dataclass structure providing auto-generated initialization for sku and qty",
+    "Single public validator method: validate()"
+  ],
+  "lifecycle": [
+    "Created via dataclass constructor with sku and qty",
+    "Optional: call validate() to assert correctness before further use",
+    "No disposal steps indicated"
+  ],
+  "state": [
+    "sku: domain data (read by validate)",
+    "qty: domain data (read by validate)"
+  ],
+  "inputs": [
+    "sku (provided at construction)",
+    "qty (provided at construction)"
+  ],
+  "outputs": [
+    "Validation outcome via exceptions; validate() returns None on success"
+  ],
+  "dependencies": [
+    "dataclass (decorator)",
+    "ValueError (exception used to signal validation failures)"
+  ],
+  "used_by": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "key_interactions": [
+    "Raises ValueError when validation fails"
+  ],
+  "side_effects": [
+    "No I/O or external state mutation; validation only"
+  ],
+  "errors": [
+    "ValueError: sku is required",
+    "ValueError: qty must be positive"
+  ],
+  "invariants": [
+    "sku must be truthy",
+    "qty must be greater than 0"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.models.CartItem.validate -> external.ValueError"
+  ],
+  "key_internal_flows": [],
+  "summary": "Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/__class__.spl"
+}

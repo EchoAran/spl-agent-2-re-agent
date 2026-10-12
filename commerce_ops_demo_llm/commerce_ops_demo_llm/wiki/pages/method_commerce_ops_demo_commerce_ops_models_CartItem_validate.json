@@ -1,0 +1,90 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "slug": "commerce-ops-demo-commerce-ops-models-cartitem-validate",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-cartitem-validate",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl"
+  ],
+  "summary": "Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.CartItem.validate\n\nValidates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.\" validate]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance whose attributes are validated.\"\n        <REF> self.sku </REF>: any \"SKU value; must be truthy to pass validation.\"\n        <REF> self.qty </REF>: number \"Quantity value; must be greater than 0.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"Returns None if both validations pass without raising an exception.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Check that self.sku is truthy to proceed with validation. RESULT sku_valid]\n            [COMMAND Check that self.qty is greater than 0. RESULT qty_valid]\n            [COMMAND Complete method execution without returning a value. RESULT None]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: not self.sku]\n        [LOG \"sku is required\"]\n        [THROW ValueError \"Raised when sku is missing or falsy.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: self.qty <= 0]\n        [LOG \"qty must be positive\"]\n        [THROW ValueError \"Raised when qty is non-positive.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.models.CartItem.validate`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.CartItem.validate\n\nValidates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.\n\n## Inputs\n- self (object): Instance whose attributes are validated.\n- self.sku (any): SKU value; must be truthy to pass validation.\n- self.qty (number): Quantity value; must be greater than 0.\n\n## Outputs\n- return (None): Returns None if both validations pass without raising an exception.\n\n## Main Effect\nComplete method execution without returning a value.\n\n## Calls and Callers\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- ValueError: Raised when qty is non-positive.\n- ValueError: Raised when sku is missing or falsy.\n- invalid when not self.sku\n- not self.sku\n- raise ValueError(\"qty must be positive\")\n- raise ValueError(\"sku is required\")\n- self.qty <= 0\n- self.qty > 0\n\n## Validation Rules\n- invalid when not self.sku\n- self.qty > 0\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.models.CartItem",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.CartItem.validate"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.models.CartItem.validate"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.631184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "8bdd0165c4981952bbc4eb39dea809890c4b4a3a94615306bae51bc470fe1231",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl",
+  "spl_content": "[DEFINE_WORKER: \"Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails.\" validate]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance whose attributes are validated.\"\n        <REF> self.sku </REF>: any \"SKU value; must be truthy to pass validation.\"\n        <REF> self.qty </REF>: number \"Quantity value; must be greater than 0.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"Returns None if both validations pass without raising an exception.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Check that self.sku is truthy to proceed with validation. RESULT sku_valid]\n            [COMMAND Check that self.qty is greater than 0. RESULT qty_valid]\n            [COMMAND Complete method execution without returning a value. RESULT None]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: not self.sku]\n        [LOG \"sku is required\"]\n        [THROW ValueError \"Raised when sku is missing or falsy.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: self.qty <= 0]\n        [LOG \"qty must be positive\"]\n        [THROW ValueError \"Raised when qty is non-positive.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

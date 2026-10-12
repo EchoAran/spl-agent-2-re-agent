@@ -1,0 +1,100 @@
+{
+  "class_name": "Customer",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer",
+  "source_file": "commerce_ops/models.py",
+  "domain": "Commerce operations / payments",
+  "purpose": "Represent a customer account with a cents-based balance, providing validated debit and credit operations and a spend check used by payment flows.",
+  "responsibility": "Primary: maintain and validate the customer's balance_cents, enabling spend checks and performing debit/credit under rules. Secondary: carry identity and profile attributes such as customer_id, email, and tier.",
+  "role": "entity",
+  "public_surface": [
+    "dataclass construction: Customer(customer_id, email, balance_cents, tier)",
+    "can_spend(amount_cents) -> bool",
+    "debit(amount_cents) -> None (mutates balance)",
+    "credit(amount_cents) -> None (mutates balance)"
+  ],
+  "entrypoints": [
+    "debit(amount_cents)",
+    "credit(amount_cents)",
+    "can_spend(amount_cents)"
+  ],
+  "mechanism": "Maintains a cents-denominated balance and enforces validation rules: spend checks confirm amount_cents > 0 and sufficient balance; debit invokes the spend check before decrementing; credit requires a positive amount before incrementing. No external I/O is performed.",
+  "internal_structure": [
+    "Validation helper: can_spend(amount_cents) reads balance_cents",
+    "Mutation operation: debit(amount_cents) decrements balance_cents after validation",
+    "Mutation operation: credit(amount_cents) increments balance_cents with positive-amount check"
+  ],
+  "lifecycle": [
+    "Construct via dataclass with customer_id, email, balance_cents, tier",
+    "Use debit and credit to mutate monetary state",
+    "No explicit teardown or disposal behavior"
+  ],
+  "state": [
+    "customer_id: customer identifier (domain attribute)",
+    "email: contact attribute (domain attribute)",
+    "tier: classification attribute (domain attribute)",
+    "balance_cents: mutable account balance in cents; read by can_spend; decremented by debit; incremented by credit"
+  ],
+  "inputs": [
+    "amount_cents (int) to can_spend",
+    "amount_cents (int) to debit",
+    "amount_cents (int) to credit",
+    "constructor inputs: customer_id, email, balance_cents, tier"
+  ],
+  "outputs": [
+    "can_spend returns bool indicating spend eligibility",
+    "debit returns None and reduces balance_cents",
+    "credit returns None and increases balance_cents",
+    "updated balance_cents persisted in instance state"
+  ],
+  "dependencies": [
+    "external.ValueError"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund"
+  ],
+  "key_interactions": [
+    "debit -> <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL> for validation",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> credit",
+    "debit and credit raise ValueError on invalid operations"
+  ],
+  "side_effects": [
+    "Mutates self.balance_cents",
+    "Raises ValueError on insufficient balance or non-positive credit",
+    "TypeError may propagate if amount_cents is not comparable to integers"
+  ],
+  "errors": [
+    "ValueError(\"customer has insufficient balance\") from debit when not <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL>(amount_cents)",
+    "ValueError(\"amount must be positive\") from credit when amount_cents <= 0",
+    "TypeError from invalid amount comparisons during validation in credit",
+    "Exceptions from <SPL>commerce_ops_demo.commerce_ops.models.Customer.can_spend</SPL> propagate (none specified in evidence)"
+  ],
+  "invariants": [
+    "All debit and credit operations require amount_cents > 0",
+    "Debits only occur when balance_cents >= amount_cents",
+    "balance_cents remains non-negative when using provided operations"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Customer/can_spend.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Customer/debit.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Customer/credit.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.models.Customer",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.models.Customer.credit"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.models.Customer.credit -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.models.Customer.debit -> external.ValueError"
+  ],
+  "key_internal_flows": [
+    "commerce_ops_demo.commerce_ops.models.Customer.debit -> commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+  ],
+  "summary": "Represent a customer account with a cents-based balance, providing validated debit and credit operations and a spend check used by payment flows.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Customer/__class__.spl"
+}

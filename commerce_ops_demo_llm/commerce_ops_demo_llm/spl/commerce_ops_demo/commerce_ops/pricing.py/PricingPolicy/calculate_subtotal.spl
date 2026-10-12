@@ -1,0 +1,46 @@
+[DEFINE_WORKER: "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item." calculate_subtotal]
+    [INPUTS]
+        <REF> self </REF>: object "Instance of the containing class; not used in the computation."
+        <REF> items </REF>: List[CartItem] "Iterable of cart items, each with sku and qty to be validated and priced."
+        <REF> products </REF>: List[Product] "Iterable of products, each with sku and price_cents used to build a price lookup."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> subtotal </REF>: int "Total price in cents calculated as the sum of price_cents * qty for all valid items."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Build a dict mapping each product.sku to product.price_cents from products RESULT price_by_sku]
+            [COMMAND Initialize subtotal accumulator to 0 RESULT subtotal]
+            [COMMAND Iterate over items; for each item validate item.qty > 0, lookup price = price_by_sku[item.sku.upper()], validate price > 0, and add price * item.qty to subtotal RESULT subtotal]
+            [COMMAND Return the accumulated subtotal RESULT subtotal]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, item.qty <= 0]
+        [LOG "Invalid quantity encountered for an item"]
+        [THROW ValueError "qty must be positive"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, fetched price <= 0]
+        [LOG "Invalid product price encountered"]
+        [THROW ValueError "price_cents must be positive"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During lookup, item.sku.upper() key is not present in price_by_sku]
+        [LOG "SKU not found in product price mapping"]
+        [THROW KeyError "SKU not found in price_by_sku when using item.sku.upper()"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, item lacks required attributes or item.sku is not a string supporting upper()]
+        [LOG "Item has missing or invalid attributes (sku or qty)"]
+        [THROW AttributeError "Missing attribute (sku or qty) or sku does not support upper()"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During comparison or multiplication, qty or price is non-numeric]
+        [LOG "Type mismatch when validating or accumulating subtotal"]
+        [THROW TypeError "Non-numeric qty or price caused comparison or arithmetic to fail"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

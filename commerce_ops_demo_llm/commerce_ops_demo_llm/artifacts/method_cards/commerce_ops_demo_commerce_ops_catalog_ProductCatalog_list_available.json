@@ -1,0 +1,66 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "owner_file_id": "commerce_ops/catalog.py",
+  "signature": "def list_available(self, tag: str = \"\") -> List[Product]:",
+  "visibility": "public",
+  "summary": "Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.",
+  "purpose_hint": "",
+  "inputs": [
+    "tag (str): Optional tag used to filter products; if empty, no tag-based filtering is applied.",
+    "self.products (Dict[Any, Product]): Internal mapping of products from which values are read and filtered."
+  ],
+  "outputs": [
+    "available_products (List[Product]): List of in-stock products, optionally filtered by tag, sorted by product.sku ascending."
+  ],
+  "main_effect": "Sort values by product.sku in ascending order and produce final list",
+  "side_effects": [],
+  "errors": [],
+  "validation_rules": [],
+  "direct_callees": [
+    "external.self.products.values",
+    "external.sorted"
+  ],
+  "direct_callers": [],
+  "external_calls": [
+    "external.self.products.values",
+    "external.sorted"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 3,
+        "code": "if tag:\n            values = [product for product in values if tag in product.tags]"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "values = [product for product in self.products.values() if product.stock > 0]"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 5,
+        "code": "return sorted(values, key=lambda product: product.sku)"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/list_available.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

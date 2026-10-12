@@ -1,0 +1,32 @@
+[DEFINE_WORKER: "Validates that a SKU string is present and returns it trimmed of whitespace and uppercased." normalize_sku]
+    [INPUTS]
+        <REF> value </REF>: string "SKU input string to normalize."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> normalized_sku </REF>: string "Uppercased SKU string with leading and trailing whitespace removed."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Check that value is provided and not whitespace-only after trimming. RESULT validation_passed]
+            [COMMAND Strip leading and trailing whitespace from value and convert to uppercase. RESULT normalized_sku]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: not value or not value.strip()]
+        [LOG "Input validation failed: sku is required"]
+        [THROW ValueError "sku is required"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: value is truthy and does not support strip()]
+        [LOG "Attribute error during validation: input lacks strip method"]
+        [THROW AttributeError "object has no attribute 'strip'"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: The stripped value does not support upper()]
+        [LOG "Normalization failed: upper() not supported on resulting type"]
+        [THROW AttributeError "object has no attribute 'upper'"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

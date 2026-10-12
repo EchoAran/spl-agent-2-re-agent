@@ -1,0 +1,106 @@
+{
+  "file_name": "pricing.py",
+  "module_name": "commerce_ops_demo.commerce_ops.pricing",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\pricing.py",
+  "language": "python",
+  "purpose": "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.",
+  "role": "service module",
+  "exports": [
+    "PriceQuote",
+    "PricingPolicy"
+  ],
+  "entrypoints": [
+    "PricingPolicy.__init__",
+    "PricingPolicy.quote"
+  ],
+  "components": [
+    "PriceQuote: dataclass value object holding subtotal_cents, discount_cents, tax_cents, total_cents, coupon",
+    "PricingPolicy: service encapsulating pricing rules and quote orchestration",
+    "PricingPolicy helpers: calculate_subtotal, apply_coupon, calculate_tax"
+  ],
+  "internal_structure": [
+    "The module defines a value object (PriceQuote) and a policy service (PricingPolicy). PricingPolicy holds policy configuration (tax_rate_bps and a coupon code map) set on construction, and exposes quote as the primary operation. quote coordinates internal helpers: calculate_subtotal derives a subtotal from items/products, apply_coupon computes and caps a discount from the configured mapping and customer context, calculate_tax computes tax from the taxable amount, and quote assembles the result into a PriceQuote."
+  ],
+  "module_mechanism": "Consumers construct PricingPolicy with a tax rate and coupons mapping; the initializer validates and normalizes configuration. At runtime, clients call quote with customer, cart items, price lookup, and an optional coupon. The module computes subtotal, discount, and tax, then returns a PriceQuote. Other parts of the system (e.g., services) depend on this module as the pricing provider.",
+  "imports": [
+    "external dependency __future__",
+    "external dependency commerce_ops.models",
+    "external dependency dataclasses",
+    "external dependency typing"
+  ],
+  "internal_imports": [],
+  "globals": [],
+  "inputs": [
+    "tax_rate_bps (int) for PricingPolicy.__init__",
+    "coupons mapping[str,int] for PricingPolicy.__init__",
+    "customer (commerce_ops.models.Customer) for quote/apply_coupon",
+    "items (List[commerce_ops.models.CartItem]) for quote/calculate_subtotal",
+    "products price map (Dict[str, commerce_ops.models.Product]) for quote/calculate_subtotal",
+    "coupon code (str or None) for quote/apply_coupon"
+  ],
+  "outputs": [
+    "PriceQuote from PricingPolicy.quote",
+    "subtotal_cents (int)",
+    "discount_cents (int)",
+    "tax_cents (int)",
+    "total_cents (int) encapsulated in PriceQuote"
+  ],
+  "key_paths": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> PricingPolicy.quote -> calculate_subtotal -> apply_coupon -> calculate_tax -> PriceQuote",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> PricingPolicy.__init__",
+    "PricingPolicy.quote constructs PriceQuote"
+  ],
+  "side_effects": [
+    "Stores tax_rate_bps on the PricingPolicy instance during __init__",
+    "Normalizes coupon keys to uppercase and stores the mapping during __init__",
+    "Constructs PriceQuote objects when quoting",
+    "No external I/O, network, or persistence effects in evidence"
+  ],
+  "errors": [
+    "ValueError: tax rate cannot be negative (initialization).",
+    "AttributeError: coupons does not provide an .items() method (initialization).",
+    "AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).",
+    "ValueError: total must be positive (quote).",
+    "ValueError: qty must be positive (calculate_subtotal).",
+    "ValueError: price_cents must be positive (calculate_subtotal).",
+    "AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).",
+    "KeyError: SKU not found in price lookup (calculate_subtotal).",
+    "TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).",
+    "ValueError: coupon is not supported (apply_coupon).",
+    "AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).",
+    "ValueError: taxable amount cannot be negative (calculate_tax).",
+    "TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."
+  ],
+  "initialization_order": [
+    "Instantiate PricingPolicy (__init__) to validate tax_rate_bps and normalize coupons before calling quote",
+    "Coupons normalization and policy state setup occur during __init__"
+  ],
+  "class_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PriceQuote/__class__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__class__.spl</SPL>"
+  ],
+  "function_refs": [],
+  "id": "commerce_ops/pricing.py",
+  "path": "commerce_ops/pricing.py",
+  "incoming_files": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "outgoing_files": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.code.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.coupons.items",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.min",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.item.sku.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.max"
+  ],
+  "summary": "Provide a pricing policy service that computes shopping cart price quotes and a simple PriceQuote data object for returning computed totals.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/__file__.spl"
+}

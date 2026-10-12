@@ -1,0 +1,13 @@
+{
+  "build_version": "repo-spl-wiki-v1",
+  "content_policy": "SPL-first. Wiki pages and single Markdown exports preserve complete SPL content as the primary body; JSON fields are navigation/index metadata.",
+  "page_count": 77,
+  "output_dir": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\Result\\commerce_ops_demo_llm\\wiki",
+  "entry": "wiki/frontend/index.html",
+  "single_markdown": "wiki/LLM_WIKI.md",
+  "single_markdown_full": "wiki/LLM_WIKI.full.md",
+  "pages": "wiki/pages",
+  "mdx": "wiki/mdx",
+  "index": "wiki/index",
+  "graphs": "wiki/graphs"
+}

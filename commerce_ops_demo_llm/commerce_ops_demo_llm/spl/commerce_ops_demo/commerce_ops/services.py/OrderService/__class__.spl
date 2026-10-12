@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" OrderService]
+
+[DEFINE_PERSONA:]
+    ROLE: "service"
+    DOMAIN: "E-commerce order processing and checkout orchestration"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Coordinate checkout, cancellation, and customer order history by orchestrating catalog, pricing, payments, persistence, and notifications."
+    Responsibility: "Primary: End-to-end checkout orchestration. Secondary: Order cancellation and customer order history summarization."
+    PublicBehavior: "__init__(catalog, pricing, payments, repository, notifications); checkout(customer, items, coupon='') -> Order; cancel_order(order_id, reason) -> Order; customer_history(customer_id) -> List[dict]"
+    InternalMechanism: "Acts as an orchestrator across injected services: reserves inventory via a catalog, requests a price quote, constructs an Order via an internal builder, authorizes payment while storing the last receipt, marks the order paid, persists it, and sends customer and stock notifications. On post-reservation failures during checkout, it releases inventory and lets the error propagate. Cancellation retrieves and updates an order, releases items, and saves. Customer history delegates to the repository and returns a simplified projection."
+    StateModel: "catalog: dependency (ProductCatalog); pricing: dependency (PricingPolicy); payments: dependency (PaymentGateway); repository: dependency (OrderRepository); notifications: dependency (NotificationService); last_receipt: runtime state (last payment receipt)"
+    Collaboration: "commerce_ops_demo.commerce_ops.catalog.ProductCatalog; commerce_ops_demo.commerce_ops.pricing.PricingPolicy; commerce_ops_demo.commerce_ops.payments.PaymentGateway; commerce_ops_demo.commerce_ops.repository.OrderRepository; commerce_ops_demo.commerce_ops.notifications.NotificationService; commerce_ops_demo.commerce_ops.models.Order"
+    ErrorBoundary: "Propagates exceptions from ProductCatalog reserve/release; Propagates exceptions from PricingPolicy.quote; Propagates exceptions from PaymentGateway.authorize; Propagates exceptions from OrderRepository.get/save/list_by_customer; Propagates exceptions from NotificationService sending methods; Attribute errors if injected dependencies are missing or lack required methods; If checkout fails after reservation, items are released and the original error is re-raised; Type errors if iterable inputs (items, orders) are invalid; Order retrieval may return None leading to attribute access errors during cancellation"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "OrderService"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.services.OrderService"
+    <REF> source_file </REF>: text "commerce_ops/services.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Coordinate checkout, cancellation, and customer order history by orchestrating catalog, pricing, payments, persistence, and notifications."
+    <REF> responsibility </REF>: text "Primary: End-to-end checkout orchestration. Secondary: Order cancellation and customer order history summarization."
+    <REF> role </REF>: text "service"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["__init__(catalog, pricing, payments, repository, notifications)", "checkout(customer, items, coupon='') -> Order", "cancel_order(order_id, reason) -> Order", "customer_history(customer_id) -> List[dict]"]
+    <REF> entrypoints </REF>: List [text] ["__init__", "checkout", "cancel_order", "customer_history"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Acts as an orchestrator across injected services: reserves inventory via a catalog, requests a price quote, constructs an Order via an internal builder, authorizes payment while storing the last receipt, marks the order paid, persists it, and sends customer and stock notifications. On post-reservation failures during checkout, it releases inventory and lets the error propagate. Cancellation retrieves and updates an order, releases items, and saves. Customer history delegates to the repository and returns a simplified projection."
+    <REF> internal_structure </REF>: List [text] ["Public orchestrator: checkout(...) coordinates inventory, pricing, payment, persistence, and notifications", "Private helper: _build_order(...) constructs Order and records a quoted event", "Private helper: _charge(...) authorizes payment and updates last_receipt", "Private helper: _notify_customer(...) sends receipt and low-stock alerts", "Public maintenance: cancel_order(...) releases items and persists cancellation", "Public query: customer_history(...) lists orders as summary dicts"]
+    <REF> lifecycle </REF>: List [text] ["Constructed with catalog, pricing, payments, repository, notifications; initializes last_receipt=None", "Used per checkout/cancel/query invocation; no persistent sessions maintained", "No explicit teardown or disposal behavior in evidence"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["catalog: dependency (ProductCatalog)", "pricing: dependency (PricingPolicy)", "payments: dependency (PaymentGateway)", "repository: dependency (OrderRepository)", "notifications: dependency (NotificationService)", "last_receipt: runtime state (last payment receipt)"]
+    <REF> inputs </REF>: List [text] ["constructor: catalog, pricing, payments, repository, notifications", "checkout: customer, items, coupon", "cancel_order: order_id, reason", "customer_history: customer_id"]
+    <REF> outputs </REF>: List [text] ["checkout returns Order (paid and persisted)", "cancel_order returns Order (cancelled and persisted)", "customer_history returns List[dict] with order_id, status, total as string"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["commerce_ops_demo.commerce_ops.catalog.ProductCatalog", "commerce_ops_demo.commerce_ops.pricing.PricingPolicy", "commerce_ops_demo.commerce_ops.payments.PaymentGateway", "commerce_ops_demo.commerce_ops.repository.OrderRepository", "commerce_ops_demo.commerce_ops.notifications.NotificationService", "commerce_ops_demo.commerce_ops.models.Order"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.cli.run_checkout_demo"]
+    <REF> key_interactions </REF>: List [text] ["Reserve and release inventory via ProductCatalog", "Quote pricing via PricingPolicy", "Construct orders and add events via Order", "Authorize payments via PaymentGateway and store last_receipt", "Mark orders paid via Order.mark_paid", "Persist orders via OrderRepository.save and fetch via get/list_by_customer", "Send receipt and low-stock alerts via NotificationService"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates self.last_receipt during charge", "Reserves and releases inventory in catalog", "Charges payment through external gateway", "Persists orders to repository", "Sends customer receipt notifications", "Triggers low-stock alerts", "Marks order as paid"]
+    <REF> errors </REF>: List [text] ["Propagates exceptions from ProductCatalog reserve/release", "Propagates exceptions from PricingPolicy.quote", "Propagates exceptions from PaymentGateway.authorize", "Propagates exceptions from OrderRepository.get/save/list_by_customer", "Propagates exceptions from NotificationService sending methods", "Attribute errors if injected dependencies are missing or lack required methods", "If checkout fails after reservation, items are released and the original error is re-raised", "Type errors if iterable inputs (items, orders) are invalid", "Order retrieval may return None leading to attribute access errors during cancellation"]
+    <REF> invariants </REF>: List [text] ["Dependencies catalog, pricing, payments, repository, notifications must be set before use", "Inventory reserved during checkout is released on any subsequent failure", "Order is marked paid only after successful payment authorization", "last_receipt reflects the most recent payment authorization in this instance", "Order changes are persisted via the repository for checkout and cancellation"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/checkout.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/cancel_order.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/customer_history.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_notify_customer.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

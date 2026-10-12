@@ -1,0 +1,91 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "owner_file_id": "commerce_ops/services.py",
+  "signature": "def cancel_order(self, order_id: str, reason: str) -> Order:",
+  "visibility": "public",
+  "summary": "Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it.",
+  "purpose_hint": "",
+  "inputs": [
+    "order_id (str): Unique identifier of the order to cancel.",
+    "reason (str): Human-readable reason for cancelling the order."
+  ],
+  "outputs": [
+    "order (Order): The updated Order entity marked as cancelled and persisted.",
+    "inventory_released (None): Side effect: order items released back to catalog inventory.",
+    "repository_saved (None): Side effect: updated order persisted via repository."
+  ],
+  "main_effect": "Return the updated order",
+  "side_effects": [
+    "self.catalog.release_items(order.items)",
+    "self.repository.save(order)"
+  ],
+  "errors": [
+    "AttributeError: Failed to access catalog.release_items to release order items.",
+    "AttributeError: Failed to access repository.get to retrieve the order.",
+    "AttributeError: Failed to access repository.save to persist the updated order.",
+    "AttributeError: order is None; calling order.mark_cancelled(reason) would raise an AttributeError.",
+    "Fetched order is None after <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id)",
+    "self.catalog is None or <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> is not available",
+    "self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> is not available",
+    "self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> is not available"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "external.order.mark_cancelled"
+  ],
+  "direct_callers": [],
+  "external_calls": [
+    "external.order.mark_cancelled"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 5,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "order = self.repository.get(order_id)"
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 3,
+        "code": "order.mark_cancelled(reason)"
+      },
+      {
+        "type": "function_call",
+        "lineno": 4,
+        "code": "self.catalog.release_items(order.items)"
+      },
+      {
+        "type": "function_call",
+        "lineno": 5,
+        "code": "self.repository.save(order)"
+      }
+    ],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 6,
+        "code": "return order"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/cancel_order.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

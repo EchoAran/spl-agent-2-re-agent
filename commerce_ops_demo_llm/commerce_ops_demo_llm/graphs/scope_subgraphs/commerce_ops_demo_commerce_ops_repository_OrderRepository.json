@@ -1,0 +1,19 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get -> external.KeyError",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer -> external.self.orders.values",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save -> external.ValueError"
+  ]
+}

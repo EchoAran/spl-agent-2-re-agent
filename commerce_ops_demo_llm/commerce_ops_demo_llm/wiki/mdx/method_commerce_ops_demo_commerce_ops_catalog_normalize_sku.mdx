@@ -1,0 +1,99 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+  "page_type": "entity",
+  "entity_kind": "function",
+  "title": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+  "summary": "Validates that a SKU string is present and returns it trimmed of whitespace and uppercased.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/normalize_sku.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.catalog.normalize_sku
+
+Validates that a SKU string is present and returns it trimmed of whitespace and uppercased.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Validates that a SKU string is present and returns it trimmed of whitespace and uppercased." normalize_sku]
+    [INPUTS]
+        <REF> value </REF>: string "SKU input string to normalize."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> normalized_sku </REF>: string "Uppercased SKU string with leading and trailing whitespace removed."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Check that value is provided and not whitespace-only after trimming. RESULT validation_passed]
+            [COMMAND Strip leading and trailing whitespace from value and convert to uppercase. RESULT normalized_sku]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: not value or not value.strip()]
+        [LOG "Input validation failed: sku is required"]
+        [THROW ValueError "sku is required"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: value is truthy and does not support strip()]
+        [LOG "Attribute error during validation: input lacks strip method"]
+        [THROW AttributeError "object has no attribute 'strip'"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: The stripped value does not support upper()]
+        [LOG "Normalization failed: upper() not supported on resulting type"]
+        [THROW AttributeError "object has no attribute 'upper'"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.normalize_sku`
+- Entity kind: `function`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/catalog.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.catalog.normalize_sku
+
+Validates that a SKU string is present and returns it trimmed of whitespace and uppercased.
+
+## Inputs
+- value (string): SKU input string to normalize.
+
+## Outputs
+- normalized_sku (string): Uppercased SKU string with leading and trailing whitespace removed.
+
+## Main Effect
+Strip leading and trailing whitespace from value and convert to uppercase.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- AttributeError: object has no attribute 'strip'
+- AttributeError: object has no attribute 'upper'
+- The stripped value does not support upper()
+- ValueError: sku is required
+- invalid when not value or not value.strip()
+- not value or not value.strip()
+- raise ValueError("sku is required")
+- value is truthy and does not support strip()
+
+## Validation Rules
+- invalid when not value or not value.strip()

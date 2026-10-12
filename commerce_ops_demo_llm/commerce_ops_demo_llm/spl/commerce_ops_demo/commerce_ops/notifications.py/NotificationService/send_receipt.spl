@@ -1,0 +1,36 @@
+[DEFINE_WORKER: "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string." send_receipt]
+    [INPUTS]
+        <REF> self </REF>: object "Object instance that must provide a sent_messages list-like attribute to append the message."
+        <REF> customer </REF>: Customer "Customer object providing email used in the receipt message."
+        <REF> order </REF>: Order "Order object providing order_id and total_cents used to compose and format the receipt."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> message </REF>: str "The composed receipt message string that is returned."
+        <REF> self.sent_messages </REF>: List[str] "Updated list after appending the composed receipt message."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Construct receipt message string using customer.email, order.order_id, and <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL>(order.total_cents). RESULT message]
+            [COMMAND Append message to self.sent_messages. RESULT self.sent_messages]
+            [COMMAND Return the composed message. RESULT message]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.]
+        [LOG "Attribute access failed while composing the receipt message."]
+        [THROW AttributeError "Raised when expected attributes are missing on customer or order."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.]
+        [LOG "Formatting total_cents failed during receipt message construction."]
+        [THROW Exception "Propagated exception from format_currency when formatting the total."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.sent_messages is missing or not list-like, causing append to fail.]
+        [LOG "Failed to append the message to self.sent_messages."]
+        [THROW AttributeError or TypeError "Raised when sent_messages attribute is absent or does not support append."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

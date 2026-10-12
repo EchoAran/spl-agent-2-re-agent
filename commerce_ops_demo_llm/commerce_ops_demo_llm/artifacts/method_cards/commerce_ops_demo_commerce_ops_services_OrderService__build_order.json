@@ -1,0 +1,85 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "owner_file_id": "commerce_ops/services.py",
+  "signature": "def _build_order(self, customer: Customer, items: List[CartItem], quote: PriceQuote) -> Order:",
+  "visibility": "private",
+  "summary": "Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Instance context for method execution.",
+    "customer (Customer): Customer providing customer_id used in the order.",
+    "items (List[CartItem]): Cart items; copied into the order via list(items).",
+    "quote (PriceQuote): Pricing details providing total_cents and breakdown fields used for the event message."
+  ],
+  "outputs": [
+    "order (Order): Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event."
+  ],
+  "main_effect": "Return the constructed order",
+  "side_effects": [],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments",
+    "AttributeError: customer must have a customer_id attribute.",
+    "AttributeError: quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents.",
+    "Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails",
+    "Exception: add_event raised an error.",
+    "TypeError: items must be an iterable of CartItem.",
+    "ValueError: Invalid arguments for constructing Order.",
+    "customer is None or lacks attribute customer.customer_id when accessed",
+    "items is None or not iterable when list(items) is evaluated",
+    "quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Order",
+    "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "external.list",
+    "external.str",
+    "external.uuid4"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [
+    "external.list",
+    "external.str",
+    "external.uuid4"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "order = Order(str(uuid4()), customer.customer_id, list(items), quote.total_cents)"
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 3,
+        "code": "order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")"
+      }
+    ],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return order"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": true,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

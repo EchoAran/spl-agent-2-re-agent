@@ -1,0 +1,92 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+  "summary": "Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_paid.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Order.mark_paid
+
+Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'." mark_paid]
+    [INPUTS]
+        <REF> payment_id </REF>: string "Identifier for the payment used to record the 'paid' event."
+        <REF> self.status </REF>: string "Current order status; must be 'created' for the operation to proceed."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.status </REF>: string "Updated to 'paid' when the operation succeeds."
+        <REF> event_record </REF>: side_effect "Calls <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> to record a 'paid' event with the given payment_id."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Verify the current status is exactly 'created'. RESULT Precondition satisfied; proceed with marking as paid.]
+            [COMMAND Assign the literal 'paid' to self.status. RESULT Order status updated to 'paid'.]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with event='paid' and the provided payment_id. RESULT 'paid' event recorded for the order with the payment identifier.]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.status != 'created']
+        [LOG "Raising ValueError: only created orders can be marked paid"]
+        [THROW ValueError "only created orders can be marked paid"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Order.mark_paid`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Order.mark_paid
+
+Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'.
+
+## Inputs
+- payment_id (string): Identifier for the payment used to record the 'paid' event.
+- self.status (string): Current order status; must be 'created' for the operation to proceed.
+
+## Outputs
+- self.status (string): Updated to 'paid' when the operation succeeds.
+- event_record (side_effect): Calls <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> to record a 'paid' event with the given payment_id.
+
+## Main Effect
+Invoke <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with event='paid' and the provided payment_id.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Order.add_event
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- mutates self.status
+- self.status (string): Updated to 'paid' when the operation succeeds.
+
+## Errors
+- ValueError: only created orders can be marked paid
+- invalid when self.status != "created"
+- raise ValueError("only created orders can be marked paid")
+- self.status != 'created'
+
+## Validation Rules
+- invalid when self.status != "created"

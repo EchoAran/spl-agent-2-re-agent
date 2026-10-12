@@ -39,14 +39,14 @@ class FunctionInfo:
 
 class PythonProjectScanner:
     def discover_python_files(self, project_root: str | Path) -> List[Path]:
-        root = Path(project_root).resolve()
+        root = Path(project_root)
         files: List[Path] = []
         for path in root.rglob("*.py"):
             try:
-                rel_parts = path.resolve().relative_to(root).parts
+                relative_parts = path.resolve().relative_to(root.resolve()).parts
             except ValueError:
-                rel_parts = path.parts
-            if any(part in IGNORED_DIRS for part in rel_parts):
+                relative_parts = path.parts
+            if any(part in IGNORED_DIRS for part in relative_parts[:-1]):
                 continue
             files.append(path)
         return sorted(files)

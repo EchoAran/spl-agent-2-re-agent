@@ -1,0 +1,96 @@
+{
+  "page_id": "topic:authentication",
+  "page_type": "topic",
+  "title": "Authentication",
+  "slug": "authentication",
+  "url": "/wiki/topic/authentication",
+  "entity_kind": "topic",
+  "entity_id": "Authentication",
+  "qualified_name": "Authentication",
+  "source_refs": [
+    "artifacts/*_cards"
+  ],
+  "summary": "Entities related to Authentication.",
+  "body_markdown": "# Authentication\n\n- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__]]\n- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize]]\n- [[commerce_ops_demo.commerce_ops.services.OrderService._charge]]\n- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway]]\n- [[commerce_ops_demo.commerce_ops.services.OrderService]]\n- [[commerce_ops/services.py]]\n- [[commerce_ops/payments.py]]\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-init",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "target_page_id": "file:commerce_ops/payments.py",
+      "target_url": "/wiki/file/commerce-ops-payments-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/payments.py"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Topics",
+      "url": "/wiki/topic"
+    }
+  ],
+  "tags": [
+    "topic"
+  ],
+  "owners": [],
+  "package_path": "",
+  "file_path": "",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "commerce_ops_demo.commerce_ops.services.OrderService",
+    "commerce_ops/services.py",
+    "commerce_ops/payments.py"
+  ],
+  "graph_refs": [],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.648640+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "b97b059d2084960f2d24a2c3bd2a51cdb0d71c56b699d747a7d49da15be4c64f",
+  "spl_source_path": "",
+  "spl_content": ""
+}

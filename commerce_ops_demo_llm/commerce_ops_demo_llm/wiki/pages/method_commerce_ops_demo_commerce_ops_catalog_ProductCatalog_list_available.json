@@ -1,0 +1,90 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "slug": "commerce-ops-demo-commerce-ops-catalog-productcatalog-list-available",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-list-available",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/list_available.spl"
+  ],
+  "summary": "Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available\n\nReturn products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.\" list_available]\n    [INPUTS]\n        <REF> tag </REF>: str \"Optional tag used to filter products; if empty, no tag-based filtering is applied.\"\n        <REF> self.products </REF>: Dict[Any, Product] \"Internal mapping of products from which values are read and filtered.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> available_products </REF>: List[Product] \"List of in-stock products, optionally filtered by tag, sorted by product.sku ascending.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Collect products with stock > 0 from self.products.values() RESULT values]\n            [COMMAND If tag is non-empty, filter values to products where tag is in product.tags RESULT values]\n            [COMMAND Sort values by product.sku in ascending order and produce final list RESULT available_products]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: tag is a non-empty string]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Filter current values to include only products whose tags contain the given tag RESULT values]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [ALTERNATIVE_FLOW: tag is an empty string]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Skip tag-based filtering and retain the current values RESULT values]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/catalog.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available\n\nReturn products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.\n\n## Inputs\n- tag (str): Optional tag used to filter products; if empty, no tag-based filtering is applied.\n- self.products (Dict[Any, Product]): Internal mapping of products from which values are read and filtered.\n\n## Outputs\n- available_products (List[Product]): List of in-stock products, optionally filtered by tag, sorted by product.sku ascending.\n\n## Main Effect\nSort values by product.sku in ascending order and produce final list\n\n## Calls and Callers\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target_page_id": "file:commerce_ops/catalog.py",
+      "target_url": "/wiki/file/commerce-ops-catalog-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/catalog.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "source_url": "/wiki/topic/configuration",
+      "relation": "topic_mentions",
+      "label": "Configuration"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/catalog.py",
+      "url": "/wiki/file/commerce-ops-catalog-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/catalog.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.631184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "61f788296ffce341d61a556692d6f59b31efc87479e2c2df88e78328869e0498",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/list_available.spl",
+  "spl_content": "[DEFINE_WORKER: \"Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order.\" list_available]\n    [INPUTS]\n        <REF> tag </REF>: str \"Optional tag used to filter products; if empty, no tag-based filtering is applied.\"\n        <REF> self.products </REF>: Dict[Any, Product] \"Internal mapping of products from which values are read and filtered.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> available_products </REF>: List[Product] \"List of in-stock products, optionally filtered by tag, sorted by product.sku ascending.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Collect products with stock > 0 from self.products.values() RESULT values]\n            [COMMAND If tag is non-empty, filter values to products where tag is in product.tags RESULT values]\n            [COMMAND Sort values by product.sku in ascending order and produce final list RESULT available_products]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: tag is a non-empty string]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Filter current values to include only products whose tags contain the given tag RESULT values]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [ALTERNATIVE_FLOW: tag is an empty string]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Skip tag-based filtering and retain the current values RESULT values]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n[END_WORKER]"
+}

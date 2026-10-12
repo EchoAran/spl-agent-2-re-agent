@@ -1,0 +1,21 @@
+[DEFINE_WORKER: "Apply a coupon code to a subtotal in integer cents by normalizing the code, supporting a 10% discount (SAVE10), a nonnegative floor 500-cent deduction (MINUS500), and otherwise returning the subtotal unchanged." apply_discount]
+    [INPUTS]
+        <REF> subtotal </REF>: int "Purchase subtotal in integer cents."
+        <REF> coupon </REF>: str | None "Coupon code; when None or empty string, no discount is applied."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> result </REF>: int "Discounted amount in integer cents."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND If coupon is falsy (None or empty string), immediately return subtotal unchanged. RESULT final_total]
+            [COMMAND Normalize the coupon by stripping leading/trailing whitespace and converting to uppercase (coupon = coupon.strip().upper()). RESULT coupon]
+            [COMMAND If coupon equals "SAVE10", compute int(subtotal * 0.9) (truncates toward zero) and return it. RESULT final_total]
+            [COMMAND If coupon equals "MINUS500", compute max(0, subtotal - 500) and return it. RESULT final_total]
+            [COMMAND For any other coupon value, return subtotal unchanged. RESULT final_total]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

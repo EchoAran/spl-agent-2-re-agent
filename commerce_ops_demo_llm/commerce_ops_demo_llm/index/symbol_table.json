@@ -1,0 +1,3145 @@
+{
+  "commerce_ops_demo.commerce_ops.catalog.normalize_sku": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "name": "normalize_sku",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/catalog.py",
+    "start_line": 8,
+    "end_line": 11,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def normalize_sku(value: str) -> str:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def normalize_sku(value: str) -> str:\n    if not value or not value.strip():\n        raise ValueError(\"sku is required\")\n    return value.strip().upper()",
+    "raw_calls": [
+      {
+        "call_text": "value.strip().upper()",
+        "lineno": 11,
+        "call_type": "method_call",
+        "target_repr": "value.strip().upper",
+        "receiver_repr": "value.strip()"
+      },
+      {
+        "call_text": "ValueError(\"sku is required\")",
+        "lineno": 10,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "value.strip()",
+        "lineno": 9,
+        "call_type": "method_call",
+        "target_repr": "value.strip",
+        "receiver_repr": "value"
+      },
+      {
+        "call_text": "value.strip()",
+        "lineno": 11,
+        "call_type": "method_call",
+        "target_repr": "value.strip",
+        "receiver_repr": "value"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"sku is required\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when not value or not value.strip()"
+    ],
+    "annotations": {
+      "returns": "str",
+      "arguments": {
+        "value": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "name": "ProductCatalog",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/catalog.py",
+    "start_line": 14,
+    "end_line": 49,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "ProductCatalog",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class ProductCatalog:\n    def __init__(self, products: Iterable[Product]):\n        self.products: Dict[str, Product] = {}\n        for product in products:\n            self.products[normalize_sku(product.sku)] = product\n\n    def get(self, sku: str) -> Product:\n        normalized = normalize_sku(sku)\n        if normalized not in self.products:\n            raise KeyError(f\"unknown sku {normalized}\")\n        return self.products[normalized]\n\n    def list_available(self, tag: str = \"\") -> List[Product]:\n        values = [product for product in self.products.values() if product.stock > 0]\n        if tag:\n            values = [product for product in values if tag in product.tags]\n        return sorted(values, key=lambda product: product.sku)\n\n    def reserve_items(self, items: List[CartItem]) -> List[Product]:\n        reserved: List[Product] = []\n        try:\n            for item in items:\n                item.validate()\n                product = self.get(item.sku)\n                product.reserve(item.qty)\n                reserved.append(product)\n            return reserved\n        except Exception:\n            for product, item in zip(reserved, items):\n                product.release(item.qty)\n            raise\n\n    def release_items(self, items: List[CartItem]) -> None:\n        for item in items:\n            product = self.get(item.sku)\n            product.release(item.qty)",
+    "raw_calls": [],
+    "state_reads": [
+      "products"
+    ],
+    "state_writes": [
+      "products"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "products (reads=2, writes=1)"
+    ],
+    "public_methods": [
+      "__init__",
+      "get",
+      "list_available",
+      "reserve_items",
+      "release_items"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "start_line": 15,
+    "end_line": 18,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def __init__(self, products: Iterable[Product]):",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(self, products: Iterable[Product]):\n        self.products: Dict[str, Product] = {}\n        for product in products:\n            self.products[normalize_sku(product.sku)] = product",
+    "raw_calls": [
+      {
+        "call_text": "normalize_sku(product.sku)",
+        "lineno": 18,
+        "call_type": "direct_call",
+        "target_repr": "normalize_sku",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "products"
+    ],
+    "state_writes": [
+      "products"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.products",
+      "mutates self.products[normalize_sku(product.sku)]"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "products must contain normalize_sku(product.sku)"
+    ],
+    "annotations": {
+      "returns": null,
+      "arguments": {
+        "products": "Iterable[Product]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "name": "get",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "start_line": 20,
+    "end_line": 24,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def get(self, sku: str) -> Product:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def get(self, sku: str) -> Product:\n        normalized = normalize_sku(sku)\n        if normalized not in self.products:\n            raise KeyError(f\"unknown sku {normalized}\")\n        return self.products[normalized]",
+    "raw_calls": [
+      {
+        "call_text": "normalize_sku(sku)",
+        "lineno": 21,
+        "call_type": "direct_call",
+        "target_repr": "normalize_sku",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "KeyError(f\"unknown sku {normalized}\")",
+        "lineno": 23,
+        "call_type": "direct_call",
+        "target_repr": "KeyError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "products"
+    ],
+    "state_writes": [],
+    "raises": [
+      "raise KeyError(f\"unknown sku {normalized}\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when normalized not in self.products"
+    ],
+    "annotations": {
+      "returns": "Product",
+      "arguments": {
+        "sku": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+    "name": "list_available",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "start_line": 26,
+    "end_line": 30,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def list_available(self, tag: str = \"\") -> List[Product]:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def list_available(self, tag: str = \"\") -> List[Product]:\n        values = [product for product in self.products.values() if product.stock > 0]\n        if tag:\n            values = [product for product in values if tag in product.tags]\n        return sorted(values, key=lambda product: product.sku)",
+    "raw_calls": [
+      {
+        "call_text": "sorted(values, key=lambda product: product.sku)",
+        "lineno": 30,
+        "call_type": "direct_call",
+        "target_repr": "sorted",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "self.products.values()",
+        "lineno": 27,
+        "call_type": "method_call",
+        "target_repr": "self.products.values",
+        "receiver_repr": "self.products"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[Product]",
+      "arguments": {
+        "tag": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "name": "reserve_items",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "start_line": 32,
+    "end_line": 44,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def reserve_items(self, items: List[CartItem]) -> List[Product]:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def reserve_items(self, items: List[CartItem]) -> List[Product]:\n        reserved: List[Product] = []\n        try:\n            for item in items:\n                item.validate()\n                product = self.get(item.sku)\n                product.reserve(item.qty)\n                reserved.append(product)\n            return reserved\n        except Exception:\n            for product, item in zip(reserved, items):\n                product.release(item.qty)\n            raise",
+    "raw_calls": [
+      {
+        "call_text": "item.validate()",
+        "lineno": 36,
+        "call_type": "method_call",
+        "target_repr": "item.validate",
+        "receiver_repr": "item"
+      },
+      {
+        "call_text": "self.get(item.sku)",
+        "lineno": 37,
+        "call_type": "method_call",
+        "target_repr": "self.get",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "product.reserve(item.qty)",
+        "lineno": 38,
+        "call_type": "method_call",
+        "target_repr": "product.reserve",
+        "receiver_repr": "product"
+      },
+      {
+        "call_text": "reserved.append(product)",
+        "lineno": 39,
+        "call_type": "method_call",
+        "target_repr": "reserved.append",
+        "receiver_repr": "reserved"
+      },
+      {
+        "call_text": "zip(reserved, items)",
+        "lineno": 42,
+        "call_type": "direct_call",
+        "target_repr": "zip",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "product.release(item.qty)",
+        "lineno": 43,
+        "call_type": "method_call",
+        "target_repr": "product.release",
+        "receiver_repr": "product"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise"
+    ],
+    "side_effect_candidates": [
+      "reserved.append(product)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[Product]",
+      "arguments": {
+        "items": "List[CartItem]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items": {
+    "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "name": "release_items",
+    "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/catalog.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "start_line": 46,
+    "end_line": 49,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def release_items(self, items: List[CartItem]) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def release_items(self, items: List[CartItem]) -> None:\n        for item in items:\n            product = self.get(item.sku)\n            product.release(item.qty)",
+    "raw_calls": [
+      {
+        "call_text": "self.get(item.sku)",
+        "lineno": 48,
+        "call_type": "method_call",
+        "target_repr": "self.get",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "product.release(item.qty)",
+        "lineno": 49,
+        "call_type": "method_call",
+        "target_repr": "product.release",
+        "receiver_repr": "product"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "items": "List[CartItem]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.cli.parse_cart": {
+    "id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "name": "parse_cart",
+    "qualified_name": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/cli.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/cli.py",
+    "start_line": 14,
+    "end_line": 19,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def parse_cart(raw_items: List[str]) -> List[CartItem]:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": true,
+    "source_code": "def parse_cart(raw_items: List[str]) -> List[CartItem]:\n    items = []\n    for raw in raw_items:\n        sku, qty_text = raw.split(\":\", 1)\n        items.append(CartItem(sku.strip(), int(qty_text)))\n    return items",
+    "raw_calls": [
+      {
+        "call_text": "raw.split(\":\", 1)",
+        "lineno": 17,
+        "call_type": "method_call",
+        "target_repr": "raw.split",
+        "receiver_repr": "raw"
+      },
+      {
+        "call_text": "items.append(CartItem(sku.strip(), int(qty_text)))",
+        "lineno": 18,
+        "call_type": "method_call",
+        "target_repr": "items.append",
+        "receiver_repr": "items"
+      },
+      {
+        "call_text": "CartItem(sku.strip(), int(qty_text))",
+        "lineno": 18,
+        "call_type": "direct_call",
+        "target_repr": "CartItem",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "sku.strip()",
+        "lineno": 18,
+        "call_type": "method_call",
+        "target_repr": "sku.strip",
+        "receiver_repr": "sku"
+      },
+      {
+        "call_text": "int(qty_text)",
+        "lineno": 18,
+        "call_type": "direct_call",
+        "target_repr": "int",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [
+      "items.append(CartItem(sku.strip(), int(qty_text)))"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[CartItem]",
+      "arguments": {
+        "raw_items": "List[str]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.cli.build_demo_service": {
+    "id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "name": "build_demo_service",
+    "qualified_name": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/cli.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/cli.py",
+    "start_line": 22,
+    "end_line": 34,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def build_demo_service() -> OrderService:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": true,
+    "source_code": "def build_demo_service() -> OrderService:\n    catalog = ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )\n    pricing = PricingPolicy(825, {\"SAVE10\": 1000, \"VIP5\": 500})\n    payments = PaymentGateway()\n    repository = OrderRepository()\n    notifications = NotificationService()\n    return OrderService(catalog, pricing, payments, repository, notifications)",
+    "raw_calls": [
+      {
+        "call_text": "ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )",
+        "lineno": 23,
+        "call_type": "direct_call",
+        "target_repr": "ProductCatalog",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "PricingPolicy(825, {\"SAVE10\": 1000, \"VIP5\": 500})",
+        "lineno": 30,
+        "call_type": "direct_call",
+        "target_repr": "PricingPolicy",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "PaymentGateway()",
+        "lineno": 31,
+        "call_type": "direct_call",
+        "target_repr": "PaymentGateway",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "OrderRepository()",
+        "lineno": 32,
+        "call_type": "direct_call",
+        "target_repr": "OrderRepository",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "NotificationService()",
+        "lineno": 33,
+        "call_type": "direct_call",
+        "target_repr": "NotificationService",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "OrderService(catalog, pricing, payments, repository, notifications)",
+        "lineno": 34,
+        "call_type": "direct_call",
+        "target_repr": "OrderService",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"])",
+        "lineno": 25,
+        "call_type": "direct_call",
+        "target_repr": "Product",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"])",
+        "lineno": 26,
+        "call_type": "direct_call",
+        "target_repr": "Product",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"])",
+        "lineno": 27,
+        "call_type": "direct_call",
+        "target_repr": "Product",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [
+      "ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )"
+    ],
+    "local_type_candidates": {
+      "catalog": "ProductCatalog",
+      "notifications": "NotificationService",
+      "payments": "PaymentGateway",
+      "pricing": "PricingPolicy",
+      "repository": "OrderRepository"
+    },
+    "validation_rules": [],
+    "annotations": {
+      "returns": "OrderService",
+      "arguments": {}
+    }
+  },
+  "commerce_ops_demo.commerce_ops.cli.run_checkout_demo": {
+    "id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "name": "run_checkout_demo",
+    "qualified_name": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/cli.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/cli.py",
+    "start_line": 37,
+    "end_line": 43,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def run_checkout_demo(raw_items: List[str], coupon: str = \"\") -> str:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": true,
+    "source_code": "def run_checkout_demo(raw_items: List[str], coupon: str = \"\") -> str:\n    service = build_demo_service()\n    customer = Customer(\"cust-100\", \"reader@example.com\", 20000, \"vip\")\n    items = parse_cart(raw_items)\n    order = service.checkout(customer, items, coupon)\n    history = service.customer_history(customer.customer_id)\n    return f\"created={order.order_id}; status={order.status}; history_count={len(history)}\"",
+    "raw_calls": [
+      {
+        "call_text": "build_demo_service()",
+        "lineno": 38,
+        "call_type": "direct_call",
+        "target_repr": "build_demo_service",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "Customer(\"cust-100\", \"reader@example.com\", 20000, \"vip\")",
+        "lineno": 39,
+        "call_type": "direct_call",
+        "target_repr": "Customer",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "parse_cart(raw_items)",
+        "lineno": 40,
+        "call_type": "direct_call",
+        "target_repr": "parse_cart",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "service.checkout(customer, items, coupon)",
+        "lineno": 41,
+        "call_type": "method_call",
+        "target_repr": "service.checkout",
+        "receiver_repr": "service"
+      },
+      {
+        "call_text": "service.customer_history(customer.customer_id)",
+        "lineno": 42,
+        "call_type": "method_call",
+        "target_repr": "service.customer_history",
+        "receiver_repr": "service"
+      },
+      {
+        "call_text": "len(history)",
+        "lineno": 43,
+        "call_type": "direct_call",
+        "target_repr": "len",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {
+      "customer": "Customer"
+    },
+    "validation_rules": [],
+    "annotations": {
+      "returns": "str",
+      "arguments": {
+        "raw_items": "List[str]",
+        "coupon": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.cli.main": {
+    "id": "commerce_ops_demo.commerce_ops.cli.main",
+    "name": "main",
+    "qualified_name": "commerce_ops_demo.commerce_ops.cli.main",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/cli.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/cli.py",
+    "start_line": 46,
+    "end_line": 47,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def main() -> None:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": true,
+    "source_code": "def main() -> None:\n    print(run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\"))",
+    "raw_calls": [
+      {
+        "call_text": "print(run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\"))",
+        "lineno": 47,
+        "call_type": "direct_call",
+        "target_repr": "print",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\")",
+        "lineno": 47,
+        "call_type": "direct_call",
+        "target_repr": "run_checkout_demo",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "None",
+      "arguments": {}
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Product": {
+    "id": "commerce_ops_demo.commerce_ops.models.Product",
+    "name": "Product",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Product",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/models.py",
+    "start_line": 9,
+    "end_line": 26,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "Product",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class Product:\n    sku: str\n    name: str\n    price_cents: int\n    stock: int\n    tags: List[str] = field(default_factory=list)\n\n    def reserve(self, qty: int) -> None:\n        if qty <= 0:\n            raise ValueError(\"qty must be positive\")\n        if qty > self.stock:\n            raise ValueError(f\"not enough stock for {self.sku}\")\n        self.stock -= qty\n\n    def release(self, qty: int) -> None:\n        if qty <= 0:\n            raise ValueError(\"qty must be positive\")\n        self.stock += qty",
+    "raw_calls": [],
+    "state_reads": [
+      "sku",
+      "stock"
+    ],
+    "state_writes": [
+      "sku",
+      "stock"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "sku",
+      "name",
+      "price_cents",
+      "stock",
+      "tags"
+    ],
+    "instance_fields": [
+      "sku (reads=1, writes=0)",
+      "stock (reads=2, writes=2)"
+    ],
+    "public_methods": [
+      "reserve",
+      "release"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.models.Product.reserve": {
+    "id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "name": "reserve",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Product",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Product",
+    "start_line": 16,
+    "end_line": 21,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def reserve(self, qty: int) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def reserve(self, qty: int) -> None:\n        if qty <= 0:\n            raise ValueError(\"qty must be positive\")\n        if qty > self.stock:\n            raise ValueError(f\"not enough stock for {self.sku}\")\n        self.stock -= qty",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"qty must be positive\")",
+        "lineno": 18,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "ValueError(f\"not enough stock for {self.sku}\")",
+        "lineno": 20,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "sku",
+      "stock"
+    ],
+    "state_writes": [
+      "stock"
+    ],
+    "raises": [
+      "raise ValueError(\"qty must be positive\")",
+      "raise ValueError(f\"not enough stock for {self.sku}\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.stock"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when qty > self.stock",
+      "qty > 0"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "qty": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Product.release": {
+    "id": "commerce_ops_demo.commerce_ops.models.Product.release",
+    "name": "release",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.release",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Product",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Product",
+    "start_line": 23,
+    "end_line": 26,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def release(self, qty: int) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def release(self, qty: int) -> None:\n        if qty <= 0:\n            raise ValueError(\"qty must be positive\")\n        self.stock += qty",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"qty must be positive\")",
+        "lineno": 25,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "stock"
+    ],
+    "state_writes": [
+      "stock"
+    ],
+    "raises": [
+      "raise ValueError(\"qty must be positive\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.stock"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "qty > 0"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "qty": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Customer": {
+    "id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "name": "Customer",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/models.py",
+    "start_line": 30,
+    "end_line": 47,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "Customer",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class Customer:\n    customer_id: str\n    email: str\n    balance_cents: int\n    tier: str = \"standard\"\n\n    def can_spend(self, amount_cents: int) -> bool:\n        return amount_cents > 0 and self.balance_cents >= amount_cents\n\n    def debit(self, amount_cents: int) -> None:\n        if not self.can_spend(amount_cents):\n            raise ValueError(\"customer has insufficient balance\")\n        self.balance_cents -= amount_cents\n\n    def credit(self, amount_cents: int) -> None:\n        if amount_cents <= 0:\n            raise ValueError(\"amount must be positive\")\n        self.balance_cents += amount_cents",
+    "raw_calls": [],
+    "state_reads": [
+      "balance_cents"
+    ],
+    "state_writes": [
+      "balance_cents"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "customer_id",
+      "email",
+      "balance_cents",
+      "tier"
+    ],
+    "instance_fields": [
+      "balance_cents (reads=3, writes=2)"
+    ],
+    "public_methods": [
+      "can_spend",
+      "debit",
+      "credit"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.models.Customer.can_spend": {
+    "id": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "name": "can_spend",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "start_line": 36,
+    "end_line": 37,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def can_spend(self, amount_cents: int) -> bool:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def can_spend(self, amount_cents: int) -> bool:\n        return amount_cents > 0 and self.balance_cents >= amount_cents",
+    "raw_calls": [],
+    "state_reads": [
+      "balance_cents"
+    ],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "bool",
+      "arguments": {
+        "amount_cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Customer.debit": {
+    "id": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "name": "debit",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "start_line": 39,
+    "end_line": 42,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def debit(self, amount_cents: int) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def debit(self, amount_cents: int) -> None:\n        if not self.can_spend(amount_cents):\n            raise ValueError(\"customer has insufficient balance\")\n        self.balance_cents -= amount_cents",
+    "raw_calls": [
+      {
+        "call_text": "self.can_spend(amount_cents)",
+        "lineno": 40,
+        "call_type": "method_call",
+        "target_repr": "self.can_spend",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "ValueError(\"customer has insufficient balance\")",
+        "lineno": 41,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "balance_cents"
+    ],
+    "state_writes": [
+      "balance_cents"
+    ],
+    "raises": [
+      "raise ValueError(\"customer has insufficient balance\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.balance_cents"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when not self.can_spend(amount_cents)"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "amount_cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Customer.credit": {
+    "id": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "name": "credit",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Customer",
+    "start_line": 44,
+    "end_line": 47,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def credit(self, amount_cents: int) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def credit(self, amount_cents: int) -> None:\n        if amount_cents <= 0:\n            raise ValueError(\"amount must be positive\")\n        self.balance_cents += amount_cents",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"amount must be positive\")",
+        "lineno": 46,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "balance_cents"
+    ],
+    "state_writes": [
+      "balance_cents"
+    ],
+    "raises": [
+      "raise ValueError(\"amount must be positive\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.balance_cents"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "amount_cents > 0"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "amount_cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.CartItem": {
+    "id": "commerce_ops_demo.commerce_ops.models.CartItem",
+    "name": "CartItem",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/models.py",
+    "start_line": 51,
+    "end_line": 59,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "CartItem",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class CartItem:\n    sku: str\n    qty: int\n\n    def validate(self) -> None:\n        if not self.sku:\n            raise ValueError(\"sku is required\")\n        if self.qty <= 0:\n            raise ValueError(\"qty must be positive\")",
+    "raw_calls": [],
+    "state_reads": [
+      "qty",
+      "sku"
+    ],
+    "state_writes": [
+      "qty",
+      "sku"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "sku",
+      "qty"
+    ],
+    "instance_fields": [
+      "qty (reads=1, writes=0)",
+      "sku (reads=1, writes=0)"
+    ],
+    "public_methods": [
+      "validate"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.models.CartItem.validate": {
+    "id": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+    "name": "validate",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.CartItem",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.CartItem",
+    "start_line": 55,
+    "end_line": 59,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def validate(self) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def validate(self) -> None:\n        if not self.sku:\n            raise ValueError(\"sku is required\")\n        if self.qty <= 0:\n            raise ValueError(\"qty must be positive\")",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"sku is required\")",
+        "lineno": 57,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "ValueError(\"qty must be positive\")",
+        "lineno": 59,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "qty",
+      "sku"
+    ],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"sku is required\")",
+      "raise ValueError(\"qty must be positive\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when not self.sku",
+      "self.qty > 0"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {}
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Order": {
+    "id": "commerce_ops_demo.commerce_ops.models.Order",
+    "name": "Order",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Order",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/models.py",
+    "start_line": 63,
+    "end_line": 91,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "Order",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class Order:\n    order_id: str\n    customer_id: str\n    items: List[CartItem]\n    total_cents: int\n    status: str = \"created\"\n    events: List[Dict[str, str]] = field(default_factory=list)\n    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))\n\n    def mark_paid(self, payment_id: str) -> None:\n        if self.status != \"created\":\n            raise ValueError(\"only created orders can be marked paid\")\n        self.status = \"paid\"\n        self.add_event(\"paid\", payment_id)\n\n    def mark_cancelled(self, reason: str) -> None:\n        if self.status == \"paid\":\n            raise ValueError(\"paid orders cannot be cancelled here\")\n        self.status = \"cancelled\"\n        self.add_event(\"cancelled\", reason)\n\n    def add_event(self, kind: str, detail: str) -> None:\n        self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )",
+    "raw_calls": [],
+    "state_reads": [
+      "status",
+      "events"
+    ],
+    "state_writes": [
+      "status",
+      "events"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "order_id",
+      "customer_id",
+      "items",
+      "total_cents",
+      "status",
+      "events",
+      "created_at"
+    ],
+    "instance_fields": [
+      "events (reads=0, writes=1)",
+      "status (reads=2, writes=2)"
+    ],
+    "public_methods": [
+      "mark_paid",
+      "mark_cancelled",
+      "add_event"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.models.Order.mark_paid": {
+    "id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "name": "mark_paid",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "start_line": 72,
+    "end_line": 76,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def mark_paid(self, payment_id: str) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def mark_paid(self, payment_id: str) -> None:\n        if self.status != \"created\":\n            raise ValueError(\"only created orders can be marked paid\")\n        self.status = \"paid\"\n        self.add_event(\"paid\", payment_id)",
+    "raw_calls": [
+      {
+        "call_text": "self.add_event(\"paid\", payment_id)",
+        "lineno": 76,
+        "call_type": "method_call",
+        "target_repr": "self.add_event",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "ValueError(\"only created orders can be marked paid\")",
+        "lineno": 74,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "status"
+    ],
+    "state_writes": [
+      "status"
+    ],
+    "raises": [
+      "raise ValueError(\"only created orders can be marked paid\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.status"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when self.status != \"created\""
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "payment_id": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled": {
+    "id": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "name": "mark_cancelled",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "start_line": 78,
+    "end_line": 82,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def mark_cancelled(self, reason: str) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def mark_cancelled(self, reason: str) -> None:\n        if self.status == \"paid\":\n            raise ValueError(\"paid orders cannot be cancelled here\")\n        self.status = \"cancelled\"\n        self.add_event(\"cancelled\", reason)",
+    "raw_calls": [
+      {
+        "call_text": "self.add_event(\"cancelled\", reason)",
+        "lineno": 82,
+        "call_type": "method_call",
+        "target_repr": "self.add_event",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "ValueError(\"paid orders cannot be cancelled here\")",
+        "lineno": 80,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "status"
+    ],
+    "state_writes": [
+      "status"
+    ],
+    "raises": [
+      "raise ValueError(\"paid orders cannot be cancelled here\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.status"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when self.status == \"paid\""
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "reason": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.models.Order.add_event": {
+    "id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "name": "add_event",
+    "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/models.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.models.Order",
+    "start_line": 84,
+    "end_line": 91,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def add_event(self, kind: str, detail: str) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def add_event(self, kind: str, detail: str) -> None:\n        self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )",
+    "raw_calls": [
+      {
+        "call_text": "self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )",
+        "lineno": 85,
+        "call_type": "method_call",
+        "target_repr": "self.events.append",
+        "receiver_repr": "self.events"
+      },
+      {
+        "call_text": "datetime.now(timezone.utc).isoformat()",
+        "lineno": 89,
+        "call_type": "method_call",
+        "target_repr": "datetime.now(timezone.utc).isoformat",
+        "receiver_repr": "datetime.now(timezone.utc)"
+      },
+      {
+        "call_text": "datetime.now(timezone.utc)",
+        "lineno": 89,
+        "call_type": "method_call",
+        "target_repr": "datetime.now",
+        "receiver_repr": "datetime"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [
+      "events"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.events via append",
+      "self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "kind": "str",
+        "detail": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.notifications.format_currency": {
+    "id": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "name": "format_currency",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "kind": "function",
+    "language": "python",
+    "file_id": "commerce_ops/notifications.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/notifications.py",
+    "start_line": 8,
+    "end_line": 11,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def format_currency(cents: int) -> str:",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def format_currency(cents: int) -> str:\n    if cents < 0:\n        raise ValueError(\"currency value cannot be negative\")\n    return f\"${cents / 100:.2f}\"",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"currency value cannot be negative\")",
+        "lineno": 10,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"currency value cannot be negative\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "cents > 0"
+    ],
+    "annotations": {
+      "returns": "str",
+      "arguments": {
+        "cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.notifications.NotificationService": {
+    "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "name": "NotificationService",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/notifications.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/notifications.py",
+    "start_line": 14,
+    "end_line": 30,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "NotificationService",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class NotificationService:\n    def __init__(self):\n        self.sent_messages: List[str] = []\n\n    def send_receipt(self, customer: Customer, order: Order) -> str:\n        message = f\"Receipt for {customer.email}: order {order.order_id} total {format_currency(order.total_cents)}\"\n        self.sent_messages.append(message)\n        return message\n\n    def send_low_stock_alert(self, products: List[Product], threshold: int = 2) -> List[str]:\n        alerts = []\n        for product in products:\n            if product.stock <= threshold:\n                alert = f\"Low stock for {product.sku}: {product.stock}\"\n                self.sent_messages.append(alert)\n                alerts.append(alert)\n        return alerts",
+    "raw_calls": [],
+    "state_reads": [
+      "sent_messages"
+    ],
+    "state_writes": [
+      "sent_messages"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "sent_messages (reads=0, writes=3)"
+    ],
+    "public_methods": [
+      "__init__",
+      "send_receipt",
+      "send_low_stock_alert"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/notifications.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "start_line": 15,
+    "end_line": 16,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def __init__(self):",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(self):\n        self.sent_messages: List[str] = []",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [
+      "sent_messages"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.sent_messages"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": null,
+      "arguments": {}
+    }
+  },
+  "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt": {
+    "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "name": "send_receipt",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/notifications.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "start_line": 18,
+    "end_line": 21,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def send_receipt(self, customer: Customer, order: Order) -> str:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def send_receipt(self, customer: Customer, order: Order) -> str:\n        message = f\"Receipt for {customer.email}: order {order.order_id} total {format_currency(order.total_cents)}\"\n        self.sent_messages.append(message)\n        return message",
+    "raw_calls": [
+      {
+        "call_text": "self.sent_messages.append(message)",
+        "lineno": 20,
+        "call_type": "method_call",
+        "target_repr": "self.sent_messages.append",
+        "receiver_repr": "self.sent_messages"
+      },
+      {
+        "call_text": "format_currency(order.total_cents)",
+        "lineno": 19,
+        "call_type": "direct_call",
+        "target_repr": "format_currency",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [
+      "sent_messages"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.sent_messages via append",
+      "self.sent_messages.append(message)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "str",
+      "arguments": {
+        "customer": "Customer",
+        "order": "Order"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert": {
+    "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "name": "send_low_stock_alert",
+    "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/notifications.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "start_line": 23,
+    "end_line": 30,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def send_low_stock_alert(self, products: List[Product], threshold: int = 2) -> List[str]:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def send_low_stock_alert(self, products: List[Product], threshold: int = 2) -> List[str]:\n        alerts = []\n        for product in products:\n            if product.stock <= threshold:\n                alert = f\"Low stock for {product.sku}: {product.stock}\"\n                self.sent_messages.append(alert)\n                alerts.append(alert)\n        return alerts",
+    "raw_calls": [
+      {
+        "call_text": "self.sent_messages.append(alert)",
+        "lineno": 28,
+        "call_type": "method_call",
+        "target_repr": "self.sent_messages.append",
+        "receiver_repr": "self.sent_messages"
+      },
+      {
+        "call_text": "alerts.append(alert)",
+        "lineno": 29,
+        "call_type": "method_call",
+        "target_repr": "alerts.append",
+        "receiver_repr": "alerts"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [
+      "sent_messages"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "alerts.append(alert)",
+      "mutates self.sent_messages via append",
+      "self.sent_messages.append(alert)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[str]",
+      "arguments": {
+        "products": "List[Product]",
+        "threshold": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentError": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "name": "PaymentError",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/payments.py",
+    "start_line": 9,
+    "end_line": 10,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "PaymentError",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class PaymentError(RuntimeError):\n    pass",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [
+      "RuntimeError"
+    ],
+    "class_variables": [],
+    "instance_fields": [],
+    "public_methods": [],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentReceipt": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "name": "PaymentReceipt",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/payments.py",
+    "start_line": 14,
+    "end_line": 17,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "PaymentReceipt",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class PaymentReceipt:\n    payment_id: str\n    amount_cents: int\n    provider: str",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "payment_id",
+      "amount_cents",
+      "provider"
+    ],
+    "instance_fields": [],
+    "public_methods": [],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentGateway": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "name": "PaymentGateway",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/payments.py",
+    "start_line": 20,
+    "end_line": 40,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "PaymentGateway",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class PaymentGateway:\n    def __init__(self, provider: str = \"internal-wallet\"):\n        self.provider = provider\n        self.authorized_total_cents = 0\n        self.refunded_total_cents = 0\n\n    def authorize(self, customer: Customer, amount_cents: int) -> PaymentReceipt:\n        if amount_cents <= 0:\n            raise PaymentError(\"amount must be positive\")\n        try:\n            customer.debit(amount_cents)\n        except ValueError as exc:\n            raise PaymentError(str(exc)) from exc\n        self.authorized_total_cents += amount_cents\n        return PaymentReceipt(str(uuid4()), amount_cents, self.provider)\n\n    def refund(self, customer: Customer, receipt: PaymentReceipt) -> None:\n        if receipt.amount_cents <= 0:\n            raise PaymentError(\"receipt amount must be positive\")\n        customer.credit(receipt.amount_cents)\n        self.refunded_total_cents += receipt.amount_cents",
+    "raw_calls": [],
+    "state_reads": [
+      "authorized_total_cents",
+      "provider",
+      "refunded_total_cents"
+    ],
+    "state_writes": [
+      "authorized_total_cents",
+      "provider",
+      "refunded_total_cents"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "authorized_total_cents (reads=1, writes=2)",
+      "provider (reads=1, writes=1)",
+      "refunded_total_cents (reads=1, writes=2)"
+    ],
+    "public_methods": [
+      "__init__",
+      "authorize",
+      "refund"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "start_line": 21,
+    "end_line": 24,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def __init__(self, provider: str = \"internal-wallet\"):",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(self, provider: str = \"internal-wallet\"):\n        self.provider = provider\n        self.authorized_total_cents = 0\n        self.refunded_total_cents = 0",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [
+      "authorized_total_cents",
+      "provider",
+      "refunded_total_cents"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.authorized_total_cents",
+      "mutates self.provider",
+      "mutates self.refunded_total_cents"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": null,
+      "arguments": {
+        "provider": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "name": "authorize",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "start_line": 26,
+    "end_line": 34,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def authorize(self, customer: Customer, amount_cents: int) -> PaymentReceipt:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def authorize(self, customer: Customer, amount_cents: int) -> PaymentReceipt:\n        if amount_cents <= 0:\n            raise PaymentError(\"amount must be positive\")\n        try:\n            customer.debit(amount_cents)\n        except ValueError as exc:\n            raise PaymentError(str(exc)) from exc\n        self.authorized_total_cents += amount_cents\n        return PaymentReceipt(str(uuid4()), amount_cents, self.provider)",
+    "raw_calls": [
+      {
+        "call_text": "PaymentReceipt(str(uuid4()), amount_cents, self.provider)",
+        "lineno": 34,
+        "call_type": "direct_call",
+        "target_repr": "PaymentReceipt",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "PaymentError(\"amount must be positive\")",
+        "lineno": 28,
+        "call_type": "direct_call",
+        "target_repr": "PaymentError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "customer.debit(amount_cents)",
+        "lineno": 30,
+        "call_type": "method_call",
+        "target_repr": "customer.debit",
+        "receiver_repr": "customer"
+      },
+      {
+        "call_text": "str(uuid4())",
+        "lineno": 34,
+        "call_type": "direct_call",
+        "target_repr": "str",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "PaymentError(str(exc))",
+        "lineno": 32,
+        "call_type": "direct_call",
+        "target_repr": "PaymentError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "uuid4()",
+        "lineno": 34,
+        "call_type": "direct_call",
+        "target_repr": "uuid4",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "str(exc)",
+        "lineno": 32,
+        "call_type": "direct_call",
+        "target_repr": "str",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "authorized_total_cents",
+      "provider"
+    ],
+    "state_writes": [
+      "authorized_total_cents"
+    ],
+    "raises": [
+      "raise PaymentError(\"amount must be positive\")",
+      "raise PaymentError(str(exc)) from exc"
+    ],
+    "side_effect_candidates": [
+      "mutates self.authorized_total_cents"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "amount_cents > 0"
+    ],
+    "annotations": {
+      "returns": "PaymentReceipt",
+      "arguments": {
+        "customer": "Customer",
+        "amount_cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund": {
+    "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+    "name": "refund",
+    "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/payments.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "start_line": 36,
+    "end_line": 40,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def refund(self, customer: Customer, receipt: PaymentReceipt) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def refund(self, customer: Customer, receipt: PaymentReceipt) -> None:\n        if receipt.amount_cents <= 0:\n            raise PaymentError(\"receipt amount must be positive\")\n        customer.credit(receipt.amount_cents)\n        self.refunded_total_cents += receipt.amount_cents",
+    "raw_calls": [
+      {
+        "call_text": "customer.credit(receipt.amount_cents)",
+        "lineno": 39,
+        "call_type": "method_call",
+        "target_repr": "customer.credit",
+        "receiver_repr": "customer"
+      },
+      {
+        "call_text": "PaymentError(\"receipt amount must be positive\")",
+        "lineno": 38,
+        "call_type": "direct_call",
+        "target_repr": "PaymentError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "refunded_total_cents"
+    ],
+    "state_writes": [
+      "refunded_total_cents"
+    ],
+    "raises": [
+      "raise PaymentError(\"receipt amount must be positive\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.refunded_total_cents"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "receipt.amount_cents > 0"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "customer": "Customer",
+        "receipt": "PaymentReceipt"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PriceQuote": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "name": "PriceQuote",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/pricing.py",
+    "start_line": 10,
+    "end_line": 15,
+    "visibility": "public",
+    "decorators": [
+      "dataclass"
+    ],
+    "signature": "PriceQuote",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class PriceQuote:\n    subtotal_cents: int\n    discount_cents: int\n    tax_cents: int\n    total_cents: int\n    coupon: str = \"\"",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [
+      "subtotal_cents",
+      "discount_cents",
+      "tax_cents",
+      "total_cents",
+      "coupon"
+    ],
+    "instance_fields": [],
+    "public_methods": [],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "name": "PricingPolicy",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/pricing.py",
+    "start_line": 18,
+    "end_line": 61,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "PricingPolicy",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class PricingPolicy:\n    def __init__(self, tax_rate_bps: int, coupons: Dict[str, int]):\n        if tax_rate_bps < 0:\n            raise ValueError(\"tax rate cannot be negative\")\n        self.tax_rate_bps = tax_rate_bps\n        self.coupons = {code.upper(): value for code, value in coupons.items()}\n\n    def quote(self, customer: Customer, items: List[CartItem], products: List[Product], coupon: str = \"\") -> PriceQuote:\n        subtotal = self.calculate_subtotal(items, products)\n        discount = self.apply_coupon(customer, subtotal, coupon)\n        taxable = max(subtotal - discount, 0)\n        tax = self.calculate_tax(taxable)\n        total = taxable + tax\n        if total <= 0:\n            raise ValueError(\"total must be positive\")\n        return PriceQuote(subtotal, discount, tax, total, coupon.upper())\n\n    def calculate_subtotal(self, items: List[CartItem], products: List[Product]) -> int:\n        price_by_sku = {product.sku: product.price_cents for product in products}\n        subtotal = 0\n        for item in items:\n            if item.qty <= 0:\n                raise ValueError(\"qty must be positive\")\n            price = price_by_sku[item.sku.upper()]\n            if price <= 0:\n                raise ValueError(\"price_cents must be positive\")\n            subtotal += price * item.qty\n        return subtotal\n\n    def apply_coupon(self, customer: Customer, subtotal_cents: int, coupon: str = \"\") -> int:\n        if not coupon:\n            return 0\n        code = coupon.upper()\n        if code not in self.coupons:\n            raise ValueError(\"coupon is not supported\")\n        discount = self.coupons[code]\n        if customer.tier == \"vip\":\n            discount += 500\n        return min(discount, subtotal_cents)\n\n    def calculate_tax(self, taxable_cents: int) -> int:\n        if taxable_cents < 0:\n            raise ValueError(\"taxable amount cannot be negative\")\n        return taxable_cents * self.tax_rate_bps // 10000",
+    "raw_calls": [],
+    "state_reads": [
+      "coupons",
+      "tax_rate_bps"
+    ],
+    "state_writes": [
+      "coupons",
+      "tax_rate_bps"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "coupons (reads=1, writes=1)",
+      "tax_rate_bps (reads=1, writes=1)"
+    ],
+    "public_methods": [
+      "__init__",
+      "quote",
+      "calculate_subtotal",
+      "apply_coupon",
+      "calculate_tax"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "start_line": 19,
+    "end_line": 23,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def __init__(self, tax_rate_bps: int, coupons: Dict[str, int]):",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(self, tax_rate_bps: int, coupons: Dict[str, int]):\n        if tax_rate_bps < 0:\n            raise ValueError(\"tax rate cannot be negative\")\n        self.tax_rate_bps = tax_rate_bps\n        self.coupons = {code.upper(): value for code, value in coupons.items()}",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"tax rate cannot be negative\")",
+        "lineno": 21,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "code.upper()",
+        "lineno": 23,
+        "call_type": "method_call",
+        "target_repr": "code.upper",
+        "receiver_repr": "code"
+      },
+      {
+        "call_text": "coupons.items()",
+        "lineno": 23,
+        "call_type": "method_call",
+        "target_repr": "coupons.items",
+        "receiver_repr": "coupons"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [
+      "coupons",
+      "tax_rate_bps"
+    ],
+    "raises": [
+      "raise ValueError(\"tax rate cannot be negative\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.coupons",
+      "mutates self.tax_rate_bps"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "tax_rate_bps > 0"
+    ],
+    "annotations": {
+      "returns": null,
+      "arguments": {
+        "tax_rate_bps": "int",
+        "coupons": "Dict[str, int]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "name": "quote",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "start_line": 25,
+    "end_line": 33,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def quote(self, customer: Customer, items: List[CartItem], products: List[Product], coupon: str = \"\") -> PriceQuote:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def quote(self, customer: Customer, items: List[CartItem], products: List[Product], coupon: str = \"\") -> PriceQuote:\n        subtotal = self.calculate_subtotal(items, products)\n        discount = self.apply_coupon(customer, subtotal, coupon)\n        taxable = max(subtotal - discount, 0)\n        tax = self.calculate_tax(taxable)\n        total = taxable + tax\n        if total <= 0:\n            raise ValueError(\"total must be positive\")\n        return PriceQuote(subtotal, discount, tax, total, coupon.upper())",
+    "raw_calls": [
+      {
+        "call_text": "self.calculate_subtotal(items, products)",
+        "lineno": 26,
+        "call_type": "method_call",
+        "target_repr": "self.calculate_subtotal",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "self.apply_coupon(customer, subtotal, coupon)",
+        "lineno": 27,
+        "call_type": "method_call",
+        "target_repr": "self.apply_coupon",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "max(subtotal - discount, 0)",
+        "lineno": 28,
+        "call_type": "direct_call",
+        "target_repr": "max",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "self.calculate_tax(taxable)",
+        "lineno": 29,
+        "call_type": "method_call",
+        "target_repr": "self.calculate_tax",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "PriceQuote(subtotal, discount, tax, total, coupon.upper())",
+        "lineno": 33,
+        "call_type": "direct_call",
+        "target_repr": "PriceQuote",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "ValueError(\"total must be positive\")",
+        "lineno": 32,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "coupon.upper()",
+        "lineno": 33,
+        "call_type": "method_call",
+        "target_repr": "coupon.upper",
+        "receiver_repr": "coupon"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"total must be positive\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "total > 0"
+    ],
+    "annotations": {
+      "returns": "PriceQuote",
+      "arguments": {
+        "customer": "Customer",
+        "items": "List[CartItem]",
+        "products": "List[Product]",
+        "coupon": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "name": "calculate_subtotal",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "start_line": 35,
+    "end_line": 45,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def calculate_subtotal(self, items: List[CartItem], products: List[Product]) -> int:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def calculate_subtotal(self, items: List[CartItem], products: List[Product]) -> int:\n        price_by_sku = {product.sku: product.price_cents for product in products}\n        subtotal = 0\n        for item in items:\n            if item.qty <= 0:\n                raise ValueError(\"qty must be positive\")\n            price = price_by_sku[item.sku.upper()]\n            if price <= 0:\n                raise ValueError(\"price_cents must be positive\")\n            subtotal += price * item.qty\n        return subtotal",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"qty must be positive\")",
+        "lineno": 40,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "item.sku.upper()",
+        "lineno": 41,
+        "call_type": "method_call",
+        "target_repr": "item.sku.upper",
+        "receiver_repr": "item.sku"
+      },
+      {
+        "call_text": "ValueError(\"price_cents must be positive\")",
+        "lineno": 43,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"qty must be positive\")",
+      "raise ValueError(\"price_cents must be positive\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "item.qty > 0",
+      "item.sku.upper() > 0"
+    ],
+    "annotations": {
+      "returns": "int",
+      "arguments": {
+        "items": "List[CartItem]",
+        "products": "List[Product]"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "name": "apply_coupon",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "start_line": 47,
+    "end_line": 56,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def apply_coupon(self, customer: Customer, subtotal_cents: int, coupon: str = \"\") -> int:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def apply_coupon(self, customer: Customer, subtotal_cents: int, coupon: str = \"\") -> int:\n        if not coupon:\n            return 0\n        code = coupon.upper()\n        if code not in self.coupons:\n            raise ValueError(\"coupon is not supported\")\n        discount = self.coupons[code]\n        if customer.tier == \"vip\":\n            discount += 500\n        return min(discount, subtotal_cents)",
+    "raw_calls": [
+      {
+        "call_text": "coupon.upper()",
+        "lineno": 50,
+        "call_type": "method_call",
+        "target_repr": "coupon.upper",
+        "receiver_repr": "coupon"
+      },
+      {
+        "call_text": "min(discount, subtotal_cents)",
+        "lineno": 56,
+        "call_type": "direct_call",
+        "target_repr": "min",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "ValueError(\"coupon is not supported\")",
+        "lineno": 52,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "coupons"
+    ],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"coupon is not supported\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when code not in self.coupons"
+    ],
+    "annotations": {
+      "returns": "int",
+      "arguments": {
+        "customer": "Customer",
+        "subtotal_cents": "int",
+        "coupon": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax": {
+    "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "name": "calculate_tax",
+    "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/pricing.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "start_line": 58,
+    "end_line": 61,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def calculate_tax(self, taxable_cents: int) -> int:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def calculate_tax(self, taxable_cents: int) -> int:\n        if taxable_cents < 0:\n            raise ValueError(\"taxable amount cannot be negative\")\n        return taxable_cents * self.tax_rate_bps // 10000",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"taxable amount cannot be negative\")",
+        "lineno": 60,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "tax_rate_bps"
+    ],
+    "state_writes": [],
+    "raises": [
+      "raise ValueError(\"taxable amount cannot be negative\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "taxable_cents > 0"
+    ],
+    "annotations": {
+      "returns": "int",
+      "arguments": {
+        "taxable_cents": "int"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "name": "OrderRepository",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/repository.py",
+    "start_line": 8,
+    "end_line": 33,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "OrderRepository",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class OrderRepository:\n    def __init__(self):\n        self.orders: Dict[str, Order] = {}\n\n    def save(self, order: Order) -> None:\n        if not order.order_id:\n            raise ValueError(\"order_id is required\")\n        self.orders[order.order_id] = order\n\n    def get(self, order_id: str) -> Order:\n        if order_id not in self.orders:\n            raise KeyError(f\"order {order_id} not found\")\n        return self.orders[order_id]\n\n    def list_by_customer(self, customer_id: str) -> List[Order]:\n        return [\n            order\n            for order in self.orders.values()\n            if order.customer_id == customer_id\n        ]\n\n    def mark_paid(self, order_id: str, payment_id: str) -> Order:\n        order = self.get(order_id)\n        order.mark_paid(payment_id)\n        self.save(order)\n        return order",
+    "raw_calls": [],
+    "state_reads": [
+      "orders"
+    ],
+    "state_writes": [
+      "orders"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "orders (reads=2, writes=2)"
+    ],
+    "public_methods": [
+      "__init__",
+      "save",
+      "get",
+      "list_by_customer",
+      "mark_paid"
+    ],
+    "private_methods": []
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "start_line": 9,
+    "end_line": 10,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def __init__(self):",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(self):\n        self.orders: Dict[str, Order] = {}",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [
+      "orders"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.orders"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": null,
+      "arguments": {}
+    }
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository.save": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "name": "save",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "start_line": 12,
+    "end_line": 15,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def save(self, order: Order) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def save(self, order: Order) -> None:\n        if not order.order_id:\n            raise ValueError(\"order_id is required\")\n        self.orders[order.order_id] = order",
+    "raw_calls": [
+      {
+        "call_text": "ValueError(\"order_id is required\")",
+        "lineno": 14,
+        "call_type": "direct_call",
+        "target_repr": "ValueError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "orders"
+    ],
+    "state_writes": [
+      "orders"
+    ],
+    "raises": [
+      "raise ValueError(\"order_id is required\")"
+    ],
+    "side_effect_candidates": [
+      "mutates self.orders[order.order_id]"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when not order.order_id",
+      "orders must contain order.order_id"
+    ],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "order": "Order"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository.get": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "name": "get",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "start_line": 17,
+    "end_line": 20,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def get(self, order_id: str) -> Order:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def get(self, order_id: str) -> Order:\n        if order_id not in self.orders:\n            raise KeyError(f\"order {order_id} not found\")\n        return self.orders[order_id]",
+    "raw_calls": [
+      {
+        "call_text": "KeyError(f\"order {order_id} not found\")",
+        "lineno": 19,
+        "call_type": "direct_call",
+        "target_repr": "KeyError",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [
+      "orders"
+    ],
+    "state_writes": [],
+    "raises": [
+      "raise KeyError(f\"order {order_id} not found\")"
+    ],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [
+      "invalid when order_id not in self.orders"
+    ],
+    "annotations": {
+      "returns": "Order",
+      "arguments": {
+        "order_id": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "name": "list_by_customer",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "start_line": 22,
+    "end_line": 27,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def list_by_customer(self, customer_id: str) -> List[Order]:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def list_by_customer(self, customer_id: str) -> List[Order]:\n        return [\n            order\n            for order in self.orders.values()\n            if order.customer_id == customer_id\n        ]",
+    "raw_calls": [
+      {
+        "call_text": "self.orders.values()",
+        "lineno": 25,
+        "call_type": "method_call",
+        "target_repr": "self.orders.values",
+        "receiver_repr": "self.orders"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[Order]",
+      "arguments": {
+        "customer_id": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid": {
+    "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "name": "mark_paid",
+    "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/repository.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "start_line": 29,
+    "end_line": 33,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def mark_paid(self, order_id: str, payment_id: str) -> Order:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def mark_paid(self, order_id: str, payment_id: str) -> Order:\n        order = self.get(order_id)\n        order.mark_paid(payment_id)\n        self.save(order)\n        return order",
+    "raw_calls": [
+      {
+        "call_text": "self.get(order_id)",
+        "lineno": 30,
+        "call_type": "method_call",
+        "target_repr": "self.get",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "order.mark_paid(payment_id)",
+        "lineno": 31,
+        "call_type": "method_call",
+        "target_repr": "order.mark_paid",
+        "receiver_repr": "order"
+      },
+      {
+        "call_text": "self.save(order)",
+        "lineno": 32,
+        "call_type": "method_call",
+        "target_repr": "self.save",
+        "receiver_repr": "self"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [
+      "self.save(order)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "Order",
+      "arguments": {
+        "order_id": "str",
+        "payment_id": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "name": "OrderService",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "kind": "class",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": null,
+    "parent_symbol_id": "commerce_ops/services.py",
+    "start_line": 14,
+    "end_line": 70,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "OrderService",
+    "docstring": "",
+    "exported": true,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "class OrderService:\n    def __init__(\n        self,\n        catalog: ProductCatalog,\n        pricing: PricingPolicy,\n        payments: PaymentGateway,\n        repository: OrderRepository,\n        notifications: NotificationService,\n    ):\n        self.catalog = catalog\n        self.pricing = pricing\n        self.payments = payments\n        self.repository = repository\n        self.notifications = notifications\n        self.last_receipt: PaymentReceipt | None = None\n\n    def checkout(self, customer: Customer, items: List[CartItem], coupon: str = \"\") -> Order:\n        reserved_products = self.catalog.reserve_items(items)\n        try:\n            quote = self.pricing.quote(customer, items, reserved_products, coupon)\n            order = self._build_order(customer, items, quote)\n            receipt = self._charge(customer, quote)\n            order.mark_paid(receipt.payment_id)\n            self.repository.save(order)\n            self._notify_customer(customer, order, reserved_products)\n            return order\n        except Exception:\n            self.catalog.release_items(items)\n            raise\n\n    def cancel_order(self, order_id: str, reason: str) -> Order:\n        order = self.repository.get(order_id)\n        order.mark_cancelled(reason)\n        self.catalog.release_items(order.items)\n        self.repository.save(order)\n        return order\n\n    def customer_history(self, customer_id: str) -> List[Dict[str, str]]:\n        orders = self.repository.list_by_customer(customer_id)\n        return [\n            {\"order_id\": order.order_id, \"status\": order.status, \"total\": str(order.total_cents)}\n            for order in orders\n        ]\n\n    def _build_order(self, customer: Customer, items: List[CartItem], quote: PriceQuote) -> Order:\n        order = Order(str(uuid4()), customer.customer_id, list(items), quote.total_cents)\n        order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")\n        return order\n\n    def _charge(self, customer: Customer, quote: PriceQuote) -> PaymentReceipt:\n        receipt = self.payments.authorize(customer, quote.total_cents)\n        self.last_receipt = receipt\n        return receipt\n\n    def _notify_customer(self, customer: Customer, order: Order, products) -> None:\n        self.notifications.send_receipt(customer, order)\n        self.notifications.send_low_stock_alert(products)",
+    "raw_calls": [],
+    "state_reads": [
+      "catalog",
+      "last_receipt",
+      "notifications",
+      "payments",
+      "pricing",
+      "repository"
+    ],
+    "state_writes": [
+      "catalog",
+      "last_receipt",
+      "notifications",
+      "payments",
+      "pricing",
+      "repository"
+    ],
+    "raises": [],
+    "side_effect_candidates": [],
+    "bases": [],
+    "class_variables": [],
+    "instance_fields": [
+      "catalog (reads=0, writes=1)",
+      "last_receipt (reads=0, writes=2)",
+      "notifications (reads=0, writes=1)",
+      "payments (reads=0, writes=1)",
+      "pricing (reads=0, writes=1)",
+      "repository (reads=0, writes=1)"
+    ],
+    "public_methods": [
+      "__init__",
+      "checkout",
+      "cancel_order",
+      "customer_history"
+    ],
+    "private_methods": [
+      "_build_order",
+      "_charge",
+      "_notify_customer"
+    ]
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService.__init__": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+    "name": "__init__",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 15,
+    "end_line": 28,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "__init__",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def __init__(\n        self,\n        catalog: ProductCatalog,\n        pricing: PricingPolicy,\n        payments: PaymentGateway,\n        repository: OrderRepository,\n        notifications: NotificationService,\n    ):\n        self.catalog = catalog\n        self.pricing = pricing\n        self.payments = payments\n        self.repository = repository\n        self.notifications = notifications\n        self.last_receipt: PaymentReceipt | None = None",
+    "raw_calls": [],
+    "state_reads": [],
+    "state_writes": [
+      "catalog",
+      "last_receipt",
+      "notifications",
+      "payments",
+      "pricing",
+      "repository"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.catalog",
+      "mutates self.last_receipt",
+      "mutates self.notifications",
+      "mutates self.payments",
+      "mutates self.pricing",
+      "mutates self.repository"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": null,
+      "arguments": {
+        "catalog": "ProductCatalog",
+        "pricing": "PricingPolicy",
+        "payments": "PaymentGateway",
+        "repository": "OrderRepository",
+        "notifications": "NotificationService"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService.checkout": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "name": "checkout",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 30,
+    "end_line": 42,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def checkout(self, customer: Customer, items: List[CartItem], coupon: str = \"\") -> Order:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def checkout(self, customer: Customer, items: List[CartItem], coupon: str = \"\") -> Order:\n        reserved_products = self.catalog.reserve_items(items)\n        try:\n            quote = self.pricing.quote(customer, items, reserved_products, coupon)\n            order = self._build_order(customer, items, quote)\n            receipt = self._charge(customer, quote)\n            order.mark_paid(receipt.payment_id)\n            self.repository.save(order)\n            self._notify_customer(customer, order, reserved_products)\n            return order\n        except Exception:\n            self.catalog.release_items(items)\n            raise",
+    "raw_calls": [
+      {
+        "call_text": "self.catalog.reserve_items(items)",
+        "lineno": 31,
+        "call_type": "method_call",
+        "target_repr": "self.catalog.reserve_items",
+        "receiver_repr": "self.catalog"
+      },
+      {
+        "call_text": "self.pricing.quote(customer, items, reserved_products, coupon)",
+        "lineno": 33,
+        "call_type": "method_call",
+        "target_repr": "self.pricing.quote",
+        "receiver_repr": "self.pricing"
+      },
+      {
+        "call_text": "self._build_order(customer, items, quote)",
+        "lineno": 34,
+        "call_type": "method_call",
+        "target_repr": "self._build_order",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "self._charge(customer, quote)",
+        "lineno": 35,
+        "call_type": "method_call",
+        "target_repr": "self._charge",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "order.mark_paid(receipt.payment_id)",
+        "lineno": 36,
+        "call_type": "method_call",
+        "target_repr": "order.mark_paid",
+        "receiver_repr": "order"
+      },
+      {
+        "call_text": "self.repository.save(order)",
+        "lineno": 37,
+        "call_type": "method_call",
+        "target_repr": "self.repository.save",
+        "receiver_repr": "self.repository"
+      },
+      {
+        "call_text": "self._notify_customer(customer, order, reserved_products)",
+        "lineno": 38,
+        "call_type": "method_call",
+        "target_repr": "self._notify_customer",
+        "receiver_repr": "self"
+      },
+      {
+        "call_text": "self.catalog.release_items(items)",
+        "lineno": 41,
+        "call_type": "method_call",
+        "target_repr": "self.catalog.release_items",
+        "receiver_repr": "self.catalog"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [
+      "raise"
+    ],
+    "side_effect_candidates": [
+      "self.catalog.release_items(items)",
+      "self.catalog.reserve_items(items)",
+      "self.repository.save(order)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "Order",
+      "arguments": {
+        "customer": "Customer",
+        "items": "List[CartItem]",
+        "coupon": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "name": "cancel_order",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 44,
+    "end_line": 49,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def cancel_order(self, order_id: str, reason: str) -> Order:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def cancel_order(self, order_id: str, reason: str) -> Order:\n        order = self.repository.get(order_id)\n        order.mark_cancelled(reason)\n        self.catalog.release_items(order.items)\n        self.repository.save(order)\n        return order",
+    "raw_calls": [
+      {
+        "call_text": "self.repository.get(order_id)",
+        "lineno": 45,
+        "call_type": "method_call",
+        "target_repr": "self.repository.get",
+        "receiver_repr": "self.repository"
+      },
+      {
+        "call_text": "order.mark_cancelled(reason)",
+        "lineno": 46,
+        "call_type": "method_call",
+        "target_repr": "order.mark_cancelled",
+        "receiver_repr": "order"
+      },
+      {
+        "call_text": "self.catalog.release_items(order.items)",
+        "lineno": 47,
+        "call_type": "method_call",
+        "target_repr": "self.catalog.release_items",
+        "receiver_repr": "self.catalog"
+      },
+      {
+        "call_text": "self.repository.save(order)",
+        "lineno": 48,
+        "call_type": "method_call",
+        "target_repr": "self.repository.save",
+        "receiver_repr": "self.repository"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [
+      "self.catalog.release_items(order.items)",
+      "self.repository.save(order)"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "Order",
+      "arguments": {
+        "order_id": "str",
+        "reason": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService.customer_history": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "name": "customer_history",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 51,
+    "end_line": 56,
+    "visibility": "public",
+    "decorators": [],
+    "signature": "def customer_history(self, customer_id: str) -> List[Dict[str, str]]:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def customer_history(self, customer_id: str) -> List[Dict[str, str]]:\n        orders = self.repository.list_by_customer(customer_id)\n        return [\n            {\"order_id\": order.order_id, \"status\": order.status, \"total\": str(order.total_cents)}\n            for order in orders\n        ]",
+    "raw_calls": [
+      {
+        "call_text": "self.repository.list_by_customer(customer_id)",
+        "lineno": 52,
+        "call_type": "method_call",
+        "target_repr": "self.repository.list_by_customer",
+        "receiver_repr": "self.repository"
+      },
+      {
+        "call_text": "str(order.total_cents)",
+        "lineno": 54,
+        "call_type": "direct_call",
+        "target_repr": "str",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "List[Dict[str, str]]",
+      "arguments": {
+        "customer_id": "str"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService._build_order": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "name": "_build_order",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 58,
+    "end_line": 61,
+    "visibility": "private",
+    "decorators": [],
+    "signature": "def _build_order(self, customer: Customer, items: List[CartItem], quote: PriceQuote) -> Order:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def _build_order(self, customer: Customer, items: List[CartItem], quote: PriceQuote) -> Order:\n        order = Order(str(uuid4()), customer.customer_id, list(items), quote.total_cents)\n        order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")\n        return order",
+    "raw_calls": [
+      {
+        "call_text": "Order(str(uuid4()), customer.customer_id, list(items), quote.total_cents)",
+        "lineno": 59,
+        "call_type": "direct_call",
+        "target_repr": "Order",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")",
+        "lineno": 60,
+        "call_type": "method_call",
+        "target_repr": "order.add_event",
+        "receiver_repr": "order"
+      },
+      {
+        "call_text": "str(uuid4())",
+        "lineno": 59,
+        "call_type": "direct_call",
+        "target_repr": "str",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "list(items)",
+        "lineno": 59,
+        "call_type": "direct_call",
+        "target_repr": "list",
+        "receiver_repr": null
+      },
+      {
+        "call_text": "uuid4()",
+        "lineno": 59,
+        "call_type": "direct_call",
+        "target_repr": "uuid4",
+        "receiver_repr": null
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {
+      "order": "Order"
+    },
+    "validation_rules": [],
+    "annotations": {
+      "returns": "Order",
+      "arguments": {
+        "customer": "Customer",
+        "items": "List[CartItem]",
+        "quote": "PriceQuote"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService._charge": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "name": "_charge",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 63,
+    "end_line": 66,
+    "visibility": "private",
+    "decorators": [],
+    "signature": "def _charge(self, customer: Customer, quote: PriceQuote) -> PaymentReceipt:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def _charge(self, customer: Customer, quote: PriceQuote) -> PaymentReceipt:\n        receipt = self.payments.authorize(customer, quote.total_cents)\n        self.last_receipt = receipt\n        return receipt",
+    "raw_calls": [
+      {
+        "call_text": "self.payments.authorize(customer, quote.total_cents)",
+        "lineno": 64,
+        "call_type": "method_call",
+        "target_repr": "self.payments.authorize",
+        "receiver_repr": "self.payments"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [
+      "last_receipt"
+    ],
+    "raises": [],
+    "side_effect_candidates": [
+      "mutates self.last_receipt"
+    ],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "PaymentReceipt",
+      "arguments": {
+        "customer": "Customer",
+        "quote": "PriceQuote"
+      }
+    }
+  },
+  "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer": {
+    "id": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+    "name": "_notify_customer",
+    "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+    "kind": "method",
+    "language": "python",
+    "file_id": "commerce_ops/services.py",
+    "package_id": "commerce_ops_demo.commerce_ops",
+    "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "parent_symbol_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+    "start_line": 68,
+    "end_line": 70,
+    "visibility": "private",
+    "decorators": [],
+    "signature": "def _notify_customer(self, customer: Customer, order: Order, products) -> None:",
+    "docstring": "",
+    "exported": false,
+    "is_test": false,
+    "is_entry_candidate": false,
+    "source_code": "def _notify_customer(self, customer: Customer, order: Order, products) -> None:\n        self.notifications.send_receipt(customer, order)\n        self.notifications.send_low_stock_alert(products)",
+    "raw_calls": [
+      {
+        "call_text": "self.notifications.send_receipt(customer, order)",
+        "lineno": 69,
+        "call_type": "method_call",
+        "target_repr": "self.notifications.send_receipt",
+        "receiver_repr": "self.notifications"
+      },
+      {
+        "call_text": "self.notifications.send_low_stock_alert(products)",
+        "lineno": 70,
+        "call_type": "method_call",
+        "target_repr": "self.notifications.send_low_stock_alert",
+        "receiver_repr": "self.notifications"
+      }
+    ],
+    "state_reads": [],
+    "state_writes": [],
+    "raises": [],
+    "side_effect_candidates": [],
+    "local_type_candidates": {},
+    "validation_rules": [],
+    "annotations": {
+      "returns": "None",
+      "arguments": {
+        "customer": "Customer",
+        "order": "Order"
+      }
+    }
+  }
+}

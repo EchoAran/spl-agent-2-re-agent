@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" Order]
+
+[DEFINE_PERSONA:]
+    ROLE: "entity"
+    DOMAIN: "Commerce operations order domain"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Represent an order with core fields, enforce simple status transitions (to paid or cancelled) with validation, and record a timestamped event log for significant changes."
+    Responsibility: "Primary: maintain order state and guard-valid transitions (pay, cancel). Secondary: append timestamped event entries describing changes."
+    PublicBehavior: "mark_paid(payment_id); mark_cancelled(reason); add_event(kind, detail); dataclass-based construction with fields: order_id, customer_id, items, total_cents, status, events, created_at"
+    InternalMechanism: "State transition methods read and mutate the status field under guard rules and delegate event logging to add_event; add_event appends an event dict with a UTC ISO timestamp using datetime.now(timezone.utc)."
+    StateModel: "order_id: domain data identifier; customer_id: domain data identifier; items: domain data collection; total_cents: domain monetary amount; status: runtime state with guarded transitions; events: event log list mutated by add_event; created_at: creation timestamp"
+    Collaboration: "datetime.now(timezone.utc) for UTC ISO timestamps; dataclasses.dataclass for field-based initialization"
+    ErrorBoundary: "ValueError: only created orders can be marked paid (when status != 'created'); ValueError: paid orders cannot be cancelled here (when status == 'paid'); AttributeError: events does not support append; NameError: datetime or timezone is not defined for timestamp creation"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "Order"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.models.Order"
+    <REF> source_file </REF>: text "commerce_ops/models.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Represent an order with core fields, enforce simple status transitions (to paid or cancelled) with validation, and record a timestamped event log for significant changes."
+    <REF> responsibility </REF>: text "Primary: maintain order state and guard-valid transitions (pay, cancel). Secondary: append timestamped event entries describing changes."
+    <REF> role </REF>: text "entity"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["mark_paid(payment_id)", "mark_cancelled(reason)", "add_event(kind, detail)", "dataclass-based construction with fields: order_id, customer_id, items, total_cents, status, events, created_at"]
+    <REF> entrypoints </REF>: List [text] ["mark_paid", "mark_cancelled", "add_event"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "State transition methods read and mutate the status field under guard rules and delegate event logging to add_event; add_event appends an event dict with a UTC ISO timestamp using datetime.now(timezone.utc)."
+    <REF> internal_structure </REF>: List [text] ["State transitions: mark_paid, mark_cancelled (validate status and update, then record events)", "Event logging helper: add_event (append {kind, detail, timestamp} to events)", "Validation and error guards: raise ValueError when rules are violated"]
+    <REF> lifecycle </REF>: List [text] ["Constructed via dataclass with provided fields", "Used by callers to transition status to paid or cancelled", "Events accumulate over the order lifetime to reflect changes"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["order_id: domain data identifier", "customer_id: domain data identifier", "items: domain data collection", "total_cents: domain monetary amount", "status: runtime state with guarded transitions", "events: event log list mutated by add_event", "created_at: creation timestamp"]
+    <REF> inputs </REF>: List [text] ["payment_id (mark_paid)", "reason (mark_cancelled)", "kind, detail (add_event)", "current status read during validation in state transition methods"]
+    <REF> outputs </REF>: List [text] ["status updated to 'paid' when paid", "status updated to 'cancelled' when cancelled", "events list appended with {kind, detail, timestamp} entries", "no direct return values from provided methods"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["datetime.now(timezone.utc) for UTC ISO timestamps", "dataclasses.dataclass for field-based initialization"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid", "commerce_ops_demo.commerce_ops.services.OrderService._build_order", "commerce_ops_demo.commerce_ops.services.OrderService.checkout"]
+    <REF> key_interactions </REF>: List [text] ["Order.mark_paid is invoked by repository and service layers to finalize payment and log a 'paid' event", "Order.mark_cancelled updates status and logs a 'cancelled' event when not paid", "Order.add_event is called internally by transitions and by OrderService to record events", "add_event obtains timestamps via datetime and mutates the events list"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates self.status", "Mutates self.events by appending event dicts with timestamps", "Reads current time for timestamps"]
+    <REF> errors </REF>: List [text] ["ValueError: only created orders can be marked paid (when status != 'created')", "ValueError: paid orders cannot be cancelled here (when status == 'paid')", "AttributeError: events does not support append", "NameError: datetime or timezone is not defined for timestamp creation"]
+    <REF> invariants </REF>: List [text] ["Only orders in status 'created' may transition to 'paid'", "Paid orders must not be cancelled through mark_cancelled", "events must be a list-like that supports append", "Event timestamps are recorded in UTC ISO format"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_paid.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_cancelled.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Order/add_event.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

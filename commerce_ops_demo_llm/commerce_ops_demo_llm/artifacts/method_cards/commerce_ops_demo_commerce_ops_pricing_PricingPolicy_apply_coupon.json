@@ -1,0 +1,101 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "owner_file_id": "commerce_ops/pricing.py",
+  "signature": "def apply_coupon(self, customer: Customer, subtotal_cents: int, coupon: str = \"\") -> int:",
+  "visibility": "public",
+  "summary": "Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Instance providing the coupons mapping used for lookup.",
+    "self.coupons (mapping[str, int]): Mapping of uppercase coupon codes to discount amounts in cents.",
+    "customer (Customer): Customer whose tier may trigger a VIP bonus.",
+    "subtotal_cents (int): Subtotal amount in cents used to cap the discount.",
+    "coupon (str): Coupon code string; empty or falsy means no discount."
+  ],
+  "outputs": [
+    "applied_discount_cents (int): Final discount in cents to apply, 0 if no coupon, includes VIP bonus when applicable and is capped to the subtotal."
+  ],
+  "main_effect": "Return the minimum of discount and subtotal_cents",
+  "side_effects": [],
+  "errors": [
+    "AttributeError: coupon.upper() is unavailable or not callable",
+    "TypeError: upper() call failed on coupon",
+    "Uppercased code not present in self.coupons",
+    "ValueError: coupon is not supported",
+    "coupon is truthy but lacks a callable upper() method during normalization",
+    "invalid when code not in self.coupons",
+    "raise ValueError(\"coupon is not supported\")",
+    "upper() call on coupon fails due to incompatible type"
+  ],
+  "validation_rules": [
+    "invalid when code not in self.coupons"
+  ],
+  "direct_callees": [
+    "external.ValueError",
+    "external.coupon.upper",
+    "external.min"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "external_calls": [
+    "external.ValueError",
+    "external.coupon.upper",
+    "external.min"
+  ],
+  "state_reads": [
+    "coupons"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 6,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if not coupon:\n            return 0"
+      },
+      {
+        "type": "if",
+        "lineno": 5,
+        "code": "if code not in self.coupons:\n            raise ValueError(\"coupon is not supported\")"
+      },
+      {
+        "type": "if",
+        "lineno": 8,
+        "code": "if customer.tier == \"vip\":\n            discount += 500"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "code = coupon.upper()"
+      },
+      {
+        "type": "assignment",
+        "lineno": 7,
+        "code": "discount = self.coupons[code]"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 10,
+        "code": "return min(discount, subtotal_cents)"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/apply_coupon.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

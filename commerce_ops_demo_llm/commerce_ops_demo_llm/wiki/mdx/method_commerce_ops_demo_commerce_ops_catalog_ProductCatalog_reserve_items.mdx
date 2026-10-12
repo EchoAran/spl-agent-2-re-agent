@@ -1,0 +1,89 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "summary": "Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items
+
+Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception." reserve_items]
+    [INPUTS]
+        <REF> self </REF>: ProductCatalog "Catalog instance used to fetch products and manage reservations."
+        <REF> items </REF>: List[CartItem] "List of cart items containing sku and qty to validate and reserve."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> reserved </REF>: List[Product] "Products for which the requested quantities were successfully reserved."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize an empty list to track products that have been reserved. RESULT reserved initialized to []]
+            [COMMAND For each item in items: validate the item; fetch its Product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku; reserve the requested quantity via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL> with item.qty; append the Product to the reserved list. RESULT reserved populated with Product objects corresponding to successfully reserved items]
+            [COMMAND Return the list of reserved Product objects. RESULT reserved]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.]
+        [LOG "Exception information"]
+        [THROW Exception "Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/catalog.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items
+
+Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.
+
+## Inputs
+- self (ProductCatalog): Catalog instance used to fetch products and manage reservations.
+- items (List[CartItem]): List of cart items containing sku and qty to validate and reserve.
+
+## Outputs
+- reserved (List[Product]): Products for which the requested quantities were successfully reserved.
+
+## Main Effect
+Return the list of reserved Product objects.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get
+- commerce_ops_demo.commerce_ops.models.Product.release
+- commerce_ops_demo.commerce_ops.models.Product.reserve
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- reserved.append(product)
+
+## Errors
+- Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.
+- Exception: Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception.
+- raise
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

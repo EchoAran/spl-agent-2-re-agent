@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" __init__.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "re-export module"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules."
+    PublicSurface: "CartItem; Customer; Order; OrderService; Product"
+    InternalOrganization: "['Provides two re-export blocks: one importing domain model symbols from commerce_ops.models and one importing OrderService from commerce_ops.services. No additional classes, functions, or module state are defined.']"
+    ModuleMechanism: "On import, binds CartItem, Customer, Order, Product, and OrderService into the package namespace by importing them from their submodules, enabling consumers to import these names directly from commerce_ops."
+    DependencyBoundary: "external dependency commerce_ops.models; external dependency commerce_ops.services"
+    ErrorBoundary: "evidence: missing; confidence: not_available; source: static_analysis"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "__init__.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\__init__.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Define the package-level public surface for commerce_ops by re-exporting core domain models and the order service from submodules."
+    <REF> role </REF>: text "re-export module"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["CartItem", "Customer", "Order", "OrderService", "Product"]
+    <REF> entrypoints </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["Re-exports: CartItem, Customer, Order, Product from commerce_ops.models", "Re-exports: OrderService from commerce_ops.services"]
+    <REF> internal_structure </REF>: text "['Provides two re-export blocks: one importing domain model symbols from commerce_ops.models and one importing OrderService from commerce_ops.services. No additional classes, functions, or module state are defined.']"
+    <REF> module_mechanism </REF>: text "On import, binds CartItem, Customer, Order, Product, and OrderService into the package namespace by importing them from their submodules, enabling consumers to import these names directly from commerce_ops."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency commerce_ops.models", "external dependency commerce_ops.services"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] ["__all__"]
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> outputs </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> key_paths </REF>: List [text] ["Importing commerce_ops initializes the package namespace by re-exporting CartItem, Customer, Order, Product, and OrderService from submodules."]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> errors </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> initialization_order </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] []
+    <REF> function_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

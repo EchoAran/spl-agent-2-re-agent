@@ -1,0 +1,96 @@
+{
+  "page_id": "topic:configuration",
+  "page_type": "topic",
+  "title": "Configuration",
+  "slug": "configuration",
+  "url": "/wiki/topic/configuration",
+  "entity_kind": "topic",
+  "entity_id": "Configuration",
+  "qualified_name": "Configuration",
+  "source_refs": [
+    "artifacts/*_cards"
+  ],
+  "summary": "Entities related to Configuration.",
+  "body_markdown": "# Configuration\n\n- [[commerce_ops_demo.commerce_ops.cli.run_checkout_demo]]\n- [[commerce_ops_demo.commerce_ops.cli.build_demo_service]]\n- [[commerce_ops_demo.commerce_ops.models.Order.mark_paid]]\n- [[commerce_ops_demo.commerce_ops.models.Order.mark_cancelled]]\n- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available]]\n- [[commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__]]\n- [[commerce_ops_demo.commerce_ops.pricing.PricingPolicy]]\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-cancelled",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-list-available",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-init",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Topics",
+      "url": "/wiki/topic"
+    }
+  ],
+  "tags": [
+    "topic"
+  ],
+  "owners": [],
+  "package_path": "",
+  "file_path": "",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+  ],
+  "graph_refs": [],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.648640+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "d8f5ef31667f088af36609c02f943885ab304d96709118cb6ab64e87142420ce",
+  "spl_source_path": "",
+  "spl_content": ""
+}

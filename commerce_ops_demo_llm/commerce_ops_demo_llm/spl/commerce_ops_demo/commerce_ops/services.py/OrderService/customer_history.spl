@@ -1,0 +1,28 @@
+[DEFINE_WORKER: "Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string." customer_history]
+    [INPUTS]
+        <REF> customer_id </REF>: str "Identifier of the customer whose orders are requested."
+        <REF> self.repository </REF>: OrderRepository "Repository used to retrieve orders for the given customer."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order_summaries </REF>: List[Dict[str, str]] "List of order summary dictionaries with keys order_id, status, and total (as a string)."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> with customer_id to retrieve the customer's orders. RESULT orders]
+            [COMMAND Construct a list of dictionaries from orders, each with order_id, status, and total as str(order.total_cents). RESULT order_summaries]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> raises an exception.]
+        [LOG "Repository error occurred while fetching orders for the customer."]
+        [THROW Exception "Propagates any exception raised by the repository call."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: orders is None or otherwise non-iterable, causing the list comprehension to fail.]
+        [LOG "Failed to iterate over the repository result when building order summaries."]
+        [THROW TypeError "Raised when attempting to iterate over a None or non-iterable orders result."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

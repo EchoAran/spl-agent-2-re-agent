@@ -1,0 +1,83 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def mark_paid(self, payment_id: str) -> None:",
+  "visibility": "public",
+  "summary": "Marks the order as paid by setting status to 'paid' and recording a 'paid' event with the provided payment_id when the current status is 'created'.",
+  "purpose_hint": "",
+  "inputs": [
+    "payment_id (string): Identifier for the payment used to record the 'paid' event.",
+    "self.status (string): Current order status; must be 'created' for the operation to proceed."
+  ],
+  "outputs": [
+    "self.status (string): Updated to 'paid' when the operation succeeds.",
+    "event_record (side_effect): Calls <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> to record a 'paid' event with the given payment_id."
+  ],
+  "main_effect": "Invoke <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with event='paid' and the provided payment_id.",
+  "side_effects": [
+    "mutates self.status",
+    "self.status (string): Updated to 'paid' when the operation succeeds."
+  ],
+  "errors": [
+    "ValueError: only created orders can be marked paid",
+    "invalid when self.status != \"created\"",
+    "raise ValueError(\"only created orders can be marked paid\")",
+    "self.status != 'created'"
+  ],
+  "validation_rules": [
+    "invalid when self.status != \"created\""
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "status"
+  ],
+  "state_writes": [
+    "status"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if self.status != \"created\":\n            raise ValueError(\"only created orders can be marked paid\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "self.status = \"paid\""
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 5,
+        "code": "self.add_event(\"paid\", payment_id)"
+      }
+    ],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_paid.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

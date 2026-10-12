@@ -1,0 +1,58 @@
+{
+  "page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "page_type": "workflow",
+  "title": "Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "slug": "commerce-ops-demo-commerce-ops-cli-parse-cart",
+  "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-parse-cart",
+  "entity_kind": "workflow",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "source_refs": [
+    "graphs/repository_call_graph.json"
+  ],
+  "summary": "Call path starting from commerce_ops_demo.commerce_ops.cli.parse_cart.",
+  "body_markdown": "# Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart\n\n## Path\n\n1. [[commerce_ops_demo.commerce_ops.cli.parse_cart]]\n2. [[commerce_ops_demo.commerce_ops.models.CartItem]]\n\n## Evidence\n\n- source: static_call_graph\n- confidence: high_or_medium_edges_preferred\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+      "relation": "workflow_step",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Workflows",
+      "url": "/wiki/workflow"
+    }
+  ],
+  "tags": [
+    "workflow"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.parse_cart",
+    "commerce_ops_demo.commerce_ops.models.CartItem"
+  ],
+  "graph_refs": [
+    "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.644133+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "c010fe3c3fad84a6d8dec211d93729f5e53aa85e0596b2d709cd0001e17ee254",
+  "spl_source_path": "",
+  "spl_content": ""
+}

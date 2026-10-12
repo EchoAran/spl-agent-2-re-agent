@@ -1,0 +1,43 @@
+[DEFINE_WORKER: "Initializes the instance by creating a dictionary mapping normalized SKUs to the provided Product objects from the input iterable." __init__]
+    [INPUTS]
+        <REF> products </REF>: Iterable[Product] "Iterable of Product objects to populate the instance mapping."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.products </REF>: Dict[str, Product] "Instance dictionary mapping normalized SKU strings to Product objects, populated from the input."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Initialize self.products to an empty dictionary RESULT self.products]
+            [COMMAND Iterate over products; for each product, compute key = <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>(product.sku) and assign self.products[key] = product RESULT self.products populated with entries for each product; later products with the same normalized key overwrite earlier ones]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: If multiple products resolve to the same normalized SKU]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Assign the later product to the existing key in self.products RESULT The later product overwrites the earlier entry for that key]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: products is not iterable when the for-loop begins]
+        [LOG "Failed to iterate over products: object is not iterable"]
+        [THROW TypeError "The provided products argument is not iterable."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: An element in products lacks a sku attribute]
+        [LOG "Product missing 'sku' attribute during normalization"]
+        [THROW AttributeError "Encountered a product without a sku attribute."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>(product.sku) raises an exception]
+        [LOG "Error from <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL> during key normalization"]
+        [THROW Exception "Exception propagated from <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>(product.sku) returns a non-hashable key]
+        [LOG "Non-hashable normalized SKU used as dict key"]
+        [THROW TypeError "Unhashable key cannot be used in dict assignment."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

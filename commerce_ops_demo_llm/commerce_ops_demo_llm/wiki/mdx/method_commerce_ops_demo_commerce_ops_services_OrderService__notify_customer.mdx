@@ -1,0 +1,101 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+  "summary": "Send a purchase receipt to the customer and trigger a low-stock alert for the provided products using the instance's notifications service.",
+  "tags": [
+    "method",
+    "private"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_notify_customer.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.services.OrderService._notify_customer
+
+Send a purchase receipt to the customer and trigger a low-stock alert for the provided products using the instance's notifications service.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Send a purchase receipt to the customer and trigger a low-stock alert for the provided products using the instance's notifications service." _notify_customer]
+    [INPUTS]
+        <REF> self </REF>: object "Instance reference; must provide a notifications service at self.notifications."
+        <REF> self.notifications </REF>: NotificationService "Service used to send notifications; expected to implement send_receipt and send_low_stock_alert."
+        <REF> customer </REF>: Customer "Customer entity used for sending the receipt."
+        <REF> order </REF>: Order "Order entity whose details are included in the receipt."
+        <REF> products </REF>: Any "Collection of product items evaluated for low-stock alerting."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> receipt_sent </REF>: side_effect "Receipt notification sent via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt</SPL>."
+        <REF> low_stock_alert_sent </REF>: side_effect "Low-stock alert triggered via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL>."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt</SPL> on self.notifications with (customer, order). RESULT receipt_sent]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL> on self.notifications with (products). RESULT low_stock_alert_sent]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.notifications is None or lacks send_receipt/send_low_stock_alert methods.]
+        [LOG "Notification service missing or incompatible on self.notifications."]
+        [THROW AttributeError "notifications service is not available or does not implement required methods."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt</SPL> or <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL> raises an exception during execution.]
+        [LOG "Underlying notification call failed; propagating error."]
+        [THROW Exception "Error raised by the notification service while sending messages."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/services.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.services.OrderService._notify_customer
+
+Send a purchase receipt to the customer and trigger a low-stock alert for the provided products using the instance's notifications service.
+
+## Inputs
+- self (object): Instance reference; must provide a notifications service at self.notifications.
+- self.notifications (NotificationService): Service used to send notifications; expected to implement send_receipt and send_low_stock_alert.
+- customer (Customer): Customer entity used for sending the receipt.
+- order (Order): Order entity whose details are included in the receipt.
+- products (Any): Collection of product items evaluated for low-stock alerting.
+
+## Outputs
+- receipt_sent (side_effect): Receipt notification sent via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt</SPL>.
+- low_stock_alert_sent (side_effect): Low-stock alert triggered via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL>.
+
+## Main Effect
+Invoke <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL> on self.notifications with (products).
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert
+- commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt</SPL> or <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert</SPL> raises an exception during execution.
+- AttributeError: notifications service is not available or does not implement required methods.
+- Exception: Error raised by the notification service while sending messages.
+- self.notifications is None or lacks send_receipt/send_low_stock_alert methods.
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

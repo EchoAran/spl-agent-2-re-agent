@@ -1,0 +1,30 @@
+[DEFINE_WORKER: "Validates that the instance has a truthy sku and a positive qty, raising ValueError if either check fails." validate]
+    [INPUTS]
+        <REF> self </REF>: object "Instance whose attributes are validated."
+        <REF> self.sku </REF>: any "SKU value; must be truthy to pass validation."
+        <REF> self.qty </REF>: number "Quantity value; must be greater than 0."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "Returns None if both validations pass without raising an exception."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Check that self.sku is truthy to proceed with validation. RESULT sku_valid]
+            [COMMAND Check that self.qty is greater than 0. RESULT qty_valid]
+            [COMMAND Complete method execution without returning a value. RESULT None]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: not self.sku]
+        [LOG "sku is required"]
+        [THROW ValueError "Raised when sku is missing or falsy."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.qty <= 0]
+        [LOG "qty must be positive"]
+        [THROW ValueError "Raised when qty is non-positive."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

@@ -1,0 +1,77 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "owner_file_id": "commerce_ops/catalog.py",
+  "signature": "def get(self, sku: str) -> Product:",
+  "visibility": "public",
+  "summary": "Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.",
+  "purpose_hint": "",
+  "inputs": [
+    "sku (string): The raw SKU string to be looked up.",
+    "self.products (Mapping[str, Product]): Internal mapping from normalized SKU to Product used for lookup."
+  ],
+  "outputs": [
+    "product (Product): The Product associated with the normalized SKU."
+  ],
+  "main_effect": "Retrieve the product from self.products using the key normalized.",
+  "side_effects": [],
+  "errors": [
+    "If normalized is not present as a key in self.products.",
+    "KeyError: Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping.",
+    "invalid when normalized not in self.products",
+    "raise KeyError(f\"unknown sku {normalized}\")"
+  ],
+  "validation_rules": [
+    "invalid when normalized not in self.products"
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "external.KeyError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "external_calls": [
+    "external.KeyError"
+  ],
+  "state_reads": [
+    "products"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 3,
+        "code": "if normalized not in self.products:\n            raise KeyError(f\"unknown sku {normalized}\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "normalized = normalize_sku(sku)"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 5,
+        "code": "return self.products[normalized]"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

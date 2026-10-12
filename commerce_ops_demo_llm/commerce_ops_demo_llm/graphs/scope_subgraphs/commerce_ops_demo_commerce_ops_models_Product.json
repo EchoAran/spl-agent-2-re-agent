@@ -1,0 +1,13 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.models.Product",
+  "internal_edges": [],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.reserve"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.models.Product.release -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.models.Product.reserve -> external.ValueError"
+  ]
+}

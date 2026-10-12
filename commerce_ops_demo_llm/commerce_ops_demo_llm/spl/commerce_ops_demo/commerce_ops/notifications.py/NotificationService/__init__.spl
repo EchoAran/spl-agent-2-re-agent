@@ -1,0 +1,16 @@
+[DEFINE_WORKER: "Summarize method __init__ from static structure" __init__]
+    [INPUTS]
+        <REF> parameters </REF>: text "Function or method signature parameters"
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> result </REF>: text "Return value or side effects inferred from static structure"
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Use static evidence and resolved calls (no resolved internal callees) to understand behavior RESULT result]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

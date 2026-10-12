@@ -1,0 +1,33 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.list",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.str",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order -> external.uuid4",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge -> commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> external.order.mark_cancelled",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history -> external.str"
+  ]
+}

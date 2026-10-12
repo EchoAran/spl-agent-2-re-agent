@@ -1,0 +1,31 @@
+[DEFINE_WORKER: "Reserve a positive quantity from available stock by validating constraints and decrementing the stock value." reserve]
+    [INPUTS]
+        <REF> qty </REF>: int "Requested quantity to reserve; must be > 0 and <= current stock."
+        <REF> self.stock </REF>: int "Current available stock level read for validation and decremented on success."
+        <REF> self.sku </REF>: str "SKU identifier used in error message when stock is insufficient."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.stock </REF>: int "Updated stock after reservation; reduced by qty when validation passes."
+        <REF> return </REF>: None "No return value."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Verify that qty is positive (qty > 0). RESULT qty_validated]
+            [COMMAND Verify that qty does not exceed available stock (qty <= self.stock). RESULT sufficiency_confirmed]
+            [COMMAND Subtract qty from self.stock to reserve the items. RESULT self.stock updated]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: qty <= 0]
+        [LOG "Quantity must be positive; reservation aborted."]
+        [THROW ValueError "qty must be positive"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: qty > self.stock]
+        [LOG "Insufficient stock for requested reservation; reservation aborted."]
+        [THROW ValueError "not enough stock for {self.sku}"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

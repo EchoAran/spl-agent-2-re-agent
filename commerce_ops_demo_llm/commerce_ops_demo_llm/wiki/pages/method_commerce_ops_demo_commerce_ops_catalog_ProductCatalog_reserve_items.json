@@ -1,0 +1,160 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "slug": "commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl"
+  ],
+  "summary": "Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n\nValidate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.\" reserve_items]\n    [INPUTS]\n        <REF> self </REF>: ProductCatalog \"Catalog instance used to fetch products and manage reservations.\"\n        <REF> items </REF>: List[CartItem] \"List of cart items containing sku and qty to validate and reserve.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> reserved </REF>: List[Product] \"Products for which the requested quantities were successfully reserved.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Initialize an empty list to track products that have been reserved. RESULT reserved initialized to []]\n            [COMMAND For each item in items: validate the item; fetch its Product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku; reserve the requested quantity via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL> with item.qty; append the Product to the reserved list. RESULT reserved populated with Product objects corresponding to successfully reserved items]\n            [COMMAND Return the list of reserved Product objects. RESULT reserved]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.]\n        [LOG \"Exception information\"]\n        [THROW Exception \"Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/catalog.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items\n\nValidate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.\n\n## Inputs\n- self (ProductCatalog): Catalog instance used to fetch products and manage reservations.\n- items (List[CartItem]): List of cart items containing sku and qty to validate and reserve.\n\n## Outputs\n- reserved (List[Product]): Products for which the requested quantities were successfully reserved.\n\n## Main Effect\nReturn the list of reserved Product objects.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get\n- commerce_ops_demo.commerce_ops.models.Product.release\n- commerce_ops_demo.commerce_ops.models.Product.reserve\n- commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\n## Side Effects\n- reserved.append(product)\n\n## Errors\n- Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.\n- Exception: Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception.\n- raise\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "file:commerce_ops/catalog.py",
+      "target_url": "/wiki/file/commerce-ops-catalog-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/catalog.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:external-integration",
+      "source_url": "/wiki/topic/external-integration",
+      "relation": "topic_mentions",
+      "label": "External Integration"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/catalog.py",
+      "url": "/wiki/file/commerce-ops-catalog-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/catalog.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.629184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "1243c212f767db115c3f6d30ca743204567fe53ca371d7585c217c4e3b5ebb42",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl",
+  "spl_content": "[DEFINE_WORKER: \"Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.\" reserve_items]\n    [INPUTS]\n        <REF> self </REF>: ProductCatalog \"Catalog instance used to fetch products and manage reservations.\"\n        <REF> items </REF>: List[CartItem] \"List of cart items containing sku and qty to validate and reserve.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> reserved </REF>: List[Product] \"Products for which the requested quantities were successfully reserved.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Initialize an empty list to track products that have been reserved. RESULT reserved initialized to []]\n            [COMMAND For each item in items: validate the item; fetch its Product via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL> using item.sku; reserve the requested quantity via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL> with item.qty; append the Product to the reserved list. RESULT reserved populated with Product objects corresponding to successfully reserved items]\n            [COMMAND Return the list of reserved Product objects. RESULT reserved]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.]\n        [LOG \"Exception information\"]\n        [THROW Exception \"Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

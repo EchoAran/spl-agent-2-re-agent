@@ -1,0 +1,91 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+  "summary": "Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_cancelled.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Order.mark_cancelled
+
+Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error." mark_cancelled]
+    [INPUTS]
+        <REF> self </REF>: Order "Order instance whose status is read and updated, and which exposes add_event."
+        <REF> reason </REF>: string "Human-readable explanation for the cancellation; passed to the event log."
+        <REF> self.status </REF>: string "Current order status evaluated to guard against cancelling paid orders."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.status </REF>: state_write "Updated to 'cancelled' when the guard condition does not trigger."
+        <REF> event </REF>: side_effect "Adds a 'cancelled' event with the provided reason via <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL>."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Set self.status to 'cancelled' RESULT status set to 'cancelled']
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with arguments ('cancelled', reason) RESULT cancellation event recorded]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.status == 'paid']
+        [LOG "paid orders cannot be cancelled here"]
+        [THROW ValueError "paid orders cannot be cancelled here"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Order.mark_cancelled
+
+Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error.
+
+## Inputs
+- self (Order): Order instance whose status is read and updated, and which exposes add_event.
+- reason (string): Human-readable explanation for the cancellation; passed to the event log.
+- self.status (string): Current order status evaluated to guard against cancelling paid orders.
+
+## Outputs
+- self.status (state_write): Updated to 'cancelled' when the guard condition does not trigger.
+- event (side_effect): Adds a 'cancelled' event with the provided reason via <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL>.
+
+## Main Effect
+Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with arguments ('cancelled', reason)
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Order.add_event
+
+## Side Effects
+- mutates self.status
+- self.status (state_write): Updated to 'cancelled' when the guard condition does not trigger.
+
+## Errors
+- ValueError: paid orders cannot be cancelled here
+- invalid when self.status == "paid"
+- raise ValueError("paid orders cannot be cancelled here")
+- self.status == 'paid'
+
+## Validation Rules
+- invalid when self.status == "paid"

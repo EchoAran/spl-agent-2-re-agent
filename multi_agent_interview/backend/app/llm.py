@@ -4,7 +4,9 @@ import json
 import logging
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 from typing import Any
+from uuid import uuid4
 
 import aiohttp
 
@@ -42,6 +44,22 @@ class LLMServices:
     def __init__(self, session: aiohttp.ClientSession, config: LLMConfig):
         self.session = session
         self.config = config
+        self.log_file_path = self._resolve_log_file_path()
+
+    def _resolve_log_file_path(self) -> Path:
+        env_path = (os.getenv("MULTI_AGENT_LLM_IO_LOG_PATH") or "").strip()
+        if env_path:
+            path = Path(env_path)
+        else:
+            path = Path(__file__).resolve().parents[1] / "runtime" / "llm_io.jsonl"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return path
+
+    def _write_llm_event(self, event: dict[str, Any]) -> None:
+        payload = dict(event)
+        payload["timestamp"] = datetime.now(timezone.utc).isoformat()
+        with self.log_file_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(payload, ensure_ascii=False) + "\n")
 
     async def chat(
         self,
@@ -60,7 +78,9 @@ class LLMServices:
             payload["tools"] = tools
         if tools and tool_choice is not None:
             payload["tool_choice"] = tool_choice
+        call_id = str(uuid4())
         request_preview = {
+            "call_id": call_id,
             "url": self.config.base_url.rstrip("/") + "/v1/chat/completions",
             "model": payload.get("model"),
             "temperature": payload.get("temperature"),
@@ -69,6 +89,14 @@ class LLMServices:
             "has_tool_choice": "tool_choice" in payload,
             "last_message_preview": str(messages[-1].get("content", ""))[:300] if messages else "",
         }
+        self._write_llm_event(
+            {
+                "event": "request",
+                "call_id": call_id,
+                "url": self.config.base_url.rstrip("/") + "/v1/chat/completions",
+                "payload": payload,
+            }
+        )
         logger.info("llm_request %s", json.dumps(request_preview, ensure_ascii=False))
 
         headers = {
@@ -82,12 +110,28 @@ class LLMServices:
             headers=headers,
         ) as response:
             body_text = await response.text()
+            self._write_llm_event(
+                {
+                    "event": "response",
+                    "call_id": call_id,
+                    "status": response.status,
+                    "body_text": body_text,
+                }
+            )
             logger.info(
                 "llm_response status=%s body_preview=%s",
                 response.status,
                 body_text[:1200],
             )
             if response.status >= 400:
+                self._write_llm_event(
+                    {
+                        "event": "error",
+                        "call_id": call_id,
+                        "status": response.status,
+                        "error_message": body_text,
+                    }
+                )
                 raise ApplicationError(
                     f"HTTP Error {response.status}: {body_text}",
                     non_retryable=response.status < 500,

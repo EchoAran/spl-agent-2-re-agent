@@ -1,0 +1,54 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Customer",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def can_spend(self, amount_cents: int) -> bool:",
+  "visibility": "public",
+  "summary": "Returns True if the requested amount in cents is positive and does not exceed the current balance; otherwise returns False.",
+  "purpose_hint": "",
+  "inputs": [
+    "amount_cents (int): Requested spend amount in cents.",
+    "self.balance_cents (int): Current balance in cents read from instance state."
+  ],
+  "outputs": [
+    "return_value (bool): True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False."
+  ],
+  "main_effect": "Return the computed boolean result.",
+  "side_effects": [
+    "return_value (bool): True if amount_cents > 0 and balance_cents >= amount_cents; otherwise False."
+  ],
+  "errors": [],
+  "validation_rules": [],
+  "direct_callees": [],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.models.Customer.debit"
+  ],
+  "external_calls": [],
+  "state_reads": [
+    "balance_cents"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 1,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 2,
+        "code": "return amount_cents > 0 and self.balance_cents >= amount_cents"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Customer/can_spend.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

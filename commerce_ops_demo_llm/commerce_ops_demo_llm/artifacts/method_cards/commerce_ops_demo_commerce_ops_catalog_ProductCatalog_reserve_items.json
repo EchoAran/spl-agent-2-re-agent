@@ -1,0 +1,61 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "qualified_name": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "owner_file_id": "commerce_ops/catalog.py",
+  "signature": "def reserve_items(self, items: List[CartItem]) -> List[Product]:",
+  "visibility": "public",
+  "summary": "Validate each cart item, fetch its product, reserve requested quantities, accumulate reserved products, and return them; on any error, release previously reserved quantities and re-raise the exception.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (ProductCatalog): Catalog instance used to fetch products and manage reservations.",
+    "items (List[CartItem]): List of cart items containing sku and qty to validate and reserve."
+  ],
+  "outputs": [
+    "reserved (List[Product]): Products for which the requested quantities were successfully reserved."
+  ],
+  "main_effect": "Return the list of reserved Product objects.",
+  "side_effects": [
+    "reserved.append(product)"
+  ],
+  "errors": [
+    "Any Exception occurs during item validation, product retrieval via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get</SPL>, or reservation via <SPL>commerce_ops_demo.commerce_ops.models.Product.reserve</SPL>.",
+    "Exception: Before re-raising, release any previously reserved quantities by iterating zip(reserved, items) and calling <SPL>commerce_ops_demo.commerce_ops.models.Product.release</SPL> with the original item.qty; then re-raise the original exception.",
+    "raise"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "external.item.validate",
+    "external.reserved.append",
+    "external.zip"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [
+    "external.item.validate",
+    "external.reserved.append",
+    "external.zip"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/reserve_items.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

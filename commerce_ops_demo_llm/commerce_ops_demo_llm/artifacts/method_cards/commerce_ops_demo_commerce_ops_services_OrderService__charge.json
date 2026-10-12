@@ -1,0 +1,77 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "owner_file_id": "commerce_ops/services.py",
+  "signature": "def _charge(self, customer: Customer, quote: PriceQuote) -> PaymentReceipt:",
+  "visibility": "private",
+  "summary": "Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.",
+  "purpose_hint": "",
+  "inputs": [
+    "customer (Customer): Customer to be charged; passed to the payment gateway.",
+    "quote (PriceQuote): Quote containing total_cents; quote.total_cents is used as the amount to authorize.",
+    "self.payments (PaymentGateway): Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents)."
+  ],
+  "outputs": [
+    "receipt (PaymentReceipt): Payment receipt returned from the authorization call.",
+    "self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object."
+  ],
+  "main_effect": "Return receipt",
+  "side_effects": [
+    "mutates self.last_receipt",
+    "self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object."
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure",
+    "AttributeError: Raised when quote is missing or does not have total_cents.",
+    "AttributeError: Raised when self.payments is not set or lacks an authorize method.",
+    "Exception: Propagated exception from the payment gateway authorization call.",
+    "quote is None or quote.total_cents attribute access fails",
+    "self.payments is None or does not provide authorize"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [
+    "last_receipt"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "receipt = self.payments.authorize(customer, quote.total_cents)"
+      },
+      {
+        "type": "assignment",
+        "lineno": 3,
+        "code": "self.last_receipt = receipt"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return receipt"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": true,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

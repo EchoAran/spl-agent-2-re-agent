@@ -1,0 +1,24 @@
+[DEFINE_WORKER: "Validates the order has a truthy order_id and stores the order in the instance's orders mapping under that key." save]
+    [INPUTS]
+        <REF> order </REF>: Order "Order object to be saved; must expose a truthy order_id used as the storage key."
+        <REF> self.orders </REF>: MutableMapping "Instance mapping of orders keyed by order_id that will be updated."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return_value </REF>: NoneType "No value is returned."
+        <REF> orders_updated </REF>: state_mutation "self.orders[order.order_id] is set to the provided order (overwrites existing entry if the key already exists)."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that order.order_id is truthy RESULT validation_passed]
+            [COMMAND Assign the order into self.orders keyed by order.order_id RESULT orders_updated]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: order.order_id is falsy (e.g., None, '', 0)]
+        [LOG "order_id is required"]
+        [THROW ValueError "order_id is required"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

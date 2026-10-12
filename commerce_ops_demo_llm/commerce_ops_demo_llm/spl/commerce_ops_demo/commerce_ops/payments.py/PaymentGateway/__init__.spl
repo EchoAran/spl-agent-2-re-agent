@@ -1,0 +1,21 @@
+[DEFINE_WORKER: "Initialize the instance by setting the payment provider and zeroing authorized and refunded totals." __init__]
+    [INPUTS]
+        <REF> self </REF>: object "The instance being initialized."
+        <REF> provider </REF>: str "Payment provider identifier; defaults to 'internal-wallet'."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.provider </REF>: str "Instance attribute set to the provided provider value."
+        <REF> self.authorized_total_cents </REF>: int "Instance attribute initialized to 0 representing total authorized amount in cents."
+        <REF> self.refunded_total_cents </REF>: int "Instance attribute initialized to 0 representing total refunded amount in cents."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Assign provider to instance attribute RESULT self.provider]
+            [COMMAND Initialize authorized_total_cents to 0 RESULT self.authorized_total_cents]
+            [COMMAND Initialize refunded_total_cents to 0 RESULT self.refunded_total_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+[END_WORKER]

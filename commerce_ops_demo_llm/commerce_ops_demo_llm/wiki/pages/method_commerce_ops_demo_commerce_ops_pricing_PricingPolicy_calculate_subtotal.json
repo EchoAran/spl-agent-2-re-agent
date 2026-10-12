@@ -1,0 +1,115 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "slug": "commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-subtotal",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-subtotal",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl"
+  ],
+  "summary": "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal\n\nCompute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.\" calculate_subtotal]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance of the containing class; not used in the computation.\"\n        <REF> items </REF>: List[CartItem] \"Iterable of cart items, each with sku and qty to be validated and priced.\"\n        <REF> products </REF>: List[Product] \"Iterable of products, each with sku and price_cents used to build a price lookup.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> subtotal </REF>: int \"Total price in cents calculated as the sum of price_cents * qty for all valid items.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Build a dict mapping each product.sku to product.price_cents from products RESULT price_by_sku]\n            [COMMAND Initialize subtotal accumulator to 0 RESULT subtotal]\n            [COMMAND Iterate over items; for each item validate item.qty > 0, lookup price = price_by_sku[item.sku.upper()], validate price > 0, and add price * item.qty to subtotal RESULT subtotal]\n            [COMMAND Return the accumulated subtotal RESULT subtotal]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, item.qty <= 0]\n        [LOG \"Invalid quantity encountered for an item\"]\n        [THROW ValueError \"qty must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, fetched price <= 0]\n        [LOG \"Invalid product price encountered\"]\n        [THROW ValueError \"price_cents must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During lookup, item.sku.upper() key is not present in price_by_sku]\n        [LOG \"SKU not found in product price mapping\"]\n        [THROW KeyError \"SKU not found in price_by_sku when using item.sku.upper()\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, item lacks required attributes or item.sku is not a string supporting upper()]\n        [LOG \"Item has missing or invalid attributes (sku or qty)\"]\n        [THROW AttributeError \"Missing attribute (sku or qty) or sku does not support upper()\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During comparison or multiplication, qty or price is non-numeric]\n        [LOG \"Type mismatch when validating or accumulating subtotal\"]\n        [THROW TypeError \"Non-numeric qty or price caused comparison or arithmetic to fail\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/pricing.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal\n\nCompute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.\n\n## Inputs\n- self (object): Instance of the containing class; not used in the computation.\n- items (List[CartItem]): Iterable of cart items, each with sku and qty to be validated and priced.\n- products (List[Product]): Iterable of products, each with sku and price_cents used to build a price lookup.\n\n## Outputs\n- subtotal (int): Total price in cents calculated as the sum of price_cents * qty for all valid items.\n\n## Main Effect\nReturn the accumulated subtotal\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- AttributeError: Missing attribute (sku or qty) or sku does not support upper()\n- During comparison or multiplication, qty or price is non-numeric\n- During iteration, fetched price <= 0\n- During iteration, item lacks required attributes or item.sku is not a string supporting upper()\n- During iteration, item.qty <= 0\n- During lookup, item.sku.upper() key is not present in price_by_sku\n- KeyError: SKU not found in price_by_sku when using item.sku.upper()\n- TypeError: Non-numeric qty or price caused comparison or arithmetic to fail\n- ValueError: price_cents must be positive\n- ValueError: qty must be positive\n- item.qty > 0\n- item.sku.upper() > 0\n- raise ValueError(\"price_cents must be positive\")\n- raise ValueError(\"qty must be positive\")\n\n## Validation Rules\n- item.qty > 0\n- item.sku.upper() > 0\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target_page_id": "file:commerce_ops/pricing.py",
+      "target_url": "/wiki/file/commerce-ops-pricing-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/pricing.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/pricing.py",
+      "url": "/wiki/file/commerce-ops-pricing-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/pricing.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635688+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "f73bbe961a646afc6c124a245cec9db768afb80ca0116ee366bae207a9af52e2",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl",
+  "spl_content": "[DEFINE_WORKER: \"Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.\" calculate_subtotal]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance of the containing class; not used in the computation.\"\n        <REF> items </REF>: List[CartItem] \"Iterable of cart items, each with sku and qty to be validated and priced.\"\n        <REF> products </REF>: List[Product] \"Iterable of products, each with sku and price_cents used to build a price lookup.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> subtotal </REF>: int \"Total price in cents calculated as the sum of price_cents * qty for all valid items.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Build a dict mapping each product.sku to product.price_cents from products RESULT price_by_sku]\n            [COMMAND Initialize subtotal accumulator to 0 RESULT subtotal]\n            [COMMAND Iterate over items; for each item validate item.qty > 0, lookup price = price_by_sku[item.sku.upper()], validate price > 0, and add price * item.qty to subtotal RESULT subtotal]\n            [COMMAND Return the accumulated subtotal RESULT subtotal]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, item.qty <= 0]\n        [LOG \"Invalid quantity encountered for an item\"]\n        [THROW ValueError \"qty must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, fetched price <= 0]\n        [LOG \"Invalid product price encountered\"]\n        [THROW ValueError \"price_cents must be positive\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During lookup, item.sku.upper() key is not present in price_by_sku]\n        [LOG \"SKU not found in product price mapping\"]\n        [THROW KeyError \"SKU not found in price_by_sku when using item.sku.upper()\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During iteration, item lacks required attributes or item.sku is not a string supporting upper()]\n        [LOG \"Item has missing or invalid attributes (sku or qty)\"]\n        [THROW AttributeError \"Missing attribute (sku or qty) or sku does not support upper()\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: During comparison or multiplication, qty or price is non-numeric]\n        [LOG \"Type mismatch when validating or accumulating subtotal\"]\n        [THROW TypeError \"Non-numeric qty or price caused comparison or arithmetic to fail\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

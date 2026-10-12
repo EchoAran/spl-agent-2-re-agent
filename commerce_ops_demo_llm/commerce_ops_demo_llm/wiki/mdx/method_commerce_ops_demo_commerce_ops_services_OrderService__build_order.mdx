@@ -1,0 +1,119 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "summary": "Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.",
+  "tags": [
+    "method",
+    "private"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.services.OrderService._build_order
+
+Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order." _build_order]
+    [INPUTS]
+        <REF> self </REF>: object "Instance context for method execution."
+        <REF> customer </REF>: Customer "Customer providing customer_id used in the order."
+        <REF> items </REF>: List[CartItem] "Cart items; copied into the order via list(items)."
+        <REF> quote </REF>: PriceQuote "Pricing details providing total_cents and breakdown fields used for the event message."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> using str(uuid4()) for id, customer.customer_id, a list(items) copy, and quote.total_cents RESULT order]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> on order with event 'quoted' and message 'subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}' RESULT event_recorded]
+            [COMMAND Return the constructed order RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: customer is None or lacks attribute customer.customer_id when accessed]
+        [LOG "Customer is missing customer_id."]
+        [THROW AttributeError "customer must have a customer_id attribute."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: items is None or not iterable when list(items) is evaluated]
+        [LOG "Items is not iterable or is None."]
+        [THROW TypeError "items must be an iterable of CartItem."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)]
+        [LOG "Quote missing required pricing fields."]
+        [THROW AttributeError "quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments]
+        [LOG "Order construction failed due to invalid argument types or values."]
+        [THROW ValueError "Invalid arguments for constructing Order."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails]
+        [LOG "Failed to add 'quoted' event to order."]
+        [THROW Exception "add_event raised an error."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService._build_order`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/services.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.services.OrderService._build_order
+
+Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.
+
+## Inputs
+- self (object): Instance context for method execution.
+- customer (Customer): Customer providing customer_id used in the order.
+- items (List[CartItem]): Cart items; copied into the order via list(items).
+- quote (PriceQuote): Pricing details providing total_cents and breakdown fields used for the event message.
+
+## Outputs
+- order (Order): Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event.
+
+## Main Effect
+Return the constructed order
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Order
+- commerce_ops_demo.commerce_ops.models.Order.add_event
+- commerce_ops_demo.commerce_ops.services.OrderService.checkout
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments
+- AttributeError: customer must have a customer_id attribute.
+- AttributeError: quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents.
+- Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails
+- Exception: add_event raised an error.
+- TypeError: items must be an iterable of CartItem.
+- ValueError: Invalid arguments for constructing Order.
+- customer is None or lacks attribute customer.customer_id when accessed
+- items is None or not iterable when list(items) is evaluated
+- quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

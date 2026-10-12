@@ -1,0 +1,31 @@
+[DEFINE_WORKER: "Return products with positive stock, optionally filtered by a provided tag, sorted by SKU in ascending order." list_available]
+    [INPUTS]
+        <REF> tag </REF>: str "Optional tag used to filter products; if empty, no tag-based filtering is applied."
+        <REF> self.products </REF>: Dict[Any, Product] "Internal mapping of products from which values are read and filtered."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> available_products </REF>: List[Product] "List of in-stock products, optionally filtered by tag, sorted by product.sku ascending."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Collect products with stock > 0 from self.products.values() RESULT values]
+            [COMMAND If tag is non-empty, filter values to products where tag is in product.tags RESULT values]
+            [COMMAND Sort values by product.sku in ascending order and produce final list RESULT available_products]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: tag is a non-empty string]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Filter current values to include only products whose tags contain the given tag RESULT values]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [ALTERNATIVE_FLOW: tag is an empty string]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Skip tag-based filtering and retain the current values RESULT values]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+[END_WORKER]

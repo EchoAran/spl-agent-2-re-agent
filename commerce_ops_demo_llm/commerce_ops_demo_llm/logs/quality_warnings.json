@@ -1,0 +1,14 @@
+[
+  {
+    "type": "class_without_method_refs",
+    "class_id": "commerce_ops_demo.commerce_ops.pricing.PriceQuote"
+  },
+  {
+    "type": "class_without_method_refs",
+    "class_id": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt"
+  },
+  {
+    "type": "class_without_method_refs",
+    "class_id": "commerce_ops_demo.commerce_ops.payments.PaymentError"
+  }
+]

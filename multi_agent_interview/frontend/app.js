@@ -15,6 +15,10 @@ let interviewerId = null;
 let sessionStatus = "idle";
 const SESSION_CACHE_KEY = "multi_agent_interview_current_session";
 const renderedMessageIds = new Set();
+if (userInput) {
+  userInput.disabled = true;
+  userInput.placeholder = "用户输入功能已禁用";
+}
 
 function addMessage({ role, agentName, text, roundIndex }) {
   const key = `${role}|${agentName}|${text}|${roundIndex}`;
@@ -142,7 +146,7 @@ startBtn.addEventListener("click", async () => {
     addMessage({
       role: "system",
       agentName: "系统",
-      text: "会话已建立，系统将自动开始访谈。你可以随时插话。",
+      text: "会话已建立，系统将自动开始访谈。",
       roundIndex: 0,
     });
   } catch (error) {
@@ -178,13 +182,7 @@ resumeBtn.addEventListener("click", () => {
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const text = userInput.value.trim();
-  if (!text || !ws || ws.readyState !== WebSocket.OPEN) {
-    return;
-  }
-  addMessage({ role: "user", agentName: "用户", text, roundIndex: 0 });
-  ws.send(JSON.stringify({ type: "user_message", text }));
-  userInput.value = "";
+  addMessage({ role: "system", agentName: "系统", text: "用户输入功能已禁用", roundIndex: 0 });
 });
 
 async function restoreSessionIfExists() {

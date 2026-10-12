@@ -1,0 +1,22 @@
+[DEFINE_WORKER: "Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input." format_currency]
+    [INPUTS]
+        <REF> cents </REF>: int "Amount in cents to format; must be non-negative."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> formatted_currency </REF>: str "Dollar-formatted string with two decimal places (e.g., '$12.34')."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Divide cents by 100 to compute the dollar amount as a float. RESULT dollar_value]
+            [COMMAND Format the dollar amount with two decimal places and prefix with '$'. RESULT formatted_currency]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: cents < 0]
+        [LOG "Exception information"]
+        [THROW ValueError "currency value cannot be negative"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

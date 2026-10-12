@@ -1,0 +1,128 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "slug": "commerce-ops-demo-commerce-ops-services-orderservice-charge",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl"
+  ],
+  "summary": "Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.services.OrderService._charge\n\nAuthorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.\" _charge]\n    [INPUTS]\n        <REF> customer </REF>: Customer \"Customer to be charged; passed to the payment gateway.\"\n        <REF> quote </REF>: PriceQuote \"Quote containing total_cents; quote.total_cents is used as the amount to authorize.\"\n        <REF> self.payments </REF>: PaymentGateway \"Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents).\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> receipt </REF>: PaymentReceipt \"Payment receipt returned from the authorization call.\"\n        <REF> self.last_receipt </REF>: PaymentReceipt \"Instance state updated to reference the same receipt object.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> via self.payments with (customer, quote.total_cents) RESULT receipt]\n            [COMMAND Assign receipt to self.last_receipt RESULT self.last_receipt]\n            [COMMAND Return receipt RESULT receipt]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: self.payments is None or does not provide authorize]\n        [LOG \"Payment gateway unavailable or missing authorize()\"]\n        [THROW AttributeError \"Raised when self.payments is not set or lacks an authorize method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: quote is None or quote.total_cents attribute access fails]\n        [LOG \"Invalid quote or missing total_cents\"]\n        [THROW AttributeError \"Raised when quote is missing or does not have total_cents.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure]\n        [LOG \"Authorization failed during payment processing\"]\n        [THROW Exception \"Propagated exception from the payment gateway authorization call.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService._charge`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/services.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.services.OrderService._charge\n\nAuthorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.\n\n## Inputs\n- customer (Customer): Customer to be charged; passed to the payment gateway.\n- quote (PriceQuote): Quote containing total_cents; quote.total_cents is used as the amount to authorize.\n- self.payments (PaymentGateway): Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents).\n\n## Outputs\n- receipt (PaymentReceipt): Payment receipt returned from the authorization call.\n- self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object.\n\n## Main Effect\nReturn receipt\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize\n- commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\n## Side Effects\n- mutates self.last_receipt\n- self.last_receipt (PaymentReceipt): Instance state updated to reference the same receipt object.\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure\n- AttributeError: Raised when quote is missing or does not have total_cents.\n- AttributeError: Raised when self.payments is not set or lacks an authorize method.\n- Exception: Propagated exception from the payment gateway authorization call.\n- quote is None or quote.total_cents attribute access fails\n- self.payments is None or does not provide authorize\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "source_url": "/wiki/topic/authentication",
+      "relation": "topic_mentions",
+      "label": "Authentication"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/services.py",
+      "url": "/wiki/file/commerce-ops-services-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "private"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/services.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.services.OrderService._charge"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635688+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "a138a73069acc783f15a304dd310fddd330a5adb2601cdb5c01afd529c411d19",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_charge.spl",
+  "spl_content": "[DEFINE_WORKER: \"Authorize a payment for the customer's quoted amount via the payment gateway, store the resulting receipt in state, and return it.\" _charge]\n    [INPUTS]\n        <REF> customer </REF>: Customer \"Customer to be charged; passed to the payment gateway.\"\n        <REF> quote </REF>: PriceQuote \"Quote containing total_cents; quote.total_cents is used as the amount to authorize.\"\n        <REF> self.payments </REF>: PaymentGateway \"Instance payment gateway used to authorize charges; expected to implement authorize(customer, amount_cents).\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> receipt </REF>: PaymentReceipt \"Payment receipt returned from the authorization call.\"\n        <REF> self.last_receipt </REF>: PaymentReceipt \"Instance state updated to reference the same receipt object.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> via self.payments with (customer, quote.total_cents) RESULT receipt]\n            [COMMAND Assign receipt to self.last_receipt RESULT self.last_receipt]\n            [COMMAND Return receipt RESULT receipt]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: self.payments is None or does not provide authorize]\n        [LOG \"Payment gateway unavailable or missing authorize()\"]\n        [THROW AttributeError \"Raised when self.payments is not set or lacks an authorize method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: quote is None or quote.total_cents attribute access fails]\n        [LOG \"Invalid quote or missing total_cents\"]\n        [THROW AttributeError \"Raised when quote is missing or does not have total_cents.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize</SPL> raises due to invalid inputs or gateway failure]\n        [LOG \"Authorization failed during payment processing\"]\n        [THROW Exception \"Propagated exception from the payment gateway authorization call.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

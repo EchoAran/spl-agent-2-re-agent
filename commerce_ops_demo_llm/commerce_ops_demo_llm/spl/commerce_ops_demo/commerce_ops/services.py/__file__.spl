@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A source file that defines a module with purpose, exports, internal organization, dependencies, and runtime role" services.py]
+
+[DEFINE_PERSONA:]
+    ROLE: "service module"
+    LANGUAGE: "python"
+    ABSTRACTION_LEVEL: "File-level; describes module responsibility and organization without expanding class or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, test, or integrate this file"
+    INTEREST: "File purpose, exports, imports, contained components, runtime role, dependencies, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications."
+    PublicSurface: "OrderService"
+    InternalOrganization: "['A single class-centric module. Consumers instantiate OrderService with required collaborators and invoke its public methods. Public methods delegate to internal helper methods and coordinate calls across catalog, pricing, payments, repository, and notifications. No additional top-level functions or module-level state are defined.']"
+    ModuleMechanism: "The module contributes a single orchestration class. At runtime, clients construct OrderService with injected dependencies. checkout uses internal helpers to build an Order (uuid4), reserve or release inventory, obtain a price quote, authorize payment, persist the order, and send notifications. cancel_order retrieves and updates an order, releases inventory, and persists changes. customer_history queries the repository and formats results. Dependency flow is inbound via constructor and outbound to domain and infrastructure collaborators during method calls."
+    DependencyBoundary: "external dependency __future__; external dependency commerce_ops.catalog; external dependency commerce_ops.models; external dependency commerce_ops.notifications; external dependency commerce_ops.payments; external dependency commerce_ops.pricing; external dependency commerce_ops.repository; external dependency typing; external dependency uuid"
+    ErrorBoundary: "Propagates exceptions from ProductCatalog reserve/release; Propagates exceptions from PricingPolicy.quote; Propagates exceptions from PaymentGateway.authorize; Propagates exceptions from OrderRepository.get/save/list_by_customer; Propagates exceptions from NotificationService sending methods; Attribute errors if injected dependencies are missing or lack required methods; If checkout fails after reservation, items are released and the original error is re-raised; Type errors if iterable inputs (items, orders) are invalid; Order retrieval may return None leading to attribute access errors during cancellation"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> file_name </REF>: text "services.py"
+    <REF> module_name </REF>: text "commerce_ops_demo.commerce_ops.services"
+    <REF> source_path </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo\commerce_ops\services.py"
+    <REF> language </REF>: text "python"
+
+    <!-- Purpose and role -->
+    <REF> purpose </REF>: text "Expose an application-level service that coordinates checkout, order cancellation, and customer order history by orchestrating catalog, pricing, payments, order persistence, and customer notifications."
+    <REF> role </REF>: text "service module"
+
+    <!-- Public surface -->
+    <REF> exports </REF>: List [text] ["OrderService"]
+    <REF> entrypoints </REF>: List [text] ["OrderService", "OrderService.__init__", "OrderService.checkout", "OrderService.cancel_order", "OrderService.customer_history"]
+
+    <!-- Internal organization -->
+    <REF> components </REF>: List [text] ["OrderService: service orchestrator for checkout, cancellation, and customer history; collaborates with ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, NotificationService, and Order model.", "OrderService private helpers: _build_order, _charge, _notify_customer (invoked by checkout)."]
+    <REF> internal_structure </REF>: text "['A single class-centric module. Consumers instantiate OrderService with required collaborators and invoke its public methods. Public methods delegate to internal helper methods and coordinate calls across catalog, pricing, payments, repository, and notifications. No additional top-level functions or module-level state are defined.']"
+    <REF> module_mechanism </REF>: text "The module contributes a single orchestration class. At runtime, clients construct OrderService with injected dependencies. checkout uses internal helpers to build an Order (uuid4), reserve or release inventory, obtain a price quote, authorize payment, persist the order, and send notifications. cancel_order retrieves and updates an order, releases inventory, and persists changes. customer_history queries the repository and formats results. Dependency flow is inbound via constructor and outbound to domain and infrastructure collaborators during method calls."
+
+    <!-- Dependencies and data -->
+    <REF> imports </REF>: List [text] ["external dependency __future__", "external dependency commerce_ops.catalog", "external dependency commerce_ops.models", "external dependency commerce_ops.notifications", "external dependency commerce_ops.payments", "external dependency commerce_ops.pricing", "external dependency commerce_ops.repository", "external dependency typing", "external dependency uuid"]
+    <REF> internal_imports </REF>: List [text] []
+    <REF> globals </REF>: List [text] []
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] ["OrderService.__init__(catalog: ProductCatalog, pricing: PricingPolicy, payments: PaymentGateway, repository: OrderRepository, notifications: NotificationService)", "OrderService.checkout(customer: Customer, items: List[CartItem], coupon: str = '')", "OrderService.cancel_order(order_id, reason)", "OrderService.customer_history(customer_id)"]
+    <REF> outputs </REF>: List [text] ["checkout returns Order (paid and persisted)", "cancel_order returns Order (cancelled and persisted)", "customer_history returns List[dict] with order_id, status, total as string"]
+    <REF> key_paths </REF>: List [text] ["checkout: reserve items in ProductCatalog -> obtain PriceQuote from PricingPolicy -> authorize via PaymentGateway -> mark Order paid -> persist via OrderRepository -> notify customer and low-stock alerts via NotificationService; release items on failure path.", "cancel_order: retrieve via OrderRepository.get -> mark order cancelled -> release items via ProductCatalog.release_items -> persist via OrderRepository.save.", "customer_history: list orders via OrderRepository.list_by_customer and format string fields.", "order construction: internal _build_order uses uuid4 and Order model, adding initial event."]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates self.last_receipt during charge", "Reserves and releases inventory in catalog", "Charges payment through external gateway", "Persists orders to repository", "Sends customer receipt notifications", "Triggers low-stock alerts", "Marks order as paid"]
+    <REF> errors </REF>: List [text] ["Propagates exceptions from ProductCatalog reserve/release", "Propagates exceptions from PricingPolicy.quote", "Propagates exceptions from PaymentGateway.authorize", "Propagates exceptions from OrderRepository.get/save/list_by_customer", "Propagates exceptions from NotificationService sending methods", "Attribute errors if injected dependencies are missing or lack required methods", "If checkout fails after reservation, items are released and the original error is re-raised", "Type errors if iterable inputs (items, orders) are invalid", "Order retrieval may return None leading to attribute access errors during cancellation"]
+    <REF> initialization_order </REF>: List [text] ["Instantiate OrderService with ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, and NotificationService before invoking checkout, cancel_order, or customer_history."]
+
+    <!-- Traceability -->
+    <REF> class_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/services.py/OrderService/__class__.spl</SPL>"]
+    <REF> function_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines file-level reverse-engineering information.
+     It should let a developer understand what the file does, what it exposes, how its components cooperate, and where to inspect lower-level details.
+     Do NOT expand class internals.
+     Do NOT expand method or function COMMAND flows.
+     Use class_refs and function_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    FileLevelOnly: "Describe the file as a module; do not expand class internals or function steps" LOG "file_over_expansion"
+    ExportBoundary: "Clearly distinguish exported surface from internal components" LOG "file_export_error"
+    DependencyAccuracy: "Mention dependencies only when they affect the module responsibility, runtime role, or boundary" LOG "file_dependency_error"
+    InitializationAccuracy: "Include initialization order only when it affects runtime behavior" LOG "file_initialization_error"
+    Traceability: "Refer to class-level and function-level SPL artifacts by reference instead of inlining them" LOG "component_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

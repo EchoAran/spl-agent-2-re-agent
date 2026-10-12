@@ -1,0 +1,74 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "owner_file_id": "commerce_ops/payments.py",
+  "signature": "def refund(self, customer: Customer, receipt: PaymentReceipt) -> None:",
+  "visibility": "public",
+  "summary": "Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Instance with refunded_total_cents attribute to update.",
+    "customer (Customer): Customer to credit via credit(amount_cents).",
+    "receipt (PaymentReceipt): Payment receipt providing amount_cents to refund."
+  ],
+  "outputs": [
+    "return (None): No return value.",
+    "customer (state_mutation): Credited by receipt.amount_cents via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>.",
+    "self.refunded_total_cents (int): Incremented by receipt.amount_cents."
+  ],
+  "main_effect": "Increment self.refunded_total_cents by receipt.amount_cents",
+  "side_effects": [
+    "mutates self.refunded_total_cents",
+    "self.refunded_total_cents (int): Incremented by receipt.amount_cents."
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: Raised with message 'receipt amount must be positive' to enforce a positive refund amount.",
+    "raise PaymentError(\"receipt amount must be positive\")",
+    "receipt.amount_cents <= 0",
+    "receipt.amount_cents > 0"
+  ],
+  "validation_rules": [
+    "receipt.amount_cents > 0"
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Customer.credit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentError"
+  ],
+  "direct_callers": [],
+  "external_calls": [],
+  "state_reads": [
+    "refunded_total_cents"
+  ],
+  "state_writes": [
+    "refunded_total_cents"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if receipt.amount_cents <= 0:\n            raise PaymentError(\"receipt amount must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 4,
+        "code": "customer.credit(receipt.amount_cents)"
+      }
+    ],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/refund.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

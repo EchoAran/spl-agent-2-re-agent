@@ -1,0 +1,70 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "owner_file_id": "commerce_ops/repository.py",
+  "signature": "def get(self, order_id: str) -> Order:",
+  "visibility": "public",
+  "summary": "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.",
+  "purpose_hint": "",
+  "inputs": [
+    "order_id (str): Identifier of the order to retrieve.",
+    "self.orders (Mapping[str, Order]): Internal mapping of orders keyed by order_id."
+  ],
+  "outputs": [
+    "order (Order): The order object corresponding to the provided order_id."
+  ],
+  "main_effect": "Retrieve the order via self.orders[order_id]",
+  "side_effects": [],
+  "errors": [
+    "KeyError: order {order_id} not found",
+    "invalid when order_id not in self.orders",
+    "order_id not in self.orders",
+    "raise KeyError(f\"order {order_id} not found\")"
+  ],
+  "validation_rules": [
+    "invalid when order_id not in self.orders"
+  ],
+  "direct_callees": [
+    "external.KeyError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+  ],
+  "external_calls": [
+    "external.KeyError"
+  ],
+  "state_reads": [
+    "orders"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if order_id not in self.orders:\n            raise KeyError(f\"order {order_id} not found\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return self.orders[order_id]"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

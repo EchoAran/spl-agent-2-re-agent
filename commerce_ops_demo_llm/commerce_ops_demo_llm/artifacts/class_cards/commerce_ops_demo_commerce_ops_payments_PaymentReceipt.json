@@ -1,0 +1,60 @@
+{
+  "class_name": "PaymentReceipt",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "source_file": "commerce_ops/payments.py",
+  "domain": "commerce operations / payments",
+  "purpose": "Represent structured payment receipt data with fields identifying the payment and its amount and provider.",
+  "responsibility": "Encapsulate and transport payment receipt information as a simple structured data record.",
+  "role": "value object",
+  "public_surface": [
+    "dataclass-generated constructor for fields: payment_id, amount_cents, provider",
+    "public attributes: payment_id, amount_cents, provider"
+  ],
+  "entrypoints": [
+    "dataclass-generated constructor for fields: payment_id, amount_cents, provider"
+  ],
+  "mechanism": "Uses the dataclass decorator to generate initialization and attribute handling, storing receipt data without additional behavior.",
+  "internal_structure": [
+    "No user-defined methods within class scope",
+    "Dataclass decorator provides boilerplate initialization and representation"
+  ],
+  "lifecycle": [
+    "Creation via dataclass-generated constructor with receipt fields",
+    "Used as a data carrier; no explicit reset or disposal behavior in evidence"
+  ],
+  "state": [
+    "payment_id: domain data",
+    "amount_cents: domain data",
+    "provider: domain data"
+  ],
+  "inputs": [
+    "payment_id",
+    "amount_cents",
+    "provider"
+  ],
+  "outputs": [
+    "Structured receipt data via attributes: payment_id, amount_cents, provider"
+  ],
+  "dependencies": [],
+  "used_by": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "key_interactions": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "side_effects": [],
+  "errors": [],
+  "invariants": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "method_refs": [],
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [],
+  "outgoing_dependencies": [],
+  "key_internal_flows": [],
+  "summary": "Represent structured payment receipt data with fields identifying the payment and its amount and provider.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentReceipt/__class__.spl"
+}

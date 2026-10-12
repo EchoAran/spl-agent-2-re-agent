@@ -1,0 +1,103 @@
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "slug": "commerce-ops-demo-commerce-ops-models-cartitem",
+  "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+  "entity_kind": "class",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.CartItem",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/__class__.spl"
+  ],
+  "summary": "Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.CartItem\n\nRepresent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\n\n## SPL\n\n```spl\n[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" CartItem]\n\n[DEFINE_PERSONA:]\n    ROLE: \"value object\"\n    DOMAIN: \"E-commerce cart and order modeling\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\"\n    Responsibility: \"Hold SKU and quantity as domain data and validate that both are present and logically valid.\"\n    PublicBehavior: \"Dataclass constructor with fields: sku, qty; validate()\"\n    InternalMechanism: \"A dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.\"\n    StateModel: \"sku: domain data (read by validate); qty: domain data (read by validate)\"\n    Collaboration: \"dataclass (decorator); ValueError (exception used to signal validation failures)\"\n    ErrorBoundary: \"ValueError: sku is required; ValueError: qty must be positive\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"CartItem\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.models.CartItem\"\n    <REF> source_file </REF>: text \"commerce_ops/models.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\"\n    <REF> responsibility </REF>: text \"Hold SKU and quantity as domain data and validate that both are present and logically valid.\"\n    <REF> role </REF>: text \"value object\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"Dataclass constructor with fields: sku, qty\", \"validate()\"]\n    <REF> entrypoints </REF>: List [text] [\"Dataclass constructor: CartItem(sku, qty)\", \"validate()\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"A dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.\"\n    <REF> internal_structure </REF>: List [text] [\"Dataclass structure providing auto-generated initialization for sku and qty\", \"Single public validator method: validate()\"]\n    <REF> lifecycle </REF>: List [text] [\"Created via dataclass constructor with sku and qty\", \"Optional: call validate() to assert correctness before further use\", \"No disposal steps indicated\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"sku: domain data (read by validate)\", \"qty: domain data (read by validate)\"]\n    <REF> inputs </REF>: List [text] [\"sku (provided at construction)\", \"qty (provided at construction)\"]\n    <REF> outputs </REF>: List [text] [\"Validation outcome via exceptions; validate() returns None on success\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"dataclass (decorator)\", \"ValueError (exception used to signal validation failures)\"]\n    <REF> used_by </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n    <REF> key_interactions </REF>: List [text] [\"Raises ValueError when validation fails\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"No I/O or external state mutation; validation only\"]\n    <REF> errors </REF>: List [text] [\"ValueError: sku is required\", \"ValueError: qty must be positive\"]\n    <REF> invariants </REF>: List [text] [\"sku must be truthy\", \"qty must be greater than 0\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]\n```\n\n## Wiki Navigation\n\n- Page ID: `class:commerce_ops_demo.commerce_ops.models.CartItem`\n- Entity kind: `class`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.CartItem\n\nRepresent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\n\n## Role and Responsibilities\nHold SKU and quantity as domain data and validate that both are present and logically valid.\n\n## Public Surface\n- Dataclass constructor with fields: sku, qty\n- validate()\n\n## State Model\n- sku: domain data (read by validate)\n- qty: domain data (read by validate)\n\n## Internal Mechanism\nA dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.\n\n## Related Classes\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Source Evidence\n- <SPL>spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl</SPL>\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-cartitem-validate",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem.validate"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-cartitem-validate",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem.validate"
+    },
+    {
+      "source_page_id": "file:commerce_ops/models.py",
+      "source_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.models"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    }
+  ],
+  "tags": [
+    "class",
+    "value object"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.CartItem",
+    "commerce_ops_demo.commerce_ops.models.CartItem.validate"
+  ],
+  "graph_refs": [
+    "class_scope:commerce_ops_demo.commerce_ops.models.CartItem"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.636693+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "cd1845cc6e1cff4f26e958bfcd336ddd9abee3ac0e440945e9cf2f20ddd042d9",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/CartItem/__class__.spl",
+  "spl_content": "[DEFINE_AGENT: \"A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries\" CartItem]\n\n[DEFINE_PERSONA:]\n    ROLE: \"value object\"\n    DOMAIN: \"E-commerce cart and order modeling\"\n    ABSTRACTION_LEVEL: \"Class-level; describes what the class does and how it works at a summarized level without expanding method command flows\"\n[END_PERSONA]\n\n[DEFINE_AUDIENCE:]\n    KNOWLEDGE: \"Developers who need to understand, reuse, test, extend, or modify this class\"\n    INTEREST: \"Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors\"\n[END_AUDIENCE]\n\n[DEFINE_CONCEPTS:]\n    Purpose: \"Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\"\n    Responsibility: \"Hold SKU and quantity as domain data and validate that both are present and logically valid.\"\n    PublicBehavior: \"Dataclass constructor with fields: sku, qty; validate()\"\n    InternalMechanism: \"A dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.\"\n    StateModel: \"sku: domain data (read by validate); qty: domain data (read by validate)\"\n    Collaboration: \"dataclass (decorator); ValueError (exception used to signal validation failures)\"\n    ErrorBoundary: \"ValueError: sku is required; ValueError: qty must be positive\"\n[END_CONCEPTS]\n\n[DEFINE_VARIABLES:]\n    <!-- Identity -->\n    <REF> class_name </REF>: text \"CartItem\"\n    <REF> qualified_name </REF>: text \"commerce_ops_demo.commerce_ops.models.CartItem\"\n    <REF> source_file </REF>: text \"commerce_ops/models.py\"\n\n    <!-- Purpose and responsibility -->\n    <REF> purpose </REF>: text \"Represent a single cart line item with SKU and quantity and provide a simple validity check for these attributes.\"\n    <REF> responsibility </REF>: text \"Hold SKU and quantity as domain data and validate that both are present and logically valid.\"\n    <REF> role </REF>: text \"value object\"\n\n    <!-- Public surface -->\n    <REF> public_surface </REF>: List [text] [\"Dataclass constructor with fields: sku, qty\", \"validate()\"]\n    <REF> entrypoints </REF>: List [text] [\"Dataclass constructor: CartItem(sku, qty)\", \"validate()\"]\n\n    <!-- Internal mechanism -->\n    <REF> mechanism </REF>: text \"A dataclass carrying sku and qty; validation ensures sku is provided and qty is greater than zero, signaling problems by raising ValueError.\"\n    <REF> internal_structure </REF>: List [text] [\"Dataclass structure providing auto-generated initialization for sku and qty\", \"Single public validator method: validate()\"]\n    <REF> lifecycle </REF>: List [text] [\"Created via dataclass constructor with sku and qty\", \"Optional: call validate() to assert correctness before further use\", \"No disposal steps indicated\"]\n\n    <!-- State and data -->\n    <REF> state </REF>: List [text] [\"sku: domain data (read by validate)\", \"qty: domain data (read by validate)\"]\n    <REF> inputs </REF>: List [text] [\"sku (provided at construction)\", \"qty (provided at construction)\"]\n    <REF> outputs </REF>: List [text] [\"Validation outcome via exceptions; validate() returns None on success\"]\n\n    <!-- Collaboration -->\n    <REF> dependencies </REF>: List [text] [\"dataclass (decorator)\", \"ValueError (exception used to signal validation failures)\"]\n    <REF> used_by </REF>: List [text] [\"evidence: missing; confidence: not_available; source: static_analysis\"]\n    <REF> key_interactions </REF>: List [text] [\"Raises ValueError when validation fails\"]\n\n    <!-- Effects and risks -->\n    <REF> side_effects </REF>: List [text] [\"No I/O or external state mutation; validation only\"]\n    <REF> errors </REF>: List [text] [\"ValueError: sku is required\", \"ValueError: qty must be positive\"]\n    <REF> invariants </REF>: List [text] [\"sku must be truthy\", \"qty must be greater than 0\"]\n\n    <!-- Traceability -->\n    <REF> method_refs </REF>: List [text] [\"<SPL>spl/commerce_ops_demo/commerce_ops/models.py/CartItem/validate.spl</SPL>\"]\n[END_VARIABLES]\n\n<!-- This section defines class-level reverse-engineering information.\n     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.\n     Do NOT expand method COMMAND flows.\n     Do NOT restate every method implementation.\n     Use method_refs only for traceability. -->\n\n[DEFINE_CONSTRAINTS:]\n    ClassLevelOnly: \"Describe the class-level abstraction; do not expand individual method command flows\" LOG \"class_over_expansion\"\n    MechanismSummary: \"Explain how the class works only at a summarized class level\" LOG \"class_mechanism_over_detail\"\n    ResponsibilityBoundary: \"Distinguish what this class owns from what it delegates to dependencies\" LOG \"class_boundary_error\"\n    StateAccuracy: \"Only include state actually owned, read, mutated, cached, or exposed by this class\" LOG \"class_state_error\"\n    Traceability: \"Refer to method-level SPL artifacts by reference instead of inlining method-level details\" LOG \"method_detail_leakage\"\n[END_CONSTRAINTS]\n\n[END_AGENT]"
+}

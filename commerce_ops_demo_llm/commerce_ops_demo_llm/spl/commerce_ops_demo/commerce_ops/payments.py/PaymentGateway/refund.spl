@@ -1,0 +1,27 @@
+[DEFINE_WORKER: "Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total." refund]
+    [INPUTS]
+        <REF> self </REF>: object "Instance with refunded_total_cents attribute to update."
+        <REF> customer </REF>: Customer "Customer to credit via credit(amount_cents)."
+        <REF> receipt </REF>: PaymentReceipt "Payment receipt providing amount_cents to refund."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "No return value."
+        <REF> customer </REF>: state_mutation "Credited by receipt.amount_cents via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>."
+        <REF> self.refunded_total_cents </REF>: int "Incremented by receipt.amount_cents."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that receipt.amount_cents is greater than 0 RESULT Proceed with refund processing when amount_cents > 0]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL> on customer with receipt.amount_cents RESULT Customer is credited by receipt.amount_cents]
+            [COMMAND Increment self.refunded_total_cents by receipt.amount_cents RESULT self.refunded_total_cents updated to include the refunded amount]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: receipt.amount_cents <= 0]
+        [LOG "Exception information"]
+        [THROW <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL> "Raised with message 'receipt amount must be positive' to enforce a positive refund amount."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

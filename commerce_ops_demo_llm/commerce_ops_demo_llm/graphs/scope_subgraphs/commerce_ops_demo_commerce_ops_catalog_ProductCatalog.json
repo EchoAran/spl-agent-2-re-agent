@@ -1,0 +1,25 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__ -> commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get -> commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get -> external.KeyError",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available -> external.self.products.values",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available -> external.sorted",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.item.validate",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.reserved.append",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.zip"
+  ]
+}

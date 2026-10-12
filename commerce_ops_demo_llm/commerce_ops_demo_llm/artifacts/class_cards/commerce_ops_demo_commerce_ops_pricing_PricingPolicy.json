@@ -1,0 +1,139 @@
+{
+  "class_name": "PricingPolicy",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "source_file": "commerce_ops/pricing.py",
+  "domain": "Commerce operations: pricing and quoting",
+  "purpose": "Encapsulate pricing rules for shopping carts by computing a price quote that combines item subtotal, coupon-based discounts, and tax using configured policy state.",
+  "responsibility": "Primary: Provide a price quoting capability that orchestrates subtotal calculation, coupon discounting, and tax computation into a final result. Secondary: Maintain pricing policy configuration (tax_rate_bps and coupons mapping) and expose reusable helpers for subtotal, coupon, and tax calculations with validation.",
+  "role": "service",
+  "public_surface": [
+    "__init__(tax_rate_bps: int, coupons: mapping[str,int]): validate non-negative tax rate; normalize and store coupons with uppercase keys.",
+    "quote(customer, items, products, coupon): produce a PriceQuote by subtotaling items, applying coupon rules (code normalization, VIP bonus, cap), clamping taxable, computing tax, and validating positive total.",
+    "calculate_subtotal(items, products): compute subtotal in cents from product price lookup and item quantities with required validations.",
+    "apply_coupon(customer, subtotal_cents, coupon): resolve discount from coupons mapping with uppercased code, add VIP bonus when applicable, and cap discount to subtotal.",
+    "calculate_tax(taxable_cents): compute tax in cents using self.tax_rate_bps basis points with integer floor division."
+  ],
+  "entrypoints": [
+    "quote",
+    "__init__"
+  ],
+  "mechanism": "The class holds configuration state for tax and supported coupons. Callers construct an instance with these settings, then use quote to coordinate subtotal, coupon application, and tax. quote delegates to calculate_subtotal, apply_coupon, and calculate_tax, enforces non-negative taxable amounts and positive totals, and constructs a <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>.",
+  "internal_structure": [
+    "Quote orchestration entry: coordinates subtotal, coupon discounting, tax computation, and builds <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>.",
+    "Subtotal computation helper: validates items and products and sums price_cents * qty.",
+    "Coupon handling helper: normalizes coupon code to uppercase, looks up in self.coupons, adds VIP bonus when applicable, caps discount to subtotal.",
+    "Tax calculation helper: reads self.tax_rate_bps and computes integer tax from a non-negative taxable amount.",
+    "Configuration state: self.tax_rate_bps and self.coupons set during initialization."
+  ],
+  "lifecycle": [
+    "Creation: __init__ validates tax_rate_bps >= 0 and normalizes coupon keys to uppercase before storing state.",
+    "Usage: quote is invoked with customer, items, products, and an optional coupon to obtain a PriceQuote.",
+    "No explicit reset or disposal behavior is defined."
+  ],
+  "state": [
+    "tax_rate_bps (int): configuration for tax rate in basis points; written in __init__; read by calculate_tax.",
+    "coupons (mapping[str,int]): configuration of uppercase coupon codes to discount cents; written in __init__; read by apply_coupon."
+  ],
+  "inputs": [
+    "tax_rate_bps (int)",
+    "coupons (mapping[str,int])",
+    "customer (Customer)",
+    "items (List[CartItem])",
+    "products (List[Product])",
+    "coupon (str)",
+    "taxable_cents (int)"
+  ],
+  "outputs": [
+    "<SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> from quote",
+    "subtotal_cents (int)",
+    "discount_cents (int)",
+    "tax_cents (int)",
+    "total_cents (int) encapsulated in PriceQuote"
+  ],
+  "dependencies": [
+    "<SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>",
+    "external.ValueError",
+    "external.max",
+    "external.min",
+    "external.coupon.upper",
+    "external.item.sku.upper",
+    "external.code.upper"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+  ],
+  "key_interactions": [
+    "quote -> calculate_subtotal",
+    "quote -> apply_coupon",
+    "quote -> calculate_tax",
+    "quote -> <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> quote",
+    "apply_coupon reads self.coupons",
+    "calculate_tax reads self.tax_rate_bps"
+  ],
+  "side_effects": [
+    "Sets self.tax_rate_bps during construction.",
+    "Normalizes and stores coupons mapping with uppercase keys during construction.",
+    "Constructs <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> when quoting."
+  ],
+  "errors": [
+    "ValueError: tax rate cannot be negative (initialization).",
+    "AttributeError: coupons does not provide an .items() method (initialization).",
+    "AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).",
+    "ValueError: total must be positive (quote).",
+    "ValueError: qty must be positive (calculate_subtotal).",
+    "ValueError: price_cents must be positive (calculate_subtotal).",
+    "AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).",
+    "KeyError: SKU not found in price lookup (calculate_subtotal).",
+    "TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).",
+    "ValueError: coupon is not supported (apply_coupon).",
+    "AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).",
+    "ValueError: taxable amount cannot be negative (calculate_tax).",
+    "TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."
+  ],
+  "invariants": [
+    "self.tax_rate_bps >= 0.",
+    "Coupon codes are normalized to uppercase in self.coupons.",
+    "Subtotal uses only items with qty > 0 and products with price_cents > 0.",
+    "Accepted coupon must exist in self.coupons.",
+    "Applied discount is capped to subtotal.",
+    "Taxable amount provided to tax calculation is >= 0.",
+    "Final total in a quote is > 0."
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__init__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/quote.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/apply_coupon.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_tax.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.code.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__ -> external.coupons.items",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon -> external.min",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal -> external.item.sku.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.coupon.upper",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> external.max"
+  ],
+  "key_internal_flows": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax"
+  ],
+  "summary": "Encapsulate pricing rules for shopping carts by computing a price quote that combines item subtotal, coupon-based discounts, and tax using configured policy state.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__class__.spl"
+}

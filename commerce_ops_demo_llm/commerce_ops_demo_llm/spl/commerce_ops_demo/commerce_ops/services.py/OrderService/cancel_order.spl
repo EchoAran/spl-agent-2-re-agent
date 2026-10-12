@@ -1,0 +1,43 @@
+[DEFINE_WORKER: "Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it." cancel_order]
+    [INPUTS]
+        <REF> order_id </REF>: str "Unique identifier of the order to cancel."
+        <REF> reason </REF>: str "Human-readable reason for cancelling the order."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The updated Order entity marked as cancelled and persisted."
+        <REF> inventory_released </REF>: None "Side effect: order items released back to catalog inventory."
+        <REF> repository_saved </REF>: None "Side effect: updated order persisted via repository."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Fetch order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id) RESULT order]
+            [COMMAND Mark the order as cancelled with the provided reason using order.mark_cancelled(reason) RESULT cancelled_order]
+            [COMMAND Release the order's items back to the catalog via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>(order.items) RESULT inventory_released]
+            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>(order) RESULT repository_saved]
+            [COMMAND Return the updated order RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> is not available]
+        [LOG "Repository unavailable or missing get() when fetching order."]
+        [THROW AttributeError "Failed to access repository.get to retrieve the order."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Fetched order is None after <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id)]
+        [LOG "Order not found for the given order_id; subsequent operations will fail."]
+        [THROW AttributeError "order is None; calling order.mark_cancelled(reason) would raise an AttributeError."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.catalog is None or <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> is not available]
+        [LOG "Catalog unavailable or missing release_items() when releasing items."]
+        [THROW AttributeError "Failed to access catalog.release_items to release order items."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> is not available]
+        [LOG "Repository unavailable or missing save() when persisting the order."]
+        [THROW AttributeError "Failed to access repository.save to persist the updated order."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

@@ -1,0 +1,28 @@
+[DEFINE_WORKER: "Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values." credit]
+    [INPUTS]
+        <REF> amount_cents </REF>: int "Amount to credit, in cents; must be > 0."
+        <REF> self.balance_cents </REF>: int "Current balance in cents read and incremented."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.balance_cents </REF>: int "Updated balance in cents after adding amount_cents."
+        <REF> return </REF>: None "No return value."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Increment self.balance_cents by amount_cents RESULT self.balance_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: amount_cents <= 0]
+        [LOG "Exception information"]
+        [THROW ValueError "Raised with message 'amount must be positive' when the amount is not greater than 0."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: amount_cents is None or non-numeric, making the '<=' comparison invalid]
+        [LOG "Exception information"]
+        [THROW TypeError "Implicitly raised by the comparison when amount_cents cannot be compared to 0."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

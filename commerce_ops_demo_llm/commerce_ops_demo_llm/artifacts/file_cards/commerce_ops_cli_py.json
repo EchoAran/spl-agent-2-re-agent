@@ -1,0 +1,125 @@
+{
+  "file_name": "cli.py",
+  "module_name": "commerce_ops_demo.commerce_ops.cli",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\cli.py",
+  "language": "python",
+  "purpose": "Provide a small CLI/demo module that constructs a demo OrderService, parses 'sku:qty' cart items, performs a sample checkout, and prints a summary.",
+  "role": "entrypoint (CLI demo utility)",
+  "exports": [
+    "build_demo_service",
+    "main",
+    "parse_cart",
+    "run_checkout_demo"
+  ],
+  "entrypoints": [
+    "main"
+  ],
+  "components": [
+    "build_demo_service: construct a demo OrderService from ProductCatalog, PricingPolicy, PaymentGateway, OrderRepository, and NotificationService",
+    "parse_cart: convert raw 'sku:qty' strings into a List[CartItem]",
+    "run_checkout_demo: orchestrate customer creation, parse cart, perform checkout, fetch history, and format a summary string",
+    "main: invoke run_checkout_demo with sample items and 'SAVE10', then print the result"
+  ],
+  "internal_structure": [
+    "main calls run_checkout_demo; run_checkout_demo builds the service via build_demo_service and parses items via parse_cart, then calls OrderService.checkout and OrderService.customer_history, formats a summary, and returns it; main prints the returned value."
+  ],
+  "module_mechanism": "When invoked via main, the module composes sample data and in-memory dependencies, executes a checkout workflow through OrderService, and surfaces the result via stdout. The exported helpers (parse_cart, build_demo_service, run_checkout_demo) allow programmatic use of the same flow.",
+  "imports": [
+    "external dependency __future__",
+    "external dependency commerce_ops.catalog",
+    "external dependency commerce_ops.models",
+    "external dependency commerce_ops.notifications",
+    "external dependency commerce_ops.payments",
+    "external dependency commerce_ops.pricing",
+    "external dependency commerce_ops.repository",
+    "external dependency commerce_ops.services",
+    "external dependency typing"
+  ],
+  "internal_imports": [],
+  "globals": [],
+  "inputs": [
+    "parse_cart.raw_items (List[str])",
+    "run_checkout_demo.raw_items (List[str])",
+    "run_checkout_demo.coupon (str, optional)"
+  ],
+  "outputs": [
+    "parse_cart -> List[CartItem]",
+    "build_demo_service -> OrderService",
+    "run_checkout_demo -> formatted summary string 'created={order_id}; status={status}; history_count={count}'",
+    "main -> prints the checkout result to stdout"
+  ],
+  "key_paths": [
+    "main -> run_checkout_demo",
+    "run_checkout_demo -> build_demo_service",
+    "run_checkout_demo -> parse_cart",
+    "run_checkout_demo -> OrderService.checkout(...)",
+    "run_checkout_demo -> OrderService.customer_history(...)",
+    "run_checkout_demo -> format 'created={order_id}; status={status}; history_count={count}'",
+    "main -> print(result)"
+  ],
+  "side_effects": [
+    "stdout printing in main"
+  ],
+  "errors": [
+    "Exception: Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates.",
+    "The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.",
+    "ValueError: Invalid literal for int() with base 10.",
+    "ValueError: Not enough values to unpack (expected 2).",
+    "qty_text cannot be converted to an integer via int(qty_text).",
+    "raw is not a string-like object and does not support split(':', 1).",
+    "raw.split(':', 1) does not produce exactly two parts for unpacking.",
+    "Exception: Underlying constructor exception is not handled and propagates to the caller.",
+    "If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error",
+    "AttributeError: order.order_id or order.status not available.",
+    "Exception: Checkout operation error.",
+    "Exception: Customer history retrieval error.",
+    "Exception: Invalid cart items.",
+    "Exception: Service initialization error.",
+    "If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.",
+    "If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.",
+    "If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.",
+    "If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.",
+    "If order lacks order_id or status attributes when formatting the summary string."
+  ],
+  "initialization_order": [
+    "main() -> run_checkout_demo(raw_items, coupon='SAVE10' in this demo)",
+    "run_checkout_demo: build_demo_service() to construct OrderService and dependencies",
+    "run_checkout_demo: parse_cart(raw_items)",
+    "run_checkout_demo: OrderService.checkout(customer, items, coupon)",
+    "run_checkout_demo: OrderService.customer_history(customer.customer_id)",
+    "run_checkout_demo: format summary string and return",
+    "main: print(result)"
+  ],
+  "class_refs": [],
+  "function_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/cli.py/parse_cart.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/cli.py/build_demo_service.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/cli.py/run_checkout_demo.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/cli.py/main.spl</SPL>"
+  ],
+  "id": "commerce_ops/cli.py",
+  "path": "commerce_ops/cli.py",
+  "incoming_files": [],
+  "outgoing_files": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.models.Product",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.services.OrderService",
+    "commerce_ops_demo.commerce_ops.cli.main -> external.print",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart -> commerce_ops_demo.commerce_ops.models.CartItem",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart -> external.int",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart -> external.items.append",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart -> external.raw.split",
+    "commerce_ops_demo.commerce_ops.cli.parse_cart -> external.sku.strip",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.models.Customer",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo -> external.len"
+  ],
+  "summary": "Provide a small CLI/demo module that constructs a demo OrderService, parses 'sku:qty' cart items, performs a sample checkout, and prints a summary.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/cli.py/__file__.spl"
+}

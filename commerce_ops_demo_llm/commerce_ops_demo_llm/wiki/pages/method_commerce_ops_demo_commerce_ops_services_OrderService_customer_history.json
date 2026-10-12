@@ -1,0 +1,116 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "slug": "commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/customer_history.spl"
+  ],
+  "summary": "Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.services.OrderService.customer_history\n\nFetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.\" customer_history]\n    [INPUTS]\n        <REF> customer_id </REF>: str \"Identifier of the customer whose orders are requested.\"\n        <REF> self.repository </REF>: OrderRepository \"Repository used to retrieve orders for the given customer.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order_summaries </REF>: List[Dict[str, str]] \"List of order summary dictionaries with keys order_id, status, and total (as a string).\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> with customer_id to retrieve the customer's orders. RESULT orders]\n            [COMMAND Construct a list of dictionaries from orders, each with order_id, status, and total as str(order.total_cents). RESULT order_summaries]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> raises an exception.]\n        [LOG \"Repository error occurred while fetching orders for the customer.\"]\n        [THROW Exception \"Propagates any exception raised by the repository call.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: orders is None or otherwise non-iterable, causing the list comprehension to fail.]\n        [LOG \"Failed to iterate over the repository result when building order summaries.\"]\n        [THROW TypeError \"Raised when attempting to iterate over a None or non-iterable orders result.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/services.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.services.OrderService.customer_history\n\nFetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.\n\n## Inputs\n- customer_id (str): Identifier of the customer whose orders are requested.\n- self.repository (OrderRepository): Repository used to retrieve orders for the given customer.\n\n## Outputs\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Main Effect\nConstruct a list of dictionaries from orders, each with order_id, status, and total as str(order.total_cents).\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer\n- commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> raises an exception.\n- Exception: Propagates any exception raised by the repository call.\n- TypeError: Raised when attempting to iterate over a None or non-iterable orders result.\n- orders is None or otherwise non-iterable, causing the list comprehension to fail.\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/services.py",
+      "url": "/wiki/file/commerce-ops-services-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/services.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635688+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "65277f265a2ee765ac61205fe0c68ab7bd45a0390a3b53d7ef9e8a7420bc555d",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/customer_history.spl",
+  "spl_content": "[DEFINE_WORKER: \"Fetches a customer's orders from the repository and returns a list of dictionaries containing order_id, status, and total_cents converted to a string.\" customer_history]\n    [INPUTS]\n        <REF> customer_id </REF>: str \"Identifier of the customer whose orders are requested.\"\n        <REF> self.repository </REF>: OrderRepository \"Repository used to retrieve orders for the given customer.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order_summaries </REF>: List[Dict[str, str]] \"List of order summary dictionaries with keys order_id, status, and total (as a string).\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> with customer_id to retrieve the customer's orders. RESULT orders]\n            [COMMAND Construct a list of dictionaries from orders, each with order_id, status, and total as str(order.total_cents). RESULT order_summaries]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer</SPL> raises an exception.]\n        [LOG \"Repository error occurred while fetching orders for the customer.\"]\n        [THROW Exception \"Propagates any exception raised by the repository call.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: orders is None or otherwise non-iterable, causing the list comprehension to fail.]\n        [LOG \"Failed to iterate over the repository result when building order summaries.\"]\n        [THROW TypeError \"Raised when attempting to iterate over a None or non-iterable orders result.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

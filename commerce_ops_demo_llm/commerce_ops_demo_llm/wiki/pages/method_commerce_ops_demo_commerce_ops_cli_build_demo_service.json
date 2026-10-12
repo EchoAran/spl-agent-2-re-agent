@@ -1,0 +1,165 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "slug": "commerce-ops-demo-commerce-ops-cli-build-demo-service",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+  "entity_kind": "function",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/build_demo_service.spl"
+  ],
+  "summary": "Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.cli.build_demo_service\n\nConstructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.\" build_demo_service]\n    [INPUTS]\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order_service </REF>: OrderService \"A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct Product('BOOK-1', 'Clean Architecture', 3500, 4, ['book']), Product('MUG-1', 'SPL Mug', 1800, 3, ['gift']), and Product('TEE-1', 'Compiler Tee', 2500, 1, ['gift']) via <SPL>commerce_ops_demo.commerce_ops.models.Product</SPL> and aggregate them into a list RESULT product_list]\n            [COMMAND Create a product catalog from product_list via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL> RESULT catalog]\n            [COMMAND Create a pricing policy with base 825 and discounts {'SAVE10': 1000, 'VIP5': 500} via <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL> RESULT pricing]\n            [COMMAND Instantiate a payment gateway via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL> RESULT payments]\n            [COMMAND Instantiate an order repository via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL> RESULT repository]\n            [COMMAND Instantiate a notification service via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL> RESULT notifications]\n            [COMMAND Construct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL> RESULT order_service]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error]\n        [LOG \"Constructor failure while building demo service; propagating exception\"]\n        [THROW Exception \"Underlying constructor exception is not handled and propagates to the caller.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.cli.build_demo_service`\n- Entity kind: `function`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/cli.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.cli.build_demo_service\n\nConstructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.\n\n## Inputs\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Outputs\n- order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.\n\n## Main Effect\nConstruct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.catalog.ProductCatalog\n- commerce_ops_demo.commerce_ops.models.Product\n- commerce_ops_demo.commerce_ops.notifications.NotificationService\n- commerce_ops_demo.commerce_ops.payments.PaymentGateway\n- commerce_ops_demo.commerce_ops.pricing.PricingPolicy\n- commerce_ops_demo.commerce_ops.repository.OrderRepository\n- commerce_ops_demo.commerce_ops.services.OrderService\n- commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\n## Side Effects\n- ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )\n- order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.\n\n## Errors\n- Exception: Underlying constructor exception is not handled and propagates to the caller.\n- If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "file:commerce_ops/cli.py",
+      "target_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/cli.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Product"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "file:commerce_ops/cli.py",
+      "source_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.cli"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "source_url": "/wiki/topic/configuration",
+      "relation": "topic_mentions",
+      "label": "Configuration"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/cli.py",
+      "url": "/wiki/file/commerce-ops-cli-py"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.cli.build_demo_service"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.630183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "ff29508126ab220ac320a361c8ce9937770b9a0f15dcf7e4bf8e740a5639d2b7",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/cli.py/build_demo_service.spl",
+  "spl_content": "[DEFINE_WORKER: \"Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.\" build_demo_service]\n    [INPUTS]\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order_service </REF>: OrderService \"A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct Product('BOOK-1', 'Clean Architecture', 3500, 4, ['book']), Product('MUG-1', 'SPL Mug', 1800, 3, ['gift']), and Product('TEE-1', 'Compiler Tee', 2500, 1, ['gift']) via <SPL>commerce_ops_demo.commerce_ops.models.Product</SPL> and aggregate them into a list RESULT product_list]\n            [COMMAND Create a product catalog from product_list via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL> RESULT catalog]\n            [COMMAND Create a pricing policy with base 825 and discounts {'SAVE10': 1000, 'VIP5': 500} via <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL> RESULT pricing]\n            [COMMAND Instantiate a payment gateway via <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL> RESULT payments]\n            [COMMAND Instantiate an order repository via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL> RESULT repository]\n            [COMMAND Instantiate a notification service via <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL> RESULT notifications]\n            [COMMAND Construct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL> RESULT order_service]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error]\n        [LOG \"Constructor failure while building demo service; propagating exception\"]\n        [THROW Exception \"Underlying constructor exception is not handled and propagates to the caller.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

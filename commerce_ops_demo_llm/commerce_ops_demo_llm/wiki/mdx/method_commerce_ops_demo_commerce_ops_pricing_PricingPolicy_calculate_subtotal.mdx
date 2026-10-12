@@ -1,0 +1,121 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "summary": "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal
+
+Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item." calculate_subtotal]
+    [INPUTS]
+        <REF> self </REF>: object "Instance of the containing class; not used in the computation."
+        <REF> items </REF>: List[CartItem] "Iterable of cart items, each with sku and qty to be validated and priced."
+        <REF> products </REF>: List[Product] "Iterable of products, each with sku and price_cents used to build a price lookup."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> subtotal </REF>: int "Total price in cents calculated as the sum of price_cents * qty for all valid items."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Build a dict mapping each product.sku to product.price_cents from products RESULT price_by_sku]
+            [COMMAND Initialize subtotal accumulator to 0 RESULT subtotal]
+            [COMMAND Iterate over items; for each item validate item.qty > 0, lookup price = price_by_sku[item.sku.upper()], validate price > 0, and add price * item.qty to subtotal RESULT subtotal]
+            [COMMAND Return the accumulated subtotal RESULT subtotal]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, item.qty <= 0]
+        [LOG "Invalid quantity encountered for an item"]
+        [THROW ValueError "qty must be positive"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, fetched price <= 0]
+        [LOG "Invalid product price encountered"]
+        [THROW ValueError "price_cents must be positive"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During lookup, item.sku.upper() key is not present in price_by_sku]
+        [LOG "SKU not found in product price mapping"]
+        [THROW KeyError "SKU not found in price_by_sku when using item.sku.upper()"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During iteration, item lacks required attributes or item.sku is not a string supporting upper()]
+        [LOG "Item has missing or invalid attributes (sku or qty)"]
+        [THROW AttributeError "Missing attribute (sku or qty) or sku does not support upper()"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: During comparison or multiplication, qty or price is non-numeric]
+        [LOG "Type mismatch when validating or accumulating subtotal"]
+        [THROW TypeError "Non-numeric qty or price caused comparison or arithmetic to fail"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/pricing.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal
+
+Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.
+
+## Inputs
+- self (object): Instance of the containing class; not used in the computation.
+- items (List[CartItem]): Iterable of cart items, each with sku and qty to be validated and priced.
+- products (List[Product]): Iterable of products, each with sku and price_cents used to build a price lookup.
+
+## Outputs
+- subtotal (int): Total price in cents calculated as the sum of price_cents * qty for all valid items.
+
+## Main Effect
+Return the accumulated subtotal
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- AttributeError: Missing attribute (sku or qty) or sku does not support upper()
+- During comparison or multiplication, qty or price is non-numeric
+- During iteration, fetched price <= 0
+- During iteration, item lacks required attributes or item.sku is not a string supporting upper()
+- During iteration, item.qty <= 0
+- During lookup, item.sku.upper() key is not present in price_by_sku
+- KeyError: SKU not found in price_by_sku when using item.sku.upper()
+- TypeError: Non-numeric qty or price caused comparison or arithmetic to fail
+- ValueError: price_cents must be positive
+- ValueError: qty must be positive
+- item.qty > 0
+- item.sku.upper() > 0
+- raise ValueError("price_cents must be positive")
+- raise ValueError("qty must be positive")
+
+## Validation Rules
+- item.qty > 0
+- item.sku.upper() > 0

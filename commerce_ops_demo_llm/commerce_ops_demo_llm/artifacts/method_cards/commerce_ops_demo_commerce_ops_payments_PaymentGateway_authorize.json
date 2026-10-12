@@ -1,0 +1,88 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "owner_file_id": "commerce_ops/payments.py",
+  "signature": "def authorize(self, customer: Customer, amount_cents: int) -> PaymentReceipt:",
+  "visibility": "public",
+  "summary": "Authorize a payment by validating the amount, debiting the customer, updating the authorized total, and returning a new payment receipt.",
+  "purpose_hint": "",
+  "inputs": [
+    "customer (Customer): Customer account to be debited; must support <SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL>.",
+    "amount_cents (int): Positive amount in cents to authorize.",
+    "self.provider (Provider): Provider identifier read from instance state and included in <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL>."
+  ],
+  "outputs": [
+    "receipt (PaymentReceipt): A new <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> constructed with a generated UUID string, amount_cents, and self.provider.",
+    "self.authorized_total_cents (int): Instance state incremented by amount_cents.",
+    "customer_balance (mutation): Side effect: customer.debit(amount_cents) invoked to reduce available funds on the customer."
+  ],
+  "main_effect": "Generate a new UUID string via uuid4() and construct <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> with (id, amount_cents, self.provider); return it.",
+  "side_effects": [
+    "customer_balance (mutation): Side effect: customer.debit(amount_cents) invoked to reduce available funds on the customer.",
+    "mutates self.authorized_total_cents",
+    "receipt (PaymentReceipt): A new <SPL>commerce_ops_demo.commerce_ops.payments.PaymentReceipt</SPL> constructed with a generated UUID string, amount_cents, and self.provider.",
+    "self.authorized_total_cents (int): Instance state incremented by amount_cents."
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.models.Customer.debit</SPL> raises ValueError",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: Raised with message 'amount must be positive' when the amount is not greater than zero.",
+    "<SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: Re-raised as PaymentError with the original ValueError message.",
+    "amount_cents <= 0",
+    "amount_cents > 0",
+    "raise PaymentError(\"amount must be positive\")",
+    "raise PaymentError(str(exc)) from exc"
+  ],
+  "validation_rules": [
+    "amount_cents > 0"
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentError",
+    "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+    "external.str",
+    "external.uuid4"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+  ],
+  "external_calls": [
+    "external.str",
+    "external.uuid4"
+  ],
+  "state_reads": [
+    "authorized_total_cents",
+    "provider"
+  ],
+  "state_writes": [
+    "authorized_total_cents"
+  ],
+  "control_markers": {
+    "statements_count": 4,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if amount_cents <= 0:\n            raise PaymentError(\"amount must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 9,
+        "code": "return PaymentReceipt(str(uuid4()), amount_cents, self.provider)"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/authorize.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

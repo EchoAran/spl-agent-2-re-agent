@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" Product]
+
+[DEFINE_PERSONA:]
+    ROLE: "entity"
+    DOMAIN: "E-commerce inventory and catalog model"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Represent a product and manage available inventory by providing validated reservation and release operations on stock."
+    Responsibility: "Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags)."
+    PublicBehavior: "reserve(qty: int) -> None; release(qty: int) -> None"
+    InternalMechanism: "A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes."
+    StateModel: "sku: product identifier (read by methods); name: product name (declared); price_cents: price in cents (declared); tags: label collection (declared); stock: available quantity (read and written by methods)"
+    Collaboration: "dataclasses.dataclass (decorator); ValueError (exception type raised for validation failures)"
+    ErrorBoundary: "ValueError: qty must be positive (reserve, release); ValueError: not enough stock for {self.sku} (reserve)"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "Product"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.models.Product"
+    <REF> source_file </REF>: text "commerce_ops/models.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Represent a product and manage available inventory by providing validated reservation and release operations on stock."
+    <REF> responsibility </REF>: text "Primary: enforce and apply stock changes with input validation and error signaling. Secondary: hold product attributes (sku, name, price_cents, tags)."
+    <REF> role </REF>: text "entity"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["reserve(qty: int) -> None", "release(qty: int) -> None"]
+    <REF> entrypoints </REF>: List [text] ["reserve(qty: int)", "release(qty: int)"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "A dataclass holds product data fields while stock operations validate inputs and mutate the stock field. Methods raise ValueError on invalid quantities or insufficient stock. External callers (ProductCatalog) invoke these operations to coordinate inventory changes."
+    <REF> internal_structure </REF>: List [text] ["Domain data fields: sku, name, price_cents, tags", "Inventory field: stock (mutable; read/write)", "No private helpers; validation and mutation occur within public methods", "Decorator: dataclass"]
+    <REF> lifecycle </REF>: List [text] ["Instantiated with product attributes and initial stock via dataclass construction", "Stock evolves through reserve and release calls", "No explicit teardown or disposal behavior"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["sku: product identifier (read by methods)", "name: product name (declared)", "price_cents: price in cents (declared)", "tags: label collection (declared)", "stock: available quantity (read and written by methods)"]
+    <REF> inputs </REF>: List [text] ["qty (int) for reserve", "qty (int) for release", "Initial construction fields: sku, name, price_cents, stock, tags"]
+    <REF> outputs </REF>: List [text] ["Updated stock via in-place mutation", "No return values from reserve or release"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["dataclasses.dataclass (decorator)", "ValueError (exception type raised for validation failures)"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items", "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items"]
+    <REF> key_interactions </REF>: List [text] ["Called by ProductCatalog to reserve or release product units", "Raises ValueError to signal invalid quantity or insufficient stock"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Mutates in-memory state: self.stock"]
+    <REF> errors </REF>: List [text] ["ValueError: qty must be positive (reserve, release)", "ValueError: not enough stock for {self.sku} (reserve)"]
+    <REF> invariants </REF>: List [text] ["Reservation requires qty > 0 and qty <= current stock", "Release requires qty > 0", "Stock is not reduced below zero by reserve due to validation", "Only reserve and release modify stock in this class"]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/reserve.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

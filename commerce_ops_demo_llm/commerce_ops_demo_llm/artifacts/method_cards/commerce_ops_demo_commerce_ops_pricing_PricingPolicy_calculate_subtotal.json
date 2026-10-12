@@ -1,0 +1,92 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "owner_file_id": "commerce_ops/pricing.py",
+  "signature": "def calculate_subtotal(self, items: List[CartItem], products: List[Product]) -> int:",
+  "visibility": "public",
+  "summary": "Compute the cart subtotal in cents by mapping product SKUs to prices, validating quantities and prices, and summing price * quantity for each item.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): Instance of the containing class; not used in the computation.",
+    "items (List[CartItem]): Iterable of cart items, each with sku and qty to be validated and priced.",
+    "products (List[Product]): Iterable of products, each with sku and price_cents used to build a price lookup."
+  ],
+  "outputs": [
+    "subtotal (int): Total price in cents calculated as the sum of price_cents * qty for all valid items."
+  ],
+  "main_effect": "Return the accumulated subtotal",
+  "side_effects": [],
+  "errors": [
+    "AttributeError: Missing attribute (sku or qty) or sku does not support upper()",
+    "During comparison or multiplication, qty or price is non-numeric",
+    "During iteration, fetched price <= 0",
+    "During iteration, item lacks required attributes or item.sku is not a string supporting upper()",
+    "During iteration, item.qty <= 0",
+    "During lookup, item.sku.upper() key is not present in price_by_sku",
+    "KeyError: SKU not found in price_by_sku when using item.sku.upper()",
+    "TypeError: Non-numeric qty or price caused comparison or arithmetic to fail",
+    "ValueError: price_cents must be positive",
+    "ValueError: qty must be positive",
+    "item.qty > 0",
+    "item.sku.upper() > 0",
+    "raise ValueError(\"price_cents must be positive\")",
+    "raise ValueError(\"qty must be positive\")"
+  ],
+  "validation_rules": [
+    "item.qty > 0",
+    "item.sku.upper() > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError",
+    "external.item.sku.upper"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "external_calls": [
+    "external.ValueError",
+    "external.item.sku.upper"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 4,
+    "control_structures": [],
+    "loops": [
+      {
+        "type": "for",
+        "lineno": 4,
+        "code": "for item in items:\n            if item.qty <= 0:\n                raise ValueError(\"qty must be positive\")\n            price = price_by_sku[item.sku.upper()]\n            if price <= 0:\n                raise ValueError(\"price_cents must be positive\")\n            subtotal += price * item.qty"
+      }
+    ],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "price_by_sku = {product.sku: product.price_cents for product in products}"
+      },
+      {
+        "type": "assignment",
+        "lineno": 3,
+        "code": "subtotal = 0"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 11,
+        "code": "return subtotal"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

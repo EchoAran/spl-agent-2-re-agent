@@ -1,0 +1,115 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+  "summary": "Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/cancel_order.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.services.OrderService.cancel_order
+
+Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it." cancel_order]
+    [INPUTS]
+        <REF> order_id </REF>: str "Unique identifier of the order to cancel."
+        <REF> reason </REF>: str "Human-readable reason for cancelling the order."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "The updated Order entity marked as cancelled and persisted."
+        <REF> inventory_released </REF>: None "Side effect: order items released back to catalog inventory."
+        <REF> repository_saved </REF>: None "Side effect: updated order persisted via repository."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Fetch order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id) RESULT order]
+            [COMMAND Mark the order as cancelled with the provided reason using order.mark_cancelled(reason) RESULT cancelled_order]
+            [COMMAND Release the order's items back to the catalog via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>(order.items) RESULT inventory_released]
+            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>(order) RESULT repository_saved]
+            [COMMAND Return the updated order RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> is not available]
+        [LOG "Repository unavailable or missing get() when fetching order."]
+        [THROW AttributeError "Failed to access repository.get to retrieve the order."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Fetched order is None after <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id)]
+        [LOG "Order not found for the given order_id; subsequent operations will fail."]
+        [THROW AttributeError "order is None; calling order.mark_cancelled(reason) would raise an AttributeError."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.catalog is None or <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> is not available]
+        [LOG "Catalog unavailable or missing release_items() when releasing items."]
+        [THROW AttributeError "Failed to access catalog.release_items to release order items."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> is not available]
+        [LOG "Repository unavailable or missing save() when persisting the order."]
+        [THROW AttributeError "Failed to access repository.save to persist the updated order."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/services.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.services.OrderService.cancel_order
+
+Cancels an order by ID with a reason, releases its items back to the catalog, saves the updated order, and returns it.
+
+## Inputs
+- order_id (str): Unique identifier of the order to cancel.
+- reason (str): Human-readable reason for cancelling the order.
+
+## Outputs
+- order (Order): The updated Order entity marked as cancelled and persisted.
+- inventory_released (None): Side effect: order items released back to catalog inventory.
+- repository_saved (None): Side effect: updated order persisted via repository.
+
+## Main Effect
+Return the updated order
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.get
+- commerce_ops_demo.commerce_ops.repository.OrderRepository.save
+
+## Side Effects
+- self.catalog.release_items(order.items)
+- self.repository.save(order)
+
+## Errors
+- AttributeError: Failed to access catalog.release_items to release order items.
+- AttributeError: Failed to access repository.get to retrieve the order.
+- AttributeError: Failed to access repository.save to persist the updated order.
+- AttributeError: order is None; calling order.mark_cancelled(reason) would raise an AttributeError.
+- Fetched order is None after <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>(order_id)
+- self.catalog is None or <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> is not available
+- self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> is not available
+- self.repository is None or <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> is not available
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

@@ -1,0 +1,135 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "slug": "commerce-ops-demo-commerce-ops-models-order-add-event",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Order/add_event.spl"
+  ],
+  "summary": "Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.models.Order.add_event\n\nAppends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.\" add_event]\n    [INPUTS]\n        <REF> kind </REF>: str \"Event type identifier to record in the new event.\"\n        <REF> detail </REF>: str \"Event detail message or description.\"\n        <REF> self.events </REF>: list \"Existing events list on the instance that will be mutated via append.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"No direct return value.\"\n        <REF> self.events </REF>: list \"Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Generate a UTC timestamp string using datetime.now(timezone.utc).isoformat(). RESULT timestamp string in ISO 8601 format]\n            [COMMAND Construct an event dictionary with keys kind, detail, and timestamp. RESULT event dict with provided kind/detail and generated timestamp]\n            [COMMAND Append the constructed event dictionary to self.events. RESULT self.events updated with the new event entry]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: self.events is None or lacks an append method (not a list-like).]\n        [LOG \"Cannot append event; self.events is not appendable.\"]\n        [THROW AttributeError \"self.events does not support append.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: datetime or timezone is not imported/defined when generating the timestamp.]\n        [LOG \"Time source unavailable: datetime or timezone is undefined.\"]\n        [THROW NameError \"datetime or timezone is not defined.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.models.Order.add_event`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/models.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.models.Order.add_event\n\nAppends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.\n\n## Inputs\n- kind (str): Event type identifier to record in the new event.\n- detail (str): Event detail message or description.\n- self.events (list): Existing events list on the instance that will be mutated via append.\n\n## Outputs\n- return (None): No direct return value.\n- self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.\n\n## Main Effect\nAppend the constructed event dictionary to self.events.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.models.Order.mark_cancelled\n- commerce_ops_demo.commerce_ops.models.Order.mark_paid\n- commerce_ops_demo.commerce_ops.services.OrderService._build_order\n\n## Side Effects\n- mutates self.events\n- mutates self.events via append\n- self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.\n- self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )\n\n## Errors\n- AttributeError: self.events does not support append.\n- NameError: datetime or timezone is not defined.\n- datetime or timezone is not imported/defined when generating the timestamp.\n- self.events is None or lacks an append method (not a list-like).\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.models.Order"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-cancelled",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-cancelled",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.models.Order"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/models.py",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.models.Order",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/models.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.models.Order.add_event"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.models.Order.add_event"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.632183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "a62e130722d73851dc566b66f4bbffc1acc67e55924b56730cf2ae8dcac57df2",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/models.py/Order/add_event.spl",
+  "spl_content": "[DEFINE_WORKER: \"Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.\" add_event]\n    [INPUTS]\n        <REF> kind </REF>: str \"Event type identifier to record in the new event.\"\n        <REF> detail </REF>: str \"Event detail message or description.\"\n        <REF> self.events </REF>: list \"Existing events list on the instance that will be mutated via append.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> return </REF>: None \"No direct return value.\"\n        <REF> self.events </REF>: list \"Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Generate a UTC timestamp string using datetime.now(timezone.utc).isoformat(). RESULT timestamp string in ISO 8601 format]\n            [COMMAND Construct an event dictionary with keys kind, detail, and timestamp. RESULT event dict with provided kind/detail and generated timestamp]\n            [COMMAND Append the constructed event dictionary to self.events. RESULT self.events updated with the new event entry]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: self.events is None or lacks an append method (not a list-like).]\n        [LOG \"Cannot append event; self.events is not appendable.\"]\n        [THROW AttributeError \"self.events does not support append.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: datetime or timezone is not imported/defined when generating the timestamp.]\n        [LOG \"Time source unavailable: datetime or timezone is undefined.\"]\n        [THROW NameError \"datetime or timezone is not defined.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

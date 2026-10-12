@@ -1,0 +1,90 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+  "slug": "commerce-ops-demo-commerce-ops-pricing-pricingpolicy-init",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-init",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__init__.spl"
+  ],
+  "summary": "Initialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__\n\nInitialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Initialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.\" __init__]\n    [INPUTS]\n        <REF> tax_rate_bps </REF>: int \"Tax rate in basis points; must be >= 0.\"\n        <REF> coupons </REF>: Dict[str, int] \"Mapping of coupon code strings to integer values; codes will be normalized to uppercase.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.tax_rate_bps </REF>: int attribute \"Instance attribute set to the provided tax_rate_bps.\"\n        <REF> self.coupons </REF>: dict[str, int] attribute \"New dictionary with coupon codes uppercased as keys and original values; later entries overwrite earlier ones if uppercase keys collide.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Validate that tax_rate_bps is not negative (tax_rate_bps >= 0). RESULT validated_tax_rate]\n            [COMMAND Assign the validated tax_rate_bps to the instance attribute. RESULT self.tax_rate_bps set]\n            [COMMAND Construct a new dict by iterating coupons.items() and mapping each code.upper() to its value; values are preserved by reference and later keys overwrite earlier ones if uppercase-normalized keys collide. RESULT normalized_coupons]\n            [COMMAND Assign the normalized coupon mapping to the instance attribute. RESULT self.coupons set]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: tax_rate_bps < 0]\n        [LOG \"tax rate cannot be negative\"]\n        [THROW ValueError \"Raised when a negative tax_rate_bps is provided.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: coupons does not provide an .items() method (non-mapping or None)]\n        [LOG \"coupons must be mapping-like; .items() is required\"]\n        [THROW AttributeError \"Attempted to call .items() on a non-mapping coupons argument.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: a coupon code from coupons.items() is not a string (lacks .upper())]\n        [LOG \"coupon code must be string-like to support .upper()\"]\n        [THROW AttributeError \"Non-string coupon code encountered during key normalization with .upper().\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/pricing.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__\n\nInitialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.\n\n## Inputs\n- tax_rate_bps (int): Tax rate in basis points; must be >= 0.\n- coupons (Dict[str, int]): Mapping of coupon code strings to integer values; codes will be normalized to uppercase.\n\n## Outputs\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Main Effect\nAssign the normalized coupon mapping to the instance attribute.\n\n## Calls and Callers\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Side Effects\n- mutates self.coupons\n- mutates self.tax_rate_bps\n\n## Errors\n- AttributeError: Attempted to call .items() on a non-mapping coupons argument.\n- AttributeError: Non-string coupon code encountered during key normalization with .upper().\n- ValueError: Raised when a negative tax_rate_bps is provided.\n- a coupon code from coupons.items() is not a string (lacks .upper())\n- coupons does not provide an .items() method (non-mapping or None)\n- raise ValueError(\"tax rate cannot be negative\")\n- tax_rate_bps < 0\n- tax_rate_bps > 0\n\n## Validation Rules\n- tax_rate_bps > 0\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target_page_id": "file:commerce_ops/pricing.py",
+      "target_url": "/wiki/file/commerce-ops-pricing-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/pricing.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/pricing.py",
+      "url": "/wiki/file/commerce-ops-pricing-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/pricing.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635182+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "abc5643be24edd46938de6b41e9cb94ed974147f5c0ff28027bcc2c8fda974b2",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__init__.spl",
+  "spl_content": "[DEFINE_WORKER: \"Initialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys.\" __init__]\n    [INPUTS]\n        <REF> tax_rate_bps </REF>: int \"Tax rate in basis points; must be >= 0.\"\n        <REF> coupons </REF>: Dict[str, int] \"Mapping of coupon code strings to integer values; codes will be normalized to uppercase.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.tax_rate_bps </REF>: int attribute \"Instance attribute set to the provided tax_rate_bps.\"\n        <REF> self.coupons </REF>: dict[str, int] attribute \"New dictionary with coupon codes uppercased as keys and original values; later entries overwrite earlier ones if uppercase keys collide.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Validate that tax_rate_bps is not negative (tax_rate_bps >= 0). RESULT validated_tax_rate]\n            [COMMAND Assign the validated tax_rate_bps to the instance attribute. RESULT self.tax_rate_bps set]\n            [COMMAND Construct a new dict by iterating coupons.items() and mapping each code.upper() to its value; values are preserved by reference and later keys overwrite earlier ones if uppercase-normalized keys collide. RESULT normalized_coupons]\n            [COMMAND Assign the normalized coupon mapping to the instance attribute. RESULT self.coupons set]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: tax_rate_bps < 0]\n        [LOG \"tax rate cannot be negative\"]\n        [THROW ValueError \"Raised when a negative tax_rate_bps is provided.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: coupons does not provide an .items() method (non-mapping or None)]\n        [LOG \"coupons must be mapping-like; .items() is required\"]\n        [THROW AttributeError \"Attempted to call .items() on a non-mapping coupons argument.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: a coupon code from coupons.items() is not a string (lacks .upper())]\n        [LOG \"coupon code must be string-like to support .upper()\"]\n        [THROW AttributeError \"Non-string coupon code encountered during key normalization with .upper().\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

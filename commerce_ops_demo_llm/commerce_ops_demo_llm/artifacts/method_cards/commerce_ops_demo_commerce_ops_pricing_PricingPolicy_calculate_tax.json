@@ -1,0 +1,73 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+  "owner_file_id": "commerce_ops/pricing.py",
+  "signature": "def calculate_tax(self, taxable_cents: int) -> int:",
+  "visibility": "public",
+  "summary": "Computes tax in cents from a non-negative taxable amount using self.tax_rate_bps (basis points) with integer floor division by 10000.",
+  "purpose_hint": "",
+  "inputs": [
+    "taxable_cents (int): Taxable amount in cents; must be >= 0.",
+    "self.tax_rate_bps (int): Tax rate in basis points (hundredths of a percent) read from instance state."
+  ],
+  "outputs": [
+    "tax_cents (int): Computed tax in cents using (taxable_cents * self.tax_rate_bps) // 10000; fractional part is truncated."
+  ],
+  "main_effect": "Compute tax as (taxable_cents * self.tax_rate_bps) // 10000 using integer floor division.",
+  "side_effects": [
+    "tax_cents (int): Computed tax in cents using (taxable_cents * self.tax_rate_bps) // 10000; fractional part is truncated."
+  ],
+  "errors": [
+    "Non-numeric or non-comparable inputs during comparison or arithmetic (e.g., taxable_cents or self.tax_rate_bps is not an int).",
+    "TypeError: Raised by Python when comparing or multiplying non-numeric or incompatible types.",
+    "ValueError: taxable amount cannot be negative",
+    "raise ValueError(\"taxable amount cannot be negative\")",
+    "taxable_cents < 0",
+    "taxable_cents > 0"
+  ],
+  "validation_rules": [
+    "taxable_cents > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "tax_rate_bps"
+  ],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if taxable_cents < 0:\n            raise ValueError(\"taxable amount cannot be negative\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return taxable_cents * self.tax_rate_bps // 10000"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_tax.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

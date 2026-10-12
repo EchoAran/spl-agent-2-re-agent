@@ -1,0 +1,14 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.models.Customer",
+  "internal_edges": [
+    "commerce_ops_demo.commerce_ops.models.Customer.debit -> commerce_ops_demo.commerce_ops.models.Customer.can_spend"
+  ],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize -> commerce_ops_demo.commerce_ops.models.Customer.debit",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund -> commerce_ops_demo.commerce_ops.models.Customer.credit"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.models.Customer.credit -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.models.Customer.debit -> external.ValueError"
+  ]
+}

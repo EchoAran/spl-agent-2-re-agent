@@ -1,0 +1,35 @@
+[DEFINE_WORKER: "Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id." list_by_customer]
+    [INPUTS]
+        <REF> customer_id </REF>: str "Target customer identifier used to filter orders."
+        <REF> self.orders </REF>: Mapping[Any, Order] "Internal mapping of orders; its values() are iterated to access order objects."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> orders_by_customer </REF>: List[Order] "New list containing orders whose order.customer_id equals the provided customer_id."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Access the internal orders collection values for iteration RESULT all_orders_iterable]
+            [COMMAND Filter orders where each order.customer_id equals the input customer_id RESULT matching_orders_sequence]
+            [COMMAND Construct a list from the filtered orders RESULT orders_by_customer]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: No orders have a customer_id equal to the provided customer_id]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Iterate through orders, find no matches, and produce an empty list RESULT orders_by_customer (empty)]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: The orders container does not support attribute values()]
+        [LOG "AttributeError when accessing self.orders.values()"]
+        [THROW AttributeError "The orders collection does not implement a values() method."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: An order object is missing the customer_id attribute during filtering]
+        [LOG "AttributeError when reading order.customer_id"]
+        [THROW AttributeError "Encountered an order without a customer_id attribute while filtering."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

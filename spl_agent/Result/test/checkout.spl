@@ -1,0 +1,31 @@
+[DEFINE_WORKER: "Compute the payable total from cart and an optional coupon, then either deduct it from the user's balance and return a success summary or return an insufficient-funds summary, raising ValueError if the total is not positive." checkout]
+    [INPUTS]
+        <REF> user </REF>: dict "User account object with a numeric 'balance' field; it is mutated in place when charging succeeds."
+        <REF> cart </REF>: list[dict] "List of cart item objects consumed by calc_total to compute the payable amount."
+        <REF> coupon </REF>: str | None "Optional coupon code applied by calc_total; None means no coupon."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order_summary </REF>: dict "On success: {'ok': True, 'charged': total, 'balance': updated_balance}; on insufficient funds: {'ok': False, 'reason': 'insufficient_funds', 'need': total, 'balance': current_balance}."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Compute total payable by calling calc_total(cart, coupon) RESULT total]
+            [COMMAND Subtract total from user['balance'] RESULT user_balance]
+            [COMMAND Return success summary dict with ok=True, charged=total, balance=user['balance'] RESULT order_summary]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: When user.get('balance', 0) < total]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Return failure summary dict with ok=False, reason='insufficient_funds', need=total, balance=user.get('balance', 0) RESULT order_summary]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: When total <= 0]
+        [LOG "Exception information"]
+        [THROW ValueError "Total must be positive"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

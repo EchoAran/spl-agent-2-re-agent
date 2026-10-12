@@ -1,0 +1,169 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "slug": "commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+  "entity_kind": "function",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/run_checkout_demo.spl"
+  ],
+  "summary": "Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\nBuilds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.\" run_checkout_demo]\n    [INPUTS]\n        <REF> raw_items </REF>: List[str] \"List of raw item strings to parse into cart items.\"\n        <REF> coupon </REF>: str \"Optional coupon code applied during checkout; empty string when none.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> summary </REF>: str \"Formatted summary string: 'created={order_id}; status={status}; history_count={count}'.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> to construct the order service instance. RESULT service]\n            [COMMAND Instantiate <SPL>commerce_ops_demo.commerce_ops.models.Customer</SPL> with id 'cust-100', email 'reader@example.com', balance 20000, and tier 'vip'. RESULT customer]\n            [COMMAND Parse raw cart items via <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items). RESULT items]\n            [COMMAND Perform checkout via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(customer, items, coupon). RESULT order]\n            [COMMAND Fetch customer order history via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id). RESULT history]\n            [COMMAND Format the return message as \"created={order.order_id}; status={order.status}; history_count={len(history)}\". RESULT summary]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.]\n        [LOG \"Failed to initialize demo order service.\"]\n        [THROW Exception \"Service initialization error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.]\n        [LOG \"Failed to parse raw_items into cart items.\"]\n        [THROW Exception \"Invalid cart items.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.]\n        [LOG \"Checkout failed for given customer/items/coupon.\"]\n        [THROW Exception \"Checkout operation error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.]\n        [LOG \"Retrieving customer history failed.\"]\n        [THROW Exception \"Customer history retrieval error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If order lacks order_id or status attributes when formatting the summary string.]\n        [LOG \"Order object missing expected attributes.\"]\n        [THROW AttributeError \"order.order_id or order.status not available.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo`\n- Entity kind: `function`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/cli.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\nBuilds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.\n\n## Inputs\n- raw_items (List[str]): List of raw item strings to parse into cart items.\n- coupon (str): Optional coupon code applied during checkout; empty string when none.\n\n## Outputs\n- summary (str): Formatted summary string: 'created={order_id}; status={status}; history_count={count}'.\n\n## Main Effect\nFormat the return message as \"created={order.order_id}; status={order.status}; history_count={len(history)}\".\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.cli.build_demo_service\n- commerce_ops_demo.commerce_ops.cli.parse_cart\n- commerce_ops_demo.commerce_ops.models.Customer\n- commerce_ops_demo.commerce_ops.services.OrderService.checkout\n- commerce_ops_demo.commerce_ops.services.OrderService.customer_history\n- commerce_ops_demo.commerce_ops.cli.main\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- AttributeError: order.order_id or order.status not available.\n- Exception: Checkout operation error.\n- Exception: Customer history retrieval error.\n- Exception: Invalid cart items.\n- Exception: Service initialization error.\n- If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.\n- If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.\n- If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.\n- If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.\n- If order lacks order_id or status attributes when formatting the summary string.\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "file:commerce_ops/cli.py",
+      "target_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/cli.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.main"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    },
+    {
+      "source_page_id": "file:commerce_ops/cli.py",
+      "source_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.cli"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "source_url": "/wiki/topic/configuration",
+      "relation": "topic_mentions",
+      "label": "Configuration"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/cli.py",
+      "url": "/wiki/file/commerce-ops-cli-py"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.629184+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "0a43d801333a5f7f12f775e3f654211e9e945c547173e8ae70e9187a3a478460",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/cli.py/run_checkout_demo.spl",
+  "spl_content": "[DEFINE_WORKER: \"Builds a demo order service, constructs a fixed customer, parses raw item strings, performs checkout with an optional coupon, retrieves the customer’s order history, and returns a formatted summary string.\" run_checkout_demo]\n    [INPUTS]\n        <REF> raw_items </REF>: List[str] \"List of raw item strings to parse into cart items.\"\n        <REF> coupon </REF>: str \"Optional coupon code applied during checkout; empty string when none.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> summary </REF>: str \"Formatted summary string: 'created={order_id}; status={status}; history_count={count}'.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> to construct the order service instance. RESULT service]\n            [COMMAND Instantiate <SPL>commerce_ops_demo.commerce_ops.models.Customer</SPL> with id 'cust-100', email 'reader@example.com', balance 20000, and tier 'vip'. RESULT customer]\n            [COMMAND Parse raw cart items via <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items). RESULT items]\n            [COMMAND Perform checkout via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(customer, items, coupon). RESULT order]\n            [COMMAND Fetch customer order history via <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id). RESULT history]\n            [COMMAND Format the return message as \"created={order.order_id}; status={order.status}; history_count={len(history)}\". RESULT summary]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.build_demo_service</SPL> fails to create the service instance.]\n        [LOG \"Failed to initialize demo order service.\"]\n        [THROW Exception \"Service initialization error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.cli.parse_cart</SPL>(raw_items) raises due to invalid or malformed input.]\n        [LOG \"Failed to parse raw_items into cart items.\"]\n        [THROW Exception \"Invalid cart items.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.checkout</SPL>(...) fails due to validation, inventory, or coupon issues.]\n        [LOG \"Checkout failed for given customer/items/coupon.\"]\n        [THROW Exception \"Checkout operation error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If <SPL>commerce_ops_demo.commerce_ops.services.OrderService.customer_history</SPL>(customer.customer_id) fails or customer_id is invalid.]\n        [LOG \"Retrieving customer history failed.\"]\n        [THROW Exception \"Customer history retrieval error.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: If order lacks order_id or status attributes when formatting the summary string.]\n        [LOG \"Order object missing expected attributes.\"]\n        [THROW AttributeError \"order.order_id or order.status not available.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

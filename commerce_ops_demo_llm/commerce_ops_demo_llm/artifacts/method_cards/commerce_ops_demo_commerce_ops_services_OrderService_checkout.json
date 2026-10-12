@@ -1,0 +1,74 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+  "owner_file_id": "commerce_ops/services.py",
+  "signature": "def checkout(self, customer: Customer, items: List[CartItem], coupon: str = \"\") -> Order:",
+  "visibility": "public",
+  "summary": "Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error.",
+  "purpose_hint": "",
+  "inputs": [
+    "customer (Customer): Customer placing the order; used for pricing, charging, and notification.",
+    "items (List[CartItem]): Cart items to purchase; used for reservation and pricing.",
+    "coupon (str): Optional coupon code applied during pricing; defaults to empty string."
+  ],
+  "outputs": [
+    "order (Order): Final paid order object that has been saved and returned.",
+    "inventory_reserved (side_effect): Items reserved via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL>; on failure, reservations are released via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>.",
+    "payment_charged (side_effect): Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.",
+    "order_persisted (side_effect): Order persisted via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.",
+    "customer_notified (side_effect): Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>."
+  ],
+  "main_effect": "Return the completed order.",
+  "side_effects": [
+    "customer_notified (side_effect): Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>.",
+    "payment_charged (side_effect): Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.",
+    "self.catalog.release_items(items)",
+    "self.catalog.reserve_items(items)",
+    "self.repository.save(order)"
+  ],
+  "errors": [
+    "Exception: Original exception is propagated to the caller.",
+    "If any exception occurs after reserving items during quoting, building the order, charging payment, marking as paid, saving, or notifying.",
+    "raise"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "reserved_products = self.catalog.reserve_items(items)"
+      }
+    ],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/checkout.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

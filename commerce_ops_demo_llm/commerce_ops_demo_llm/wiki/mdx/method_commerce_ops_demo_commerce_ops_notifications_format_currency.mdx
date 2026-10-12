@@ -1,0 +1,84 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+  "page_type": "entity",
+  "entity_kind": "function",
+  "title": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+  "summary": "Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/format_currency.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.notifications.format_currency
+
+Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input." format_currency]
+    [INPUTS]
+        <REF> cents </REF>: int "Amount in cents to format; must be non-negative."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> formatted_currency </REF>: str "Dollar-formatted string with two decimal places (e.g., '$12.34')."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Divide cents by 100 to compute the dollar amount as a float. RESULT dollar_value]
+            [COMMAND Format the dollar amount with two decimal places and prefix with '$'. RESULT formatted_currency]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: cents < 0]
+        [LOG "Exception information"]
+        [THROW ValueError "currency value cannot be negative"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.notifications.format_currency`
+- Entity kind: `function`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/notifications.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.notifications.format_currency
+
+Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input.
+
+## Inputs
+- cents (int): Amount in cents to format; must be non-negative.
+
+## Outputs
+- formatted_currency (str): Dollar-formatted string with two decimal places (e.g., '$12.34').
+
+## Main Effect
+Format the dollar amount with two decimal places and prefix with '$'.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- ValueError: currency value cannot be negative
+- cents < 0
+- cents > 0
+- raise ValueError("currency value cannot be negative")
+
+## Validation Rules
+- cents > 0

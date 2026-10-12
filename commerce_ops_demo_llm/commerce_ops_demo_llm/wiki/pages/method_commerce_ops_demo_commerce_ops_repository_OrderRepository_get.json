@@ -1,0 +1,122 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "slug": "commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl"
+  ],
+  "summary": "Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.repository.OrderRepository.get\n\nReturns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.\" get]\n    [INPUTS]\n        <REF> order_id </REF>: str \"Identifier of the order to retrieve.\"\n        <REF> self.orders </REF>: Mapping[str, Order] \"Internal mapping of orders keyed by order_id.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"The order object corresponding to the provided order_id.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Check that order_id exists in self.orders RESULT validated_presence]\n            [COMMAND Retrieve the order via self.orders[order_id] RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: order_id not in self.orders]\n        [LOG \"Exception information\"]\n        [THROW KeyError \"order {order_id} not found\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/repository.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.repository.OrderRepository.get\n\nReturns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.\n\n## Inputs\n- order_id (str): Identifier of the order to retrieve.\n- self.orders (Mapping[str, Order]): Internal mapping of orders keyed by order_id.\n\n## Outputs\n- order (Order): The order object corresponding to the provided order_id.\n\n## Main Effect\nRetrieve the order via self.orders[order_id]\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid\n- commerce_ops_demo.commerce_ops.services.OrderService.cancel_order\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- KeyError: order {order_id} not found\n- invalid when order_id not in self.orders\n- order_id not in self.orders\n- raise KeyError(f\"order {order_id} not found\")\n\n## Validation Rules\n- invalid when order_id not in self.orders\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_page_id": "file:commerce_ops/repository.py",
+      "target_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/repository.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    },
+    {
+      "source_page_id": "topic:validation",
+      "source_url": "/wiki/topic/validation",
+      "relation": "topic_mentions",
+      "label": "Validation"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/repository.py",
+      "url": "/wiki/file/commerce-ops-repository-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/repository.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.634181+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "0df1b4962a6aef476240f0909ed8d534f406c0fc0b4b63af47d9a28e8f6bdbaf",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/get.spl",
+  "spl_content": "[DEFINE_WORKER: \"Returns the Order associated with the given order_id from self.orders, raising KeyError if the id is absent.\" get]\n    [INPUTS]\n        <REF> order_id </REF>: str \"Identifier of the order to retrieve.\"\n        <REF> self.orders </REF>: Mapping[str, Order] \"Internal mapping of orders keyed by order_id.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"The order object corresponding to the provided order_id.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Check that order_id exists in self.orders RESULT validated_presence]\n            [COMMAND Retrieve the order via self.orders[order_id] RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: order_id not in self.orders]\n        [LOG \"Exception information\"]\n        [THROW KeyError \"order {order_id} not found\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

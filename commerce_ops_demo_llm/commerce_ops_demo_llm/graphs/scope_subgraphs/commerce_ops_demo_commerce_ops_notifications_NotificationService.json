@@ -1,0 +1,14 @@
+{
+  "scope_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+  "internal_edges": [],
+  "incoming_edges": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "outgoing_edges": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.alerts.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.self.sent_messages.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt -> commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt -> external.self.sent_messages.append"
+  ]
+}

@@ -1,0 +1,95 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+  "summary": "Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/refund.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund
+
+Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total." refund]
+    [INPUTS]
+        <REF> self </REF>: object "Instance with refunded_total_cents attribute to update."
+        <REF> customer </REF>: Customer "Customer to credit via credit(amount_cents)."
+        <REF> receipt </REF>: PaymentReceipt "Payment receipt providing amount_cents to refund."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "No return value."
+        <REF> customer </REF>: state_mutation "Credited by receipt.amount_cents via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>."
+        <REF> self.refunded_total_cents </REF>: int "Incremented by receipt.amount_cents."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that receipt.amount_cents is greater than 0 RESULT Proceed with refund processing when amount_cents > 0]
+            [COMMAND Invoke <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL> on customer with receipt.amount_cents RESULT Customer is credited by receipt.amount_cents]
+            [COMMAND Increment self.refunded_total_cents by receipt.amount_cents RESULT self.refunded_total_cents updated to include the refunded amount]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: receipt.amount_cents <= 0]
+        [LOG "Exception information"]
+        [THROW <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL> "Raised with message 'receipt amount must be positive' to enforce a positive refund amount."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/payments.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund
+
+Validates a positive receipt amount, credits the customer by that amount, and increments the instance's refunded total.
+
+## Inputs
+- self (object): Instance with refunded_total_cents attribute to update.
+- customer (Customer): Customer to credit via credit(amount_cents).
+- receipt (PaymentReceipt): Payment receipt providing amount_cents to refund.
+
+## Outputs
+- return (None): No return value.
+- customer (state_mutation): Credited by receipt.amount_cents via <SPL>commerce_ops_demo.commerce_ops.models.Customer.credit</SPL>.
+- self.refunded_total_cents (int): Incremented by receipt.amount_cents.
+
+## Main Effect
+Increment self.refunded_total_cents by receipt.amount_cents
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Customer.credit
+- commerce_ops_demo.commerce_ops.payments.PaymentError
+
+## Side Effects
+- mutates self.refunded_total_cents
+- self.refunded_total_cents (int): Incremented by receipt.amount_cents.
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.payments.PaymentError</SPL>: Raised with message 'receipt amount must be positive' to enforce a positive refund amount.
+- raise PaymentError("receipt amount must be positive")
+- receipt.amount_cents <= 0
+- receipt.amount_cents > 0
+
+## Validation Rules
+- receipt.amount_cents > 0

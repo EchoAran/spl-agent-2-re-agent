@@ -1,0 +1,106 @@
+{
+  "file_name": "catalog.py",
+  "module_name": "commerce_ops_demo.commerce_ops.catalog",
+  "source_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo\\commerce_ops\\catalog.py",
+  "language": "python",
+  "purpose": "Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings.",
+  "role": "repository, coordinator",
+  "exports": [
+    "ProductCatalog",
+    "normalize_sku"
+  ],
+  "entrypoints": [
+    "ProductCatalog",
+    "ProductCatalog.reserve_items",
+    "ProductCatalog.release_items"
+  ],
+  "components": [
+    "ProductCatalog: in-memory catalog repository and coordinator for Product retrieval, availability listing, and reservation/release orchestration with compensation on failure.",
+    "normalize_sku: validation/normalization helper that trims and uppercases SKU strings."
+  ],
+  "internal_structure": [
+    "The module centers on ProductCatalog, which builds and owns a mapping from normalized SKU to Product. Catalog methods use normalize_sku for consistent lookups, expose listing of available products, and coordinate multi-item reservation and release by invoking Product.reserve and Product.release. The normalize_sku function provides the SKU normalization used by ProductCatalog."
+  ],
+  "module_mechanism": "At import and construction time, ProductCatalog normalizes provided Product SKUs to populate an internal map. Callers construct ProductCatalog and invoke reserve_items or release_items to mutate inventory via Product methods, with compensating releases on reservation errors. normalize_sku enforces SKU input quality by trimming and uppercasing values and raising ValueError when empty.",
+  "imports": [
+    "external dependency __future__",
+    "external dependency commerce_ops.models",
+    "external dependency typing"
+  ],
+  "internal_imports": [],
+  "globals": [],
+  "inputs": [
+    "products: iterable of Product for ProductCatalog construction",
+    "items: iterable of CartItem for ProductCatalog.reserve_items",
+    "items: iterable of CartItem for ProductCatalog.release_items",
+    "value (string): SKU input to normalize for normalize_sku"
+  ],
+  "outputs": [
+    "Product from ProductCatalog.get",
+    "List[Product] with positive stock, optionally filtered by tag and sorted by SKU from ProductCatalog.list_available",
+    "List[Product] successfully reserved from ProductCatalog.reserve_items",
+    "None from ProductCatalog.release_items",
+    "normalized_sku (string) from normalize_sku",
+    "Inventory/reservation state mutations on Product via Product.reserve/Product.release"
+  ],
+  "key_paths": [
+    "Construction builds a normalized-SKU map of Product instances using normalize_sku",
+    "Lookup path: ProductCatalog.get normalizes SKU then retrieves Product or raises KeyError",
+    "Availability path: ProductCatalog.list_available filters positive stock (optional tag) and sorts by SKU",
+    "Reservation path: ProductCatalog.reserve_items validates items, retrieves Products, reserves quantities, and compensates by releasing prior reservations on error",
+    "Release path: ProductCatalog.release_items retrieves Products and releases specified quantities"
+  ],
+  "side_effects": [
+    "Mutates internal product index during ProductCatalog construction",
+    "Mutates Product inventory/reservations via Product.reserve in reserve_items",
+    "Mutates Product inventory/reservations via Product.release in release_items"
+  ],
+  "errors": [
+    "__init__: exceptions propagated from normalize_sku, unhashable keys, missing product.sku attribute, or non-iterable products argument",
+    "get: KeyError when normalized SKU not present",
+    "reserve_items: any exception during item.validate, get, or Product.reserve triggers compensating releases via Product.release and then re-raises",
+    "release_items: exceptions propagated from get or Product.release; AttributeError when items lack sku or qty or the retrieved object lacks release; TypeError when items is not iterable",
+    "normalize_sku: AttributeError: object has no attribute 'strip'",
+    "normalize_sku: AttributeError: object has no attribute 'upper'",
+    "normalize_sku: The stripped value does not support upper()",
+    "normalize_sku: ValueError: sku is required",
+    "normalize_sku: invalid when not value or not value.strip()",
+    "normalize_sku: not value or not value.strip()",
+    "normalize_sku: raise ValueError(\"sku is required\")",
+    "normalize_sku: value is truthy and does not support strip()"
+  ],
+  "initialization_order": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "class_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/__class__.spl</SPL>"
+  ],
+  "function_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/catalog.py/normalize_sku.spl</SPL>"
+  ],
+  "id": "commerce_ops/catalog.py",
+  "path": "commerce_ops/catalog.py",
+  "incoming_files": [
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "outgoing_files": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get -> external.KeyError",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available -> external.self.products.values",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available -> external.sorted",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.release",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> commerce_ops_demo.commerce_ops.models.Product.reserve",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.item.validate",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.reserved.append",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items -> external.zip",
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku -> external.ValueError",
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku -> external.value.strip",
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku -> external.value.strip().upper"
+  ],
+  "summary": "Provide a product catalog module that maintains a normalized-SKU index for Product lookups and exposes catalog operations for listing available products and coordinating reservation/release of quantities. Also exposes a utility to normalize SKU strings.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/catalog.py/__file__.spl"
+}

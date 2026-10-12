@@ -1,0 +1,88 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+  "summary": "Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/catalog.py/ProductCatalog/get.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get
+
+Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent." get]
+    [INPUTS]
+        <REF> sku </REF>: string "The raw SKU string to be looked up."
+        <REF> self.products </REF>: Mapping[str, Product] "Internal mapping from normalized SKU to Product used for lookup."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> product </REF>: Product "The Product associated with the normalized SKU."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Normalize the input SKU using <SPL>commerce_ops_demo.commerce_ops.catalog.normalize_sku</SPL>. RESULT normalized]
+            [COMMAND Retrieve the product from self.products using the key normalized. RESULT product]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: If normalized is not present as a key in self.products.]
+        [LOG "No product found for normalized SKU; raising KeyError."]
+        [THROW KeyError "Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/catalog.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get
+
+Retrieve a Product by normalizing the provided SKU and returning the mapped item from the products dictionary, raising KeyError if absent.
+
+## Inputs
+- sku (string): The raw SKU string to be looked up.
+- self.products (Mapping[str, Product]): Internal mapping from normalized SKU to Product used for lookup.
+
+## Outputs
+- product (Product): The Product associated with the normalized SKU.
+
+## Main Effect
+Retrieve the product from self.products using the key normalized.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.catalog.normalize_sku
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items
+- commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- If normalized is not present as a key in self.products.
+- KeyError: Raised with message 'unknown sku {normalized}' when the normalized SKU is absent from the products mapping.
+- invalid when normalized not in self.products
+- raise KeyError(f"unknown sku {normalized}")
+
+## Validation Rules
+- invalid when normalized not in self.products

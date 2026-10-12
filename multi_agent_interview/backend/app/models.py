@@ -15,6 +15,7 @@ class LLMConfig(BaseModel):
 class CreateSessionRequest(BaseModel):
     github_repo_url: str = Field(min_length=1)
     project_name: str | None = None
+    interview_skill_name: str = Field(default="requirements-elicitation", min_length=1)
 
 
 class SessionResponse(BaseModel):

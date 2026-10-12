@@ -1,0 +1,135 @@
+---
+{
+  "page_id": "package:commerce_ops_demo",
+  "page_type": "entity",
+  "entity_kind": "package",
+  "title": "commerce_ops_demo",
+  "summary": "Provide a repository-level container for a demo commerce operations subsystem.",
+  "tags": [
+    "Container package for a commerce operations demo subsystem",
+    "package"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/__package__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo
+
+Provide a repository-level container for a demo commerce operations subsystem.
+
+## SPL
+
+```spl
+[DEFINE_AGENT: "A package that groups related modules into a subsystem with public surface, internal structure, dependency direction, and repository role" commerce_ops_demo]
+
+[DEFINE_PERSONA:]
+    ROLE: "Container package for a commerce operations demo subsystem"
+    LAYER: "repository root container"
+    ABSTRACTION_LEVEL: "Package-level; describes subsystem responsibility without expanding file, class, or method internals"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, maintain, extend, test, or integrate this package"
+    INTEREST: "Package purpose, public APIs, internal subsystems, dependency direction, workflows, boundaries, and repository role"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a repository-level container for a demo commerce operations subsystem."
+    PublicSurface: "evidence: missing; confidence: not_available; source: static_analysis"
+    InternalSubsystems: "Subpackage: commerce_ops — self-contained commerce operations subsystem with checkout and order management orchestration, domain models, in-memory adapters, and a CLI demo"
+    PackageMechanism: "Acts as a container; all functionality and public surface are provided by the commerce_ops subpackage; this package adds no additional coordination or APIs."
+    DependencyDirection: "No incoming or outgoing package edges observed at this level; functionality and dependency flow are delegated to the commerce_ops child package."
+    RepositoryRole: "Top-level package grouping the commerce_ops demo subsystem for checkout, order management, and customer interactions."
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> package_name </REF>: text "commerce_ops_demo"
+    <REF> package_path </REF>: text "commerce_ops_demo"
+    <REF> source_directory </REF>: text "C:\Users\杨天宇\资料\逆向工程\工程\Code_SPL\Code_SPL\sample_repos\commerce_ops_demo"
+
+    <!-- Purpose and architecture -->
+    <REF> purpose </REF>: text "Provide a repository-level container for a demo commerce operations subsystem."
+    <REF> role </REF>: text "Container package for a commerce operations demo subsystem"
+    <REF> repository_role </REF>: text "Top-level package grouping the commerce_ops demo subsystem for checkout, order management, and customer interactions."
+
+    <!-- Public surface -->
+    <REF> public_api </REF>: List [text] []
+    <REF> entrypoints </REF>: List [text] []
+
+    <!-- Internal structure -->
+    <REF> files </REF>: List [text] []
+    <REF> subpackages </REF>: List [text] ["commerce_ops: Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo."]
+    <REF> subsystem_groups </REF>: List [text] ["Subpackage: commerce_ops — self-contained commerce operations subsystem with checkout and order management orchestration, domain models, in-memory adapters, and a CLI demo"]
+    <REF> package_mechanism </REF>: text "Acts as a container; all functionality and public surface are provided by the commerce_ops subpackage; this package adds no additional coordination or APIs."
+
+    <!-- Dependencies -->
+    <REF> dependencies </REF>: List [text] []
+    <REF> dependency_direction </REF>: text "No incoming or outgoing package edges observed at this level; functionality and dependency flow are delegated to the commerce_ops child package."
+
+    <!-- Behavior -->
+    <REF> inputs </REF>: List [text] []
+    <REF> outputs </REF>: List [text] []
+    <REF> key_workflows </REF>: List [text] ["Delegates workflows such as checkout, cancellation, customer history, and CLI demo to the commerce_ops subpackage"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] []
+    <REF> errors </REF>: List [text] []
+    <REF> architectural_assumptions </REF>: List [text] ["All operational logic and public surface reside in the commerce_ops subpackage", "This package does not re-export symbols from child packages", "External integrations should import from the commerce_ops subpackage for functionality"]
+
+    <!-- Traceability -->
+    <REF> file_refs </REF>: List [text] []
+    <REF> subpackage_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/__package__.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines package-level reverse-engineering information.
+     It should let a developer understand what subsystem this package represents, what it exposes, how its files and subpackages cooperate, and how it fits into the repository.
+     Do NOT expand file internals.
+     Do NOT expand class or method details.
+     Use file_refs and subpackage_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    PackageLevelOnly: "Describe the package as a subsystem; do not expand individual files, classes, or methods" LOG "package_over_expansion"
+    BoundaryAccuracy: "Distinguish what the package owns from what it delegates to sibling, child, parent, or external packages" LOG "package_boundary_error"
+    DependencyDirection: "Preserve intended dependency direction and architectural layer" LOG "package_dependency_error"
+    WorkflowSummary: "Describe workflows only at package level without expanding implementation steps" LOG "package_workflow_over_detail"
+    Traceability: "Refer to file-level and subpackage-level SPL artifacts by reference instead of inlining them" LOG "subsystem_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]
+```
+
+## Wiki Navigation
+
+- Page ID: `package:commerce_ops_demo`
+- Entity kind: `package`
+- Package: `commerce_ops_demo`
+
+## Wiki Summary
+
+# commerce_ops_demo
+
+Provide a repository-level container for a demo commerce operations subsystem.
+
+## Architecture Role
+Container package for a commerce operations demo subsystem
+
+## Public API
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Child Files
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Child Packages
+- commerce_ops: Provide a self-contained commerce operations subsystem for checkout, order management, and customer interactions, exposing a package-level surface for core domain models and an OrderService orchestrator with a CLI demo.
+
+## Dependency Direction
+No incoming or outgoing package edges observed at this level; functionality and dependency flow are delegated to the commerce_ops child package.
+
+## Key Workflows
+- Delegates workflows such as checkout, cancellation, customer history, and CLI demo to the commerce_ops subpackage
+
+## Source Evidence
+- <SPL>spl/commerce_ops_demo/commerce_ops/__package__.spl</SPL>

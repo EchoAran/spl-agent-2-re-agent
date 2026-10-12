@@ -1,0 +1,129 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "slug": "commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl"
+  ],
+  "summary": "Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid\n\nRetrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.\" mark_paid]\n    [INPUTS]\n        <REF> order_id </REF>: str \"Identifier of the order to update.\"\n        <REF> payment_id </REF>: str \"Identifier of the payment used to mark the order as paid.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"The updated Order entity after being marked as paid and saved.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Fetch the order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> using order_id RESULT order]\n            [COMMAND Mark the retrieved order as paid using payment_id via <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> RESULT order]\n            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> RESULT saved]\n            [COMMAND Return the updated order RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order]\n        [LOG \"Failed to retrieve order for the provided order_id.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: Retrieved order is None, causing a failure on mark_paid invocation]\n        [LOG \"Retrieved order is None; cannot mark it as paid.\"]\n        [THROW AttributeError \"Attempting to call mark_paid on a None order value.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid]\n        [LOG \"Error occurred while marking the order as paid.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order]\n        [LOG \"Failed to persist the updated order.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/repository.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid\n\nRetrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.\n\n## Inputs\n- order_id (str): Identifier of the order to update.\n- payment_id (str): Identifier of the payment used to mark the order as paid.\n\n## Outputs\n- order (Order): The updated Order entity after being marked as paid and saved.\n\n## Main Effect\nReturn the updated order\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.models.Order.mark_paid\n- commerce_ops_demo.commerce_ops.repository.OrderRepository.get\n- commerce_ops_demo.commerce_ops.repository.OrderRepository.save\n\n## Side Effects\n- self.save(order)\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid\n- <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order\n- <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order\n- AttributeError: Attempting to call mark_paid on a None order value.\n- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\n- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>.\n- Exception: Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\n- Retrieved order is None, causing a failure on mark_paid invocation\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "file:commerce_ops/repository.py",
+      "target_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/repository.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/repository.py",
+      "url": "/wiki/file/commerce-ops-repository-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/repository.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635688+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "107699e49676607fc230079c463ae3bc936fc46a153b252565d29534dcb7863f",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/mark_paid.spl",
+  "spl_content": "[DEFINE_WORKER: \"Retrieve an order by ID, mark it as paid with the given payment ID, persist it, and return the updated order.\" mark_paid]\n    [INPUTS]\n        <REF> order_id </REF>: str \"Identifier of the order to update.\"\n        <REF> payment_id </REF>: str \"Identifier of the payment used to mark the order as paid.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"The updated Order entity after being marked as paid and saved.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Fetch the order by ID via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> using order_id RESULT order]\n            [COMMAND Mark the retrieved order as paid using payment_id via <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> RESULT order]\n            [COMMAND Persist the updated order via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> RESULT saved]\n            [COMMAND Return the updated order RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL> raises an error while retrieving the order]\n        [LOG \"Failed to retrieve order for the provided order_id.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.get</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: Retrieved order is None, causing a failure on mark_paid invocation]\n        [LOG \"Retrieved order is None; cannot mark it as paid.\"]\n        [THROW AttributeError \"Attempting to call mark_paid on a None order value.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> raises an error while marking the order as paid]\n        [LOG \"Error occurred while marking the order as paid.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> raises an error while saving the updated order]\n        [LOG \"Failed to persist the updated order.\"]\n        [THROW Exception \"Error propagated from <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

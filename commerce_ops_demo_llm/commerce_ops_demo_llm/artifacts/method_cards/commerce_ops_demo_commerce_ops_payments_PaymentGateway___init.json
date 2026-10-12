@@ -1,0 +1,71 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+  "owner_file_id": "commerce_ops/payments.py",
+  "signature": "def __init__(self, provider: str = \"internal-wallet\"):",
+  "visibility": "public",
+  "summary": "Initialize the instance by setting the payment provider and zeroing authorized and refunded totals.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (object): The instance being initialized.",
+    "provider (str): Payment provider identifier; defaults to 'internal-wallet'."
+  ],
+  "outputs": [
+    "self.provider (str): Instance attribute set to the provided provider value.",
+    "self.authorized_total_cents (int): Instance attribute initialized to 0 representing total authorized amount in cents.",
+    "self.refunded_total_cents (int): Instance attribute initialized to 0 representing total refunded amount in cents."
+  ],
+  "main_effect": "Initialize refunded_total_cents to 0",
+  "side_effects": [
+    "mutates self.authorized_total_cents",
+    "mutates self.provider",
+    "mutates self.refunded_total_cents",
+    "self.authorized_total_cents (int): Instance attribute initialized to 0 representing total authorized amount in cents.",
+    "self.provider (str): Instance attribute set to the provided provider value.",
+    "self.refunded_total_cents (int): Instance attribute initialized to 0 representing total refunded amount in cents."
+  ],
+  "errors": [],
+  "validation_rules": [],
+  "direct_callees": [],
+  "direct_callers": [],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [
+    "authorized_total_cents",
+    "provider",
+    "refunded_total_cents"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "self.provider = provider"
+      },
+      {
+        "type": "assignment",
+        "lineno": 3,
+        "code": "self.authorized_total_cents = 0"
+      },
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "self.refunded_total_cents = 0"
+      }
+    ],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__init__.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

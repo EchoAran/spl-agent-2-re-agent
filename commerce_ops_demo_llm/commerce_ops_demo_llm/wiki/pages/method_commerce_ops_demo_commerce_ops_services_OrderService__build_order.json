@@ -1,0 +1,129 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "slug": "commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "qualified_name": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl"
+  ],
+  "summary": "Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.services.OrderService._build_order\n\nConstructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.\" _build_order]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance context for method execution.\"\n        <REF> customer </REF>: Customer \"Customer providing customer_id used in the order.\"\n        <REF> items </REF>: List[CartItem] \"Cart items; copied into the order via list(items).\"\n        <REF> quote </REF>: PriceQuote \"Pricing details providing total_cents and breakdown fields used for the event message.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> using str(uuid4()) for id, customer.customer_id, a list(items) copy, and quote.total_cents RESULT order]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> on order with event 'quoted' and message 'subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}' RESULT event_recorded]\n            [COMMAND Return the constructed order RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: customer is None or lacks attribute customer.customer_id when accessed]\n        [LOG \"Customer is missing customer_id.\"]\n        [THROW AttributeError \"customer must have a customer_id attribute.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: items is None or not iterable when list(items) is evaluated]\n        [LOG \"Items is not iterable or is None.\"]\n        [THROW TypeError \"items must be an iterable of CartItem.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)]\n        [LOG \"Quote missing required pricing fields.\"]\n        [THROW AttributeError \"quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments]\n        [LOG \"Order construction failed due to invalid argument types or values.\"]\n        [THROW ValueError \"Invalid arguments for constructing Order.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails]\n        [LOG \"Failed to add 'quoted' event to order.\"]\n        [THROW Exception \"add_event raised an error.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.services.OrderService._build_order`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/services.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.services.OrderService._build_order\n\nConstructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.\n\n## Inputs\n- self (object): Instance context for method execution.\n- customer (Customer): Customer providing customer_id used in the order.\n- items (List[CartItem]): Cart items; copied into the order via list(items).\n- quote (PriceQuote): Pricing details providing total_cents and breakdown fields used for the event message.\n\n## Outputs\n- order (Order): Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event.\n\n## Main Effect\nReturn the constructed order\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.models.Order\n- commerce_ops_demo.commerce_ops.models.Order.add_event\n- commerce_ops_demo.commerce_ops.services.OrderService.checkout\n\n## Side Effects\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Errors\n- <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments\n- AttributeError: customer must have a customer_id attribute.\n- AttributeError: quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents.\n- Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails\n- Exception: add_event raised an error.\n- TypeError: items must be an iterable of CartItem.\n- ValueError: Invalid arguments for constructing Order.\n- customer is None or lacks attribute customer.customer_id when accessed\n- items is None or not iterable when list(items) is evaluated\n- quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/services.py",
+      "url": "/wiki/file/commerce-ops-services-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice"
+    }
+  ],
+  "tags": [
+    "method",
+    "private"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/services.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.635182+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "076040c605d5da12652f4c0eff74e4a85fafe9bb89f4cd09cac756473cacbbb2",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/services.py/OrderService/_build_order.spl",
+  "spl_content": "[DEFINE_WORKER: \"Constructs a new Order from the given customer, items, and quote, assigns a UUID, records a 'quoted' event with price breakdown, and returns the Order.\" _build_order]\n    [INPUTS]\n        <REF> self </REF>: object \"Instance context for method execution.\"\n        <REF> customer </REF>: Customer \"Customer providing customer_id used in the order.\"\n        <REF> items </REF>: List[CartItem] \"Cart items; copied into the order via list(items).\"\n        <REF> quote </REF>: PriceQuote \"Pricing details providing total_cents and breakdown fields used for the event message.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> order </REF>: Order \"Newly constructed Order with UUID string id, customer_id, a copied items list, total_cents, and a recorded 'quoted' event.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> using str(uuid4()) for id, customer.customer_id, a list(items) copy, and quote.total_cents RESULT order]\n            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> on order with event 'quoted' and message 'subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}' RESULT event_recorded]\n            [COMMAND Return the constructed order RESULT order]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: customer is None or lacks attribute customer.customer_id when accessed]\n        [LOG \"Customer is missing customer_id.\"]\n        [THROW AttributeError \"customer must have a customer_id attribute.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: items is None or not iterable when list(items) is evaluated]\n        [LOG \"Items is not iterable or is None.\"]\n        [THROW TypeError \"items must be an iterable of CartItem.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: quote is None or lacks expected attributes (total_cents, subtotal_cents, discount_cents, tax_cents)]\n        [LOG \"Quote missing required pricing fields.\"]\n        [THROW AttributeError \"quote must provide total_cents, subtotal_cents, discount_cents, and tax_cents.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.models.Order</SPL> constructor rejects provided arguments]\n        [LOG \"Order construction failed due to invalid argument types or values.\"]\n        [THROW ValueError \"Invalid arguments for constructing Order.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: Calling <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> fails]\n        [LOG \"Failed to add 'quoted' event to order.\"]\n        [THROW Exception \"add_event raised an error.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

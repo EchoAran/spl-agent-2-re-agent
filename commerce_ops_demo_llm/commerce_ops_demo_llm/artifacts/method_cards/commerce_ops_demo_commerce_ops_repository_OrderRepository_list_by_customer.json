@@ -1,0 +1,61 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+  "owner_file_id": "commerce_ops/repository.py",
+  "signature": "def list_by_customer(self, customer_id: str) -> List[Order]:",
+  "visibility": "public",
+  "summary": "Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id.",
+  "purpose_hint": "",
+  "inputs": [
+    "customer_id (str): Target customer identifier used to filter orders.",
+    "self.orders (Mapping[Any, Order]): Internal mapping of orders; its values() are iterated to access order objects."
+  ],
+  "outputs": [
+    "orders_by_customer (List[Order]): New list containing orders whose order.customer_id equals the provided customer_id."
+  ],
+  "main_effect": "Construct a list from the filtered orders",
+  "side_effects": [
+    "orders_by_customer (List[Order]): New list containing orders whose order.customer_id equals the provided customer_id."
+  ],
+  "errors": [
+    "An order object is missing the customer_id attribute during filtering",
+    "AttributeError: Encountered an order without a customer_id attribute while filtering.",
+    "AttributeError: The orders collection does not implement a values() method.",
+    "The orders container does not support attribute values()"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "external.self.orders.values"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+  ],
+  "external_calls": [
+    "external.self.orders.values"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 1,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 2,
+        "code": "return [\n            order\n            for order in self.orders.values()\n            if order.customer_id == customer_id\n        ]"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+  "owner_file_id": "commerce_ops/notifications.py",
+  "signature": "def send_low_stock_alert(self, products: List[Product], threshold: int = 2) -> List[str]:",
+  "visibility": "public",
+  "summary": "Generates low-stock alert messages for products with stock less than or equal to a threshold (default 2), appends them to self.sent_messages, and returns the messages.",
+  "purpose_hint": "",
+  "inputs": [
+    "products (List[Product]): Iterable of Product objects; each product is expected to have 'stock' and 'sku' attributes.",
+    "threshold (int): Stock threshold; products with stock <= threshold are considered low. Defaults to 2."
+  ],
+  "outputs": [
+    "alerts (List[str]): List of alert message strings created for products whose stock <= threshold, returned in iteration order.",
+    "self.sent_messages (side_effect): Each generated alert message is appended to self.sent_messages."
+  ],
+  "main_effect": "Return the collected alerts.",
+  "side_effects": [
+    "alerts.append(alert)",
+    "mutates self.sent_messages",
+    "mutates self.sent_messages via append",
+    "self.sent_messages (side_effect): Each generated alert message is appended to self.sent_messages.",
+    "self.sent_messages.append(alert)"
+  ],
+  "errors": [
+    "A product lacks the 'sku' attribute when formatting the alert string",
+    "A product lacks the 'stock' attribute when evaluating the threshold condition",
+    "AttributeError: Attribute 'sent_messages' missing or not appendable.",
+    "AttributeError: Missing 'sku' attribute on product.",
+    "AttributeError: Missing 'stock' attribute on product.",
+    "TypeError: Object is not iterable.",
+    "TypeError: Unsupported comparison between product.stock and threshold.",
+    "product.stock cannot be compared to threshold (e.g., incompatible type)",
+    "products is None or not iterable when entering the loop",
+    "self.sent_messages is missing or does not support append"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "external.alerts.append",
+    "external.self.sent_messages.append"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "external_calls": [
+    "external.alerts.append",
+    "external.self.sent_messages.append"
+  ],
+  "state_reads": [],
+  "state_writes": [
+    "sent_messages"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [],
+    "loops": [
+      {
+        "type": "for",
+        "lineno": 3,
+        "code": "for product in products:\n            if product.stock <= threshold:\n                alert = f\"Low stock for {product.sku}: {product.stock}\"\n                self.sent_messages.append(alert)\n                alerts.append(alert)"
+      }
+    ],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "alerts = []"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 8,
+        "code": "return alerts"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_low_stock_alert.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

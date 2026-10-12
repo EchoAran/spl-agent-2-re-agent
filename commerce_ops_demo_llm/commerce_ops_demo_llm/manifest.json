@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "root_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo",
+    "output_dir": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\Result\\commerce_ops_demo_llm",
+    "target_kind": "repository",
+    "include_tests": false,
+    "root_package_id": "commerce_ops_demo",
+    "root_package_spl": "spl/commerce_ops_demo/__package__.spl",
+    "method_count": 43,
+    "class_count": 13,
+    "file_count": 9,
+    "package_count": 2,
+    "quality_warning_count": 3,
+    "wiki_page_count": 77,
+    "wiki_entry": "wiki/frontend/index.html"
+  },
+  "input": {
+    "kind": "repository",
+    "root_path": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo",
+    "index_root": "C:\\Users\\杨天宇\\资料\\逆向工程\\工程\\Code_SPL\\Code_SPL\\sample_repos\\commerce_ops_demo",
+    "root_namespace": "commerce_ops_demo",
+    "include_tests": false
+  },
+  "output_layout": {
+    "spl/<root_namespace>/": "Mirror of the analyzed source tree under the repository/package root namespace. Use --flat-spl-root to keep the legacy layout directly under spl/.",
+    "spl/<root_namespace>/<source_dir>/__package__.spl": "Package/root-package SPL generated bottom-up from direct file cards and direct subpackage cards.",
+    "spl/<root_namespace>/<source_file_name>/__file__.spl": "File SPL generated from class cards, top-level function cards, imports, exports, and file graph evidence.",
+    "spl/<root_namespace>/<source_file_name>/<function>.spl": "Top-level function SPL generated from source-level deep analysis.",
+    "spl/<root_namespace>/<source_file_name>/<ClassName>/__class__.spl": "Class SPL generated from method cards and class-level graph evidence.",
+    "spl/<root_namespace>/<source_file_name>/<ClassName>/<method>.spl": "Method SPL generated from source-level deep analysis.",
+    "artifacts/method_cards/": "Machine-readable method cards consumed by class aggregation.",
+    "artifacts/class_cards/": "Machine-readable class cards consumed by file aggregation.",
+    "artifacts/file_cards/": "Machine-readable file cards consumed by package aggregation.",
+    "artifacts/package_cards/": "Machine-readable package cards consumed by parent package/root aggregation.",
+    "graphs/": "Repository call graph, file/package dependency graphs, containment graph, and scope subgraphs.",
+    "index/": "Repository index, symbol table, and ownership relations.",
+    "logs/": "Parse errors, unresolved calls, LLM failures, and quality warnings.",
+    "wiki/pages/": "Compiled WikiPage JSON objects for entities, topics, workflows, and navigation.",
+    "wiki/mdx/": "Obsidian/Docusaurus-style MDX pages with JSON frontmatter and markdown body.",
+    "wiki/LLM_WIKI.md": "Single-file SPL-first wiki export for sharing. It preserves each page's complete SPL content as the primary body.",
+    "wiki/LLM_WIKI.full.md": "Detailed single-file SPL-first wiki export with complete SPL content plus source refs, symbol refs, graph refs, and link context.",
+    "wiki/index/": "Search index, page index, link index, backlink index, and sitemap.",
+    "wiki/graphs/": "Frontend-ready wiki graph, call graph, dependency graphs, and containment graph.",
+    "wiki/frontend/": "Dependency-free static wiki browser for local inspection."
+  },
+  "recursive_policy": {
+    "method": "Reads source code, AST facts, and graph context.",
+    "class": "Reads compact method cards and class scope graph only.",
+    "file": "Reads compact class cards, top-level function cards, file metadata, and file scope graph only.",
+    "package": "Reads direct file cards, direct subpackage cards, package graph, and workflow candidates only."
+  },
+  "runtime": {
+    "max_workers": 8,
+    "include_root_folder": true,
+    "cache_enabled": true,
+    "llm_key_count": 0,
+    "llm_max_concurrency_per_key": 2,
+    "llm_retry": 2,
+    "llm_timeout": 120
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "file_edges": [
+    {
+      "source_file": "commerce_ops/catalog.py",
+      "target_file": "commerce_ops/models.py",
+      "edge_count": 3
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/catalog.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/models.py",
+      "edge_count": 5
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/notifications.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/payments.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/pricing.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/repository.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/cli.py",
+      "target_file": "commerce_ops/services.py",
+      "edge_count": 3
+    },
+    {
+      "source_file": "commerce_ops/payments.py",
+      "target_file": "commerce_ops/models.py",
+      "edge_count": 2
+    },
+    {
+      "source_file": "commerce_ops/repository.py",
+      "target_file": "commerce_ops/models.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/catalog.py",
+      "edge_count": 3
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/models.py",
+      "edge_count": 3
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/notifications.py",
+      "edge_count": 2
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/payments.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/pricing.py",
+      "edge_count": 1
+    },
+    {
+      "source_file": "commerce_ops/services.py",
+      "target_file": "commerce_ops/repository.py",
+      "edge_count": 4
+    }
+  ]
+}

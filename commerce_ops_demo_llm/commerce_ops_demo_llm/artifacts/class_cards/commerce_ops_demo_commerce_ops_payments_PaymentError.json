@@ -1,0 +1,57 @@
+{
+  "domain": "payments",
+  "purpose": "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.",
+  "responsibility": "Expose a named error type for payment logic, enabling callers to raise and catch payment-specific failures distinctly from other runtime errors.",
+  "role": "value object",
+  "public_surface": [
+    "Exception type subclassing RuntimeError for payment failures"
+  ],
+  "entrypoints": [],
+  "mechanism": "Inherits behavior from RuntimeError and serves as a semantic marker without adding state or methods.",
+  "internal_structure": [
+    "No additional fields or methods beyond RuntimeError"
+  ],
+  "lifecycle": [
+    "Instantiated and raised as a payment-specific RuntimeError",
+    "Propagates up the call stack until caught by handlers for PaymentError or RuntimeError"
+  ],
+  "state": [],
+  "inputs": [],
+  "outputs": [],
+  "dependencies": [
+    "RuntimeError (inherits)"
+  ],
+  "used_by": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "key_interactions": [
+    "Inherits from RuntimeError to integrate with Python exception hierarchy"
+  ],
+  "side_effects": [],
+  "errors": [
+    "Raised to signal payment-related failures"
+  ],
+  "invariants": [],
+  "id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+  "class_name": "PaymentError",
+  "source_file": "commerce_ops/payments.py",
+  "class_type": "class",
+  "method_refs": [],
+  "related_classes": [
+    {
+      "source_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "target_class_id": "RuntimeError",
+      "relation_type": "inherits_from",
+      "evidence": "RuntimeError",
+      "direction": "this -> target",
+      "confidence": "medium"
+    }
+  ],
+  "incoming_dependencies": [],
+  "outgoing_dependencies": [],
+  "key_internal_flows": [],
+  "summary": "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentError/__class__.spl"
+}

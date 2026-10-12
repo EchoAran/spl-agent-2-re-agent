@@ -1,0 +1,34 @@
+[DEFINE_WORKER: "Reserve cart items, quote pricing, build and charge an order, mark it paid, persist and notify the customer, then return the order; on any failure after reservation, release items and propagate the error." checkout]
+    [INPUTS]
+        <REF> customer </REF>: Customer "Customer placing the order; used for pricing, charging, and notification."
+        <REF> items </REF>: List[CartItem] "Cart items to purchase; used for reservation and pricing."
+        <REF> coupon </REF>: str "Optional coupon code applied during pricing; defaults to empty string."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> order </REF>: Order "Final paid order object that has been saved and returned."
+        <REF> inventory_reserved </REF>: side_effect "Items reserved via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL>; on failure, reservations are released via <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL>."
+        <REF> payment_charged </REF>: side_effect "Payment processed via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> and applied to the order using <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL>."
+        <REF> order_persisted </REF>: side_effect "Order persisted via <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL>."
+        <REF> customer_notified </REF>: side_effect "Customer notified of the order via <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL>."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items</SPL> with items to reserve inventory. RESULT reserved_products]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote</SPL> with customer, items, reserved_products, and coupon to compute a pricing quote. RESULT quote]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._build_order</SPL> with customer, items, and quote to construct the order. RESULT order]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._charge</SPL> with customer and quote to process payment. RESULT receipt]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.models.Order.mark_paid</SPL> on order with receipt.payment_id to mark the order as paid. RESULT order_paid]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository.save</SPL> with order to persist it. RESULT order_saved]
+            [COMMAND Call <SPL>commerce_ops_demo.commerce_ops.services.OrderService._notify_customer</SPL> with customer, order, and reserved_products to send a notification. RESULT customer_notified]
+            [COMMAND Return the completed order. RESULT order]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: If any exception occurs after reserving items during quoting, building the order, charging payment, marking as paid, saving, or notifying.]
+        [LOG "Release item reservations by calling <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items</SPL> with items, then re-raise the original exception."]
+        [THROW Exception "Original exception is propagated to the caller."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

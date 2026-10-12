@@ -1,0 +1,28 @@
+[DEFINE_WORKER: "Computes tax in cents from a non-negative taxable amount using self.tax_rate_bps (basis points) with integer floor division by 10000." calculate_tax]
+    [INPUTS]
+        <REF> taxable_cents </REF>: int "Taxable amount in cents; must be >= 0."
+        <REF> self.tax_rate_bps </REF>: int "Tax rate in basis points (hundredths of a percent) read from instance state."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> tax_cents </REF>: int "Computed tax in cents using (taxable_cents * self.tax_rate_bps) // 10000; fractional part is truncated."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that taxable_cents is not negative; continue if taxable_cents >= 0. RESULT validation_passed]
+            [COMMAND Compute tax as (taxable_cents * self.tax_rate_bps) // 10000 using integer floor division. RESULT tax_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: taxable_cents < 0]
+        [LOG "Negative taxable amount encountered; raising ValueError."]
+        [THROW ValueError "taxable amount cannot be negative"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: Non-numeric or non-comparable inputs during comparison or arithmetic (e.g., taxable_cents or self.tax_rate_bps is not an int).]
+        [LOG "Type error during comparison or arithmetic while computing tax."]
+        [THROW TypeError "Raised by Python when comparing or multiplying non-numeric or incompatible types."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

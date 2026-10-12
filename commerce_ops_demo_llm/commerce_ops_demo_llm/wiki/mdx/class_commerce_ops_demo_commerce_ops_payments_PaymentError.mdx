@@ -1,0 +1,133 @@
+---
+{
+  "page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+  "page_type": "entity",
+  "entity_kind": "class",
+  "title": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+  "summary": "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.",
+  "tags": [
+    "class",
+    "value object"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentError/__class__.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.payments.PaymentError
+
+Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.
+
+## SPL
+
+```spl
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" PaymentError]
+
+[DEFINE_PERSONA:]
+    ROLE: "value object"
+    DOMAIN: "payments"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized."
+    Responsibility: "Expose a named error type for payment logic, enabling callers to raise and catch payment-specific failures distinctly from other runtime errors."
+    PublicBehavior: "Exception type subclassing RuntimeError for payment failures"
+    InternalMechanism: "Inherits behavior from RuntimeError and serves as a semantic marker without adding state or methods."
+    StateModel: "evidence: missing; confidence: not_available; source: static_analysis"
+    Collaboration: "RuntimeError (inherits)"
+    ErrorBoundary: "Raised to signal payment-related failures"
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "PaymentError"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.payments.PaymentError"
+    <REF> source_file </REF>: text "commerce_ops/payments.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized."
+    <REF> responsibility </REF>: text "Expose a named error type for payment logic, enabling callers to raise and catch payment-specific failures distinctly from other runtime errors."
+    <REF> role </REF>: text "value object"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["Exception type subclassing RuntimeError for payment failures"]
+    <REF> entrypoints </REF>: List [text] []
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "Inherits behavior from RuntimeError and serves as a semantic marker without adding state or methods."
+    <REF> internal_structure </REF>: List [text] ["No additional fields or methods beyond RuntimeError"]
+    <REF> lifecycle </REF>: List [text] ["Instantiated and raised as a payment-specific RuntimeError", "Propagates up the call stack until caught by handlers for PaymentError or RuntimeError"]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] []
+    <REF> inputs </REF>: List [text] []
+    <REF> outputs </REF>: List [text] []
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["RuntimeError (inherits)"]
+    <REF> used_by </REF>: List [text] ["evidence: missing; confidence: not_available; source: static_analysis"]
+    <REF> key_interactions </REF>: List [text] ["Inherits from RuntimeError to integrate with Python exception hierarchy"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] []
+    <REF> errors </REF>: List [text] ["Raised to signal payment-related failures"]
+    <REF> invariants </REF>: List [text] []
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] []
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]
+```
+
+## Wiki Navigation
+
+- Page ID: `class:commerce_ops_demo.commerce_ops.payments.PaymentError`
+- Entity kind: `class`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/payments.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.payments.PaymentError
+
+Provide a domain-specific runtime exception for payment operations so payment-related failures can be conveyed and categorized.
+
+## Role and Responsibilities
+Expose a named error type for payment logic, enabling callers to raise and catch payment-specific failures distinctly from other runtime errors.
+
+## Public Surface
+- Exception type subclassing RuntimeError for payment failures
+
+## State Model
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Internal Mechanism
+Inherits behavior from RuntimeError and serves as a semantic marker without adding state or methods.
+
+## Related Classes
+- {"source_class_id": "commerce_ops_demo.commerce_ops.payments.PaymentError", "target_class_id": "RuntimeError", "relation_type": "inherits_from", "evidence": "RuntimeError", "direction": "this -> target", "confidence": "medium"}
+
+## Source Evidence
+- evidence: missing; confidence: not_available; source: static_analysis

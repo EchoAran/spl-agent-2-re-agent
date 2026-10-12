@@ -1,0 +1,103 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "slug": "commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "qualified_name": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl"
+  ],
+  "summary": "Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer\n\nReturns a new list of orders from the internal collection whose customer_id equals the provided customer_id.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id.\" list_by_customer]\n    [INPUTS]\n        <REF> customer_id </REF>: str \"Target customer identifier used to filter orders.\"\n        <REF> self.orders </REF>: Mapping[Any, Order] \"Internal mapping of orders; its values() are iterated to access order objects.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> orders_by_customer </REF>: List[Order] \"New list containing orders whose order.customer_id equals the provided customer_id.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Access the internal orders collection values for iteration RESULT all_orders_iterable]\n            [COMMAND Filter orders where each order.customer_id equals the input customer_id RESULT matching_orders_sequence]\n            [COMMAND Construct a list from the filtered orders RESULT orders_by_customer]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: No orders have a customer_id equal to the provided customer_id]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Iterate through orders, find no matches, and produce an empty list RESULT orders_by_customer (empty)]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [EXCEPTION_FLOW: The orders container does not support attribute values()]\n        [LOG \"AttributeError when accessing self.orders.values()\"]\n        [THROW AttributeError \"The orders collection does not implement a values() method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: An order object is missing the customer_id attribute during filtering]\n        [LOG \"AttributeError when reading order.customer_id\"]\n        [THROW AttributeError \"Encountered an order without a customer_id attribute while filtering.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/repository.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer\n\nReturns a new list of orders from the internal collection whose customer_id equals the provided customer_id.\n\n## Inputs\n- customer_id (str): Target customer identifier used to filter orders.\n- self.orders (Mapping[Any, Order]): Internal mapping of orders; its values() are iterated to access order objects.\n\n## Outputs\n- orders_by_customer (List[Order]): New list containing orders whose order.customer_id equals the provided customer_id.\n\n## Main Effect\nConstruct a list from the filtered orders\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.services.OrderService.customer_history\n\n## Side Effects\n- orders_by_customer (List[Order]): New list containing orders whose order.customer_id equals the provided customer_id.\n\n## Errors\n- An order object is missing the customer_id attribute during filtering\n- AttributeError: Encountered an order without a customer_id attribute while filtering.\n- AttributeError: The orders collection does not implement a values() method.\n- The orders container does not support attribute values()\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_page_id": "file:commerce_ops/repository.py",
+      "target_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/repository.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    },
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "source_url": "/wiki/topic/persistence",
+      "relation": "topic_mentions",
+      "label": "Persistence"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/repository.py",
+      "url": "/wiki/file/commerce-ops-repository-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/repository.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.634181+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "992fe092c8e34c04ba3b92fb317d6dd4e2cff5d768ba45e06269216a08ac5f8a",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/repository.py/OrderRepository/list_by_customer.spl",
+  "spl_content": "[DEFINE_WORKER: \"Returns a new list of orders from the internal collection whose customer_id equals the provided customer_id.\" list_by_customer]\n    [INPUTS]\n        <REF> customer_id </REF>: str \"Target customer identifier used to filter orders.\"\n        <REF> self.orders </REF>: Mapping[Any, Order] \"Internal mapping of orders; its values() are iterated to access order objects.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> orders_by_customer </REF>: List[Order] \"New list containing orders whose order.customer_id equals the provided customer_id.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Access the internal orders collection values for iteration RESULT all_orders_iterable]\n            [COMMAND Filter orders where each order.customer_id equals the input customer_id RESULT matching_orders_sequence]\n            [COMMAND Construct a list from the filtered orders RESULT orders_by_customer]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [ALTERNATIVE_FLOW: No orders have a customer_id equal to the provided customer_id]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Iterate through orders, find no matches, and produce an empty list RESULT orders_by_customer (empty)]\n        [END_SEQUENTIAL_BLOCK]\n    [END_ALTERNATIVE_FLOW]\n\n    [EXCEPTION_FLOW: The orders container does not support attribute values()]\n        [LOG \"AttributeError when accessing self.orders.values()\"]\n        [THROW AttributeError \"The orders collection does not implement a values() method.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: An order object is missing the customer_id attribute during filtering]\n        [LOG \"AttributeError when reading order.customer_id\"]\n        [THROW AttributeError \"Encountered an order without a customer_id attribute while filtering.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

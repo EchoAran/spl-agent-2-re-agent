@@ -1,0 +1,192 @@
+{
+  "page_id": "topic:persistence",
+  "page_type": "topic",
+  "title": "Persistence",
+  "slug": "persistence",
+  "url": "/wiki/topic/persistence",
+  "entity_kind": "topic",
+  "entity_id": "Persistence",
+  "qualified_name": "Persistence",
+  "source_refs": [
+    "artifacts/*_cards"
+  ],
+  "summary": "Entities related to Persistence.",
+  "body_markdown": "# Persistence\n\n- [[commerce_ops_demo.commerce_ops.cli.main]]\n- [[commerce_ops_demo.commerce_ops.cli.build_demo_service]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.save]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.get]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid]]\n- [[commerce_ops_demo.commerce_ops.services.OrderService.cancel_order]]\n- [[commerce_ops_demo.commerce_ops.services.OrderService.customer_history]]\n- [[commerce_ops_demo.commerce_ops.catalog.ProductCatalog]]\n- [[commerce_ops_demo.commerce_ops.repository.OrderRepository]]\n- [[commerce_ops_demo.commerce_ops.services.OrderService]]\n- [[commerce_ops/catalog.py]]\n- [[commerce_ops/cli.py]]\n- [[commerce_ops/models.py]]\n- [[commerce_ops/services.py]]\n- [[commerce_ops/repository.py]]\n- [[commerce_ops_demo.commerce_ops]]\n- [[commerce_ops_demo]]\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.cli.main"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-init",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "file:commerce_ops/catalog.py",
+      "target_url": "/wiki/file/commerce-ops-catalog-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/catalog.py"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "file:commerce_ops/cli.py",
+      "target_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/cli.py"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "file:commerce_ops/models.py",
+      "target_url": "/wiki/file/commerce-ops-models-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/models.py"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "file:commerce_ops/services.py",
+      "target_url": "/wiki/file/commerce-ops-services-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/services.py"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "file:commerce_ops/repository.py",
+      "target_url": "/wiki/file/commerce-ops-repository-py",
+      "relation": "topic_mentions",
+      "label": "commerce_ops/repository.py"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "topic:persistence",
+      "target_page_id": "package:commerce_ops_demo",
+      "target_url": "/wiki/package/commerce-ops-demo",
+      "relation": "topic_mentions",
+      "label": "commerce_ops_demo"
+    }
+  ],
+  "incoming_links": [],
+  "breadcrumbs": [
+    {
+      "title": "Topics",
+      "url": "/wiki/topic"
+    }
+  ],
+  "tags": [
+    "topic"
+  ],
+  "owners": [],
+  "package_path": "",
+  "file_path": "",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.main",
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "commerce_ops_demo.commerce_ops.services.OrderService",
+    "commerce_ops/catalog.py",
+    "commerce_ops/cli.py",
+    "commerce_ops/models.py",
+    "commerce_ops/services.py",
+    "commerce_ops/repository.py",
+    "commerce_ops_demo.commerce_ops",
+    "commerce_ops_demo"
+  ],
+  "graph_refs": [],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.648640+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "2ff2f7eabd6af8f84d0d14ea55736d657e0d1b82c12f58fc36a5a90d157454b7",
+  "spl_source_path": "",
+  "spl_content": ""
+}

@@ -1,0 +1,96 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "slug": "commerce-ops-demo-commerce-ops-payments-paymentgateway-init",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-init",
+  "entity_kind": "method",
+  "entity_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "qualified_name": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__init__.spl"
+  ],
+  "summary": "Initialize the instance by setting the payment provider and zeroing authorized and refunded totals.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__\n\nInitialize the instance by setting the payment provider and zeroing authorized and refunded totals.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Initialize the instance by setting the payment provider and zeroing authorized and refunded totals.\" __init__]\n    [INPUTS]\n        <REF> self </REF>: object \"The instance being initialized.\"\n        <REF> provider </REF>: str \"Payment provider identifier; defaults to 'internal-wallet'.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.provider </REF>: str \"Instance attribute set to the provided provider value.\"\n        <REF> self.authorized_total_cents </REF>: int \"Instance attribute initialized to 0 representing total authorized amount in cents.\"\n        <REF> self.refunded_total_cents </REF>: int \"Instance attribute initialized to 0 representing total refunded amount in cents.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Assign provider to instance attribute RESULT self.provider]\n            [COMMAND Initialize authorized_total_cents to 0 RESULT self.authorized_total_cents]\n            [COMMAND Initialize refunded_total_cents to 0 RESULT self.refunded_total_cents]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__`\n- Entity kind: `method`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/payments.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__\n\nInitialize the instance by setting the payment provider and zeroing authorized and refunded totals.\n\n## Inputs\n- self (object): The instance being initialized.\n- provider (str): Payment provider identifier; defaults to 'internal-wallet'.\n\n## Outputs\n- self.provider (str): Instance attribute set to the provided provider value.\n- self.authorized_total_cents (int): Instance attribute initialized to 0 representing total authorized amount in cents.\n- self.refunded_total_cents (int): Instance attribute initialized to 0 representing total refunded amount in cents.\n\n## Main Effect\nInitialize refunded_total_cents to 0\n\n## Calls and Callers\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Side Effects\n- mutates self.authorized_total_cents\n- mutates self.provider\n- mutates self.refunded_total_cents\n- self.authorized_total_cents (int): Instance attribute initialized to 0 representing total authorized amount in cents.\n- self.provider (str): Instance attribute set to the provided provider value.\n- self.refunded_total_cents (int): Instance attribute initialized to 0 representing total refunded amount in cents.\n\n## Errors\n- evidence: missing; confidence: not_available; source: static_analysis\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway",
+      "relation": "owned_by_class",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target_page_id": "file:commerce_ops/payments.py",
+      "target_url": "/wiki/file/commerce-ops-payments-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/payments.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "source_url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway",
+      "relation": "contains_method",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway"
+    },
+    {
+      "source_page_id": "topic:authentication",
+      "source_url": "/wiki/topic/authentication",
+      "relation": "topic_mentions",
+      "label": "Authentication"
+    },
+    {
+      "source_page_id": "topic:configuration",
+      "source_url": "/wiki/topic/configuration",
+      "relation": "topic_mentions",
+      "label": "Configuration"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/payments.py",
+      "url": "/wiki/file/commerce-ops-payments-py"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/payments.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.632183+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "79afe072907aecc7269e0720d34c818e9263359e7dd7749db27879f705fd4e4b",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/payments.py/PaymentGateway/__init__.spl",
+  "spl_content": "[DEFINE_WORKER: \"Initialize the instance by setting the payment provider and zeroing authorized and refunded totals.\" __init__]\n    [INPUTS]\n        <REF> self </REF>: object \"The instance being initialized.\"\n        <REF> provider </REF>: str \"Payment provider identifier; defaults to 'internal-wallet'.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> self.provider </REF>: str \"Instance attribute set to the provided provider value.\"\n        <REF> self.authorized_total_cents </REF>: int \"Instance attribute initialized to 0 representing total authorized amount in cents.\"\n        <REF> self.refunded_total_cents </REF>: int \"Instance attribute initialized to 0 representing total refunded amount in cents.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Assign provider to instance attribute RESULT self.provider]\n            [COMMAND Initialize authorized_total_cents to 0 RESULT self.authorized_total_cents]\n            [COMMAND Initialize refunded_total_cents to 0 RESULT self.refunded_total_cents]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n[END_WORKER]"
+}

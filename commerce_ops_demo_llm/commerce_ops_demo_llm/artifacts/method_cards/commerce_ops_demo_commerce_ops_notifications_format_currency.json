@@ -1,0 +1,66 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/notifications.py",
+  "signature": "def format_currency(cents: int) -> str:",
+  "visibility": "public",
+  "summary": "Formats a non-negative cent amount into a dollar string with two decimal places, raising ValueError for negative input.",
+  "purpose_hint": "",
+  "inputs": [
+    "cents (int): Amount in cents to format; must be non-negative."
+  ],
+  "outputs": [
+    "formatted_currency (str): Dollar-formatted string with two decimal places (e.g., '$12.34')."
+  ],
+  "main_effect": "Format the dollar amount with two decimal places and prefix with '$'.",
+  "side_effects": [],
+  "errors": [
+    "ValueError: currency value cannot be negative",
+    "cents < 0",
+    "cents > 0",
+    "raise ValueError(\"currency value cannot be negative\")"
+  ],
+  "validation_rules": [
+    "cents > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if cents < 0:\n        raise ValueError(\"currency value cannot be negative\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 4,
+        "code": "return f\"${cents / 100:.2f}\""
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/format_currency.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

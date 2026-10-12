@@ -1,0 +1,81 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Order",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def mark_cancelled(self, reason: str) -> None:",
+  "visibility": "public",
+  "summary": "Cancels the order by setting its status to 'cancelled' and records the cancellation reason unless the order is paid, in which case it raises an error.",
+  "purpose_hint": "",
+  "inputs": [
+    "self (Order): Order instance whose status is read and updated, and which exposes add_event.",
+    "reason (string): Human-readable explanation for the cancellation; passed to the event log.",
+    "self.status (string): Current order status evaluated to guard against cancelling paid orders."
+  ],
+  "outputs": [
+    "self.status (state_write): Updated to 'cancelled' when the guard condition does not trigger.",
+    "event (side_effect): Adds a 'cancelled' event with the provided reason via <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL>."
+  ],
+  "main_effect": "Call <SPL>commerce_ops_demo.commerce_ops.models.Order.add_event</SPL> with arguments ('cancelled', reason)",
+  "side_effects": [
+    "mutates self.status",
+    "self.status (state_write): Updated to 'cancelled' when the guard condition does not trigger."
+  ],
+  "errors": [
+    "ValueError: paid orders cannot be cancelled here",
+    "invalid when self.status == \"paid\"",
+    "raise ValueError(\"paid orders cannot be cancelled here\")",
+    "self.status == 'paid'"
+  ],
+  "validation_rules": [
+    "invalid when self.status == \"paid\""
+  ],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.models.Order.add_event",
+    "external.ValueError"
+  ],
+  "direct_callers": [],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "status"
+  ],
+  "state_writes": [
+    "status"
+  ],
+  "control_markers": {
+    "statements_count": 3,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if self.status == \"paid\":\n            raise ValueError(\"paid orders cannot be cancelled here\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 4,
+        "code": "self.status = \"cancelled\""
+      }
+    ],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 5,
+        "code": "self.add_event(\"cancelled\", reason)"
+      }
+    ],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Order/mark_cancelled.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

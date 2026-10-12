@@ -1,0 +1,68 @@
+{
+  "domain": "commerce_ops_demo.commerce_ops.pricing",
+  "purpose": "Represent a price quote as a simple dataclass with fields for subtotal_cents, discount_cents, tax_cents, total_cents, and coupon.",
+  "responsibility": "Hold and convey computed price components and final total as structured data.",
+  "role": "value object",
+  "public_surface": [
+    "Dataclass-generated constructor to set: subtotal_cents, discount_cents, tax_cents, total_cents, coupon",
+    "Public attributes: subtotal_cents, discount_cents, tax_cents, total_cents, coupon"
+  ],
+  "entrypoints": [
+    "Constructor (__init__)"
+  ],
+  "mechanism": "The @dataclass decorator provides initialization and attribute storage; the class defines no custom methods or internal logic.",
+  "internal_structure": [
+    "No inheritance and no private helpers",
+    "No internal call graph edges; pure data holder"
+  ],
+  "lifecycle": [
+    "Created with pricing values; persists as an in-memory data record",
+    "No explicit initialization beyond construction; no disposal/reset behavior in evidence"
+  ],
+  "state": [
+    "subtotal_cents (domain data)",
+    "discount_cents (domain data)",
+    "tax_cents (domain data)",
+    "total_cents (domain data)",
+    "coupon (domain data)"
+  ],
+  "inputs": [
+    "subtotal_cents",
+    "discount_cents",
+    "tax_cents",
+    "total_cents",
+    "coupon"
+  ],
+  "outputs": [
+    "Exposes pricing attributes via direct attribute access: subtotal_cents, discount_cents, tax_cents, total_cents, coupon"
+  ],
+  "dependencies": [],
+  "used_by": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "key_interactions": [
+    "No incoming or outgoing edges in class scope graph; no observed collaborations"
+  ],
+  "side_effects": [
+    "None observed in class scope graph; data-only container"
+  ],
+  "errors": [
+    "No error-handling behavior in evidence"
+  ],
+  "invariants": [
+    "evidence: missing; confidence: not_available; source: static_analysis"
+  ],
+  "method_refs": [],
+  "id": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+  "qualified_name": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+  "class_name": "PriceQuote",
+  "source_file": "commerce_ops/pricing.py",
+  "class_type": "class",
+  "related_classes": [],
+  "incoming_dependencies": [],
+  "outgoing_dependencies": [],
+  "key_internal_flows": [],
+  "summary": "Represent a price quote as a simple dataclass with fields for subtotal_cents, discount_cents, tax_cents, total_cents, and coupon.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/pricing.py/PriceQuote/__class__.spl"
+}

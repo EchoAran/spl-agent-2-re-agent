@@ -1,0 +1,36 @@
+[DEFINE_WORKER: "Initialize the instance by validating that tax_rate_bps is non-negative and storing tax_rate_bps and a coupons dict with uppercase keys." __init__]
+    [INPUTS]
+        <REF> tax_rate_bps </REF>: int "Tax rate in basis points; must be >= 0."
+        <REF> coupons </REF>: Dict[str, int] "Mapping of coupon code strings to integer values; codes will be normalized to uppercase."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.tax_rate_bps </REF>: int attribute "Instance attribute set to the provided tax_rate_bps."
+        <REF> self.coupons </REF>: dict[str, int] attribute "New dictionary with coupon codes uppercased as keys and original values; later entries overwrite earlier ones if uppercase keys collide."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Validate that tax_rate_bps is not negative (tax_rate_bps >= 0). RESULT validated_tax_rate]
+            [COMMAND Assign the validated tax_rate_bps to the instance attribute. RESULT self.tax_rate_bps set]
+            [COMMAND Construct a new dict by iterating coupons.items() and mapping each code.upper() to its value; values are preserved by reference and later keys overwrite earlier ones if uppercase-normalized keys collide. RESULT normalized_coupons]
+            [COMMAND Assign the normalized coupon mapping to the instance attribute. RESULT self.coupons set]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: tax_rate_bps < 0]
+        [LOG "tax rate cannot be negative"]
+        [THROW ValueError "Raised when a negative tax_rate_bps is provided."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: coupons does not provide an .items() method (non-mapping or None)]
+        [LOG "coupons must be mapping-like; .items() is required"]
+        [THROW AttributeError "Attempted to call .items() on a non-mapping coupons argument."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: a coupon code from coupons.items() is not a string (lacks .upper())]
+        [LOG "coupon code must be string-like to support .upper()"]
+        [THROW AttributeError "Non-string coupon code encountered during key normalization with .upper()."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]

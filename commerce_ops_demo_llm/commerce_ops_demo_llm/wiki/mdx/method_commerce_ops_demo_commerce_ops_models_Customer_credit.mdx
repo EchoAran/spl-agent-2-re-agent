@@ -1,0 +1,95 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+  "summary": "Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Customer/credit.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Customer.credit
+
+Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values." credit]
+    [INPUTS]
+        <REF> amount_cents </REF>: int "Amount to credit, in cents; must be > 0."
+        <REF> self.balance_cents </REF>: int "Current balance in cents read and incremented."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> self.balance_cents </REF>: int "Updated balance in cents after adding amount_cents."
+        <REF> return </REF>: None "No return value."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Increment self.balance_cents by amount_cents RESULT self.balance_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: amount_cents <= 0]
+        [LOG "Exception information"]
+        [THROW ValueError "Raised with message 'amount must be positive' when the amount is not greater than 0."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: amount_cents is None or non-numeric, making the '<=' comparison invalid]
+        [LOG "Exception information"]
+        [THROW TypeError "Implicitly raised by the comparison when amount_cents cannot be compared to 0."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Customer.credit`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Customer.credit
+
+Credits a positive amount (in cents) to the balance by incrementing self.balance_cents and rejects non-positive values.
+
+## Inputs
+- amount_cents (int): Amount to credit, in cents; must be > 0.
+- self.balance_cents (int): Current balance in cents read and incremented.
+
+## Outputs
+- self.balance_cents (int): Updated balance in cents after adding amount_cents.
+- return (None): No return value.
+
+## Main Effect
+Increment self.balance_cents by amount_cents
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund
+
+## Side Effects
+- mutates self.balance_cents
+- self.balance_cents (int): Updated balance in cents after adding amount_cents.
+
+## Errors
+- TypeError: Implicitly raised by the comparison when amount_cents cannot be compared to 0.
+- ValueError: Raised with message 'amount must be positive' when the amount is not greater than 0.
+- amount_cents <= 0
+- amount_cents > 0
+- amount_cents is None or non-numeric, making the '<=' comparison invalid
+- raise ValueError("amount must be positive")
+
+## Validation Rules
+- amount_cents > 0

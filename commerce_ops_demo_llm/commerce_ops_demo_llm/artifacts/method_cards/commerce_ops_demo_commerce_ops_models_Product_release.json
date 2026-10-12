@@ -1,0 +1,70 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "qualified_name": "commerce_ops_demo.commerce_ops.models.Product.release",
+  "kind": "method",
+  "owner_class_id": "commerce_ops_demo.commerce_ops.models.Product",
+  "owner_file_id": "commerce_ops/models.py",
+  "signature": "def release(self, qty: int) -> None:",
+  "visibility": "public",
+  "summary": "Increases the object's stock by the given quantity after validating the quantity is positive.",
+  "purpose_hint": "",
+  "inputs": [
+    "qty (int): Quantity to add; must be greater than 0.",
+    "self.stock (int): Current stock value prior to update."
+  ],
+  "outputs": [
+    "self.stock (int): Updated stock after adding qty.",
+    "return (None): No return value."
+  ],
+  "main_effect": "Add qty to self.stock",
+  "side_effects": [
+    "mutates self.stock",
+    "self.stock (int): Updated stock after adding qty."
+  ],
+  "errors": [
+    "ValueError: Raised when qty is not positive with message 'qty must be positive'.",
+    "qty <= 0",
+    "qty > 0",
+    "raise ValueError(\"qty must be positive\")"
+  ],
+  "validation_rules": [
+    "qty > 0"
+  ],
+  "direct_callees": [
+    "external.ValueError"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+  ],
+  "external_calls": [
+    "external.ValueError"
+  ],
+  "state_reads": [
+    "stock"
+  ],
+  "state_writes": [
+    "stock"
+  ],
+  "control_markers": {
+    "statements_count": 2,
+    "control_structures": [
+      {
+        "type": "if",
+        "lineno": 2,
+        "code": "if qty <= 0:\n            raise ValueError(\"qty must be positive\")"
+      }
+    ],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": false,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/models.py/Product/release.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

@@ -1,0 +1,121 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+  "summary": "Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/apply_coupon.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon
+
+Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal." apply_coupon]
+    [INPUTS]
+        <REF> self </REF>: object "Instance providing the coupons mapping used for lookup."
+        <REF> self.coupons </REF>: mapping[str, int] "Mapping of uppercase coupon codes to discount amounts in cents."
+        <REF> customer </REF>: Customer "Customer whose tier may trigger a VIP bonus."
+        <REF> subtotal_cents </REF>: int "Subtotal amount in cents used to cap the discount."
+        <REF> coupon </REF>: str "Coupon code string; empty or falsy means no discount."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> applied_discount_cents </REF>: int "Final discount in cents to apply, 0 if no coupon, includes VIP bonus when applicable and is capped to the subtotal."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Convert coupon to uppercase string RESULT code]
+            [COMMAND Verify code exists in self.coupons RESULT valid_code]
+            [COMMAND Retrieve base discount in cents from self.coupons[code] RESULT discount]
+            [COMMAND If customer.tier == 'vip', add 500 to discount; otherwise leave unchanged RESULT discount]
+            [COMMAND Return the minimum of discount and subtotal_cents RESULT applied_discount_cents]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [ALTERNATIVE_FLOW: coupon is empty or falsy]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Return 0 (no coupon provided) RESULT applied_discount_cents = 0]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [ALTERNATIVE_FLOW: customer.tier == 'vip']
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Increase discount by 500 before capping RESULT discount]
+        [END_SEQUENTIAL_BLOCK]
+    [END_ALTERNATIVE_FLOW]
+
+    [EXCEPTION_FLOW: Uppercased code not present in self.coupons]
+        [LOG "coupon is not supported"]
+        [THROW ValueError "coupon is not supported"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: coupon is truthy but lacks a callable upper() method during normalization]
+        [LOG "Failed to uppercase coupon"]
+        [THROW AttributeError "coupon.upper() is unavailable or not callable"]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: upper() call on coupon fails due to incompatible type]
+        [LOG "Type error during coupon normalization"]
+        [THROW TypeError "upper() call failed on coupon"]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/pricing.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon
+
+Computes the discount in cents from a coupon code, adds a 500-cent VIP bonus when applicable, and returns the discount capped to the subtotal.
+
+## Inputs
+- self (object): Instance providing the coupons mapping used for lookup.
+- self.coupons (mapping[str, int]): Mapping of uppercase coupon codes to discount amounts in cents.
+- customer (Customer): Customer whose tier may trigger a VIP bonus.
+- subtotal_cents (int): Subtotal amount in cents used to cap the discount.
+- coupon (str): Coupon code string; empty or falsy means no discount.
+
+## Outputs
+- applied_discount_cents (int): Final discount in cents to apply, 0 if no coupon, includes VIP bonus when applicable and is capped to the subtotal.
+
+## Main Effect
+Return the minimum of discount and subtotal_cents
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote
+
+## Side Effects
+- evidence: missing; confidence: not_available; source: static_analysis
+
+## Errors
+- AttributeError: coupon.upper() is unavailable or not callable
+- TypeError: upper() call failed on coupon
+- Uppercased code not present in self.coupons
+- ValueError: coupon is not supported
+- coupon is truthy but lacks a callable upper() method during normalization
+- invalid when code not in self.coupons
+- raise ValueError("coupon is not supported")
+- upper() call on coupon fails due to incompatible type
+
+## Validation Rules
+- invalid when code not in self.coupons

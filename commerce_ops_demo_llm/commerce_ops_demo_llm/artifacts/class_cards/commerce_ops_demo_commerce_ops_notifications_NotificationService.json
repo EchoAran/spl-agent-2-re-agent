@@ -1,0 +1,103 @@
+{
+  "class_name": "NotificationService",
+  "qualified_name": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+  "source_file": "commerce_ops/notifications.py",
+  "domain": "commerce operations - notifications",
+  "purpose": "Compose and record notification messages such as order receipts and low-stock alerts, accumulating them in an internal list for later use; invoked by OrderService._notify_customer.",
+  "responsibility": "Primary: generate and accumulate notification messages in sent_messages. Secondary: delegate currency formatting to a helper function for receipt totals.",
+  "role": "service",
+  "public_surface": [
+    "__init__(): initialize internal accumulator sent_messages",
+    "send_receipt(customer, order) -> str: compose a receipt message and record it",
+    "send_low_stock_alert(products, threshold=2) -> List[str]: generate alerts for low inventory and record them"
+  ],
+  "entrypoints": [
+    "__init__",
+    "send_receipt",
+    "send_low_stock_alert"
+  ],
+  "mechanism": "Builds message strings from provided domain objects, delegates currency formatting to format_currency for totals, appends each composed message to an internal sent_messages list, and returns the message or list of messages. No external I/O is performed.",
+  "internal_structure": [
+    "State: sent_messages (List[str]) as an accumulator for all composed notifications",
+    "No private helpers; public methods directly compose and append messages",
+    "Delegation: uses format_currency to format monetary amounts in receipt messages"
+  ],
+  "lifecycle": [
+    "Creation: __init__ sets up sent_messages",
+    "Usage: each call to a public method composes messages and appends them to sent_messages",
+    "Retention: accumulated messages persist on the instance for its lifetime"
+  ],
+  "state": [
+    "sent_messages: List[str] (accumulator; initialized in constructor; appended by public methods)"
+  ],
+  "inputs": [
+    "customer.email (send_receipt)",
+    "order.order_id (send_receipt)",
+    "order.total_cents (send_receipt, formatted via format_currency)",
+    "products iterable of Product objects (send_low_stock_alert)",
+    "product.sku (send_low_stock_alert)",
+    "product.stock comparable to threshold (send_low_stock_alert)",
+    "threshold: int with default 2 (send_low_stock_alert)"
+  ],
+  "outputs": [
+    "receipt message string (from send_receipt)",
+    "list of low-stock alert strings (from send_low_stock_alert)",
+    "mutated sent_messages containing all composed messages"
+  ],
+  "dependencies": [
+    "commerce_ops_demo.commerce_ops.notifications.format_currency"
+  ],
+  "used_by": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+  ],
+  "key_interactions": [
+    "Incoming: OrderService._notify_customer -> send_receipt",
+    "Incoming: OrderService._notify_customer -> send_low_stock_alert",
+    "Outgoing: send_receipt -> format_currency for total formatting",
+    "State effect: both public methods -> self.sent_messages.append for accumulation"
+  ],
+  "side_effects": [
+    "Appends composed messages to self.sent_messages",
+    "Maintains an in-memory log of messages across calls via sent_messages"
+  ],
+  "errors": [
+    "<SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.",
+    "Exception: Propagated exception from format_currency when formatting the total.",
+    "AttributeError: Raised when expected attributes are missing on customer or order.",
+    "customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.",
+    "self.sent_messages is missing or not list-like, causing append to fail.",
+    "A product lacks the 'sku' attribute when formatting the alert string",
+    "A product lacks the 'stock' attribute when evaluating the threshold condition",
+    "TypeError: Object is not iterable.",
+    "TypeError: Unsupported comparison between product.stock and threshold.",
+    "products is None or not iterable when entering the loop"
+  ],
+  "invariants": [
+    "sent_messages exists on the instance and supports append operations",
+    "send_receipt assumes customer has email and order has order_id and total_cents acceptable to format_currency",
+    "send_low_stock_alert assumes each product provides sku and stock, and stock is comparable to threshold",
+    "Methods operate in-memory without external I/O; side effects are confined to sent_messages"
+  ],
+  "method_refs": [
+    "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__init__.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl</SPL>",
+    "<SPL>spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_low_stock_alert.spl</SPL>"
+  ],
+  "id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+  "class_type": "service",
+  "related_classes": [],
+  "incoming_dependencies": [
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer -> commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+  ],
+  "outgoing_dependencies": [
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.alerts.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert -> external.self.sent_messages.append",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt -> commerce_ops_demo.commerce_ops.notifications.format_currency",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt -> external.self.sent_messages.append"
+  ],
+  "key_internal_flows": [],
+  "summary": "Compose and record notification messages such as order receipts and low-stock alerts, accumulating them in an internal list for later use; invoked by OrderService._notify_customer.",
+  "schema_version": "repo-spl-v1",
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/__class__.spl"
+}

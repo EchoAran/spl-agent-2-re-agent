@@ -15,10 +15,30 @@ This skill runs as a stateful semi structured interview loop. Do not treat it as
 
 This skill uses file-based state persistence to maintain interview context across execution sessions. See `references/state_management.md` for detailed implementation rules.
 
+State persistence must be handled by skill bundled scripts, not host-provided file-write helpers.
+
+### Runtime Scripts
+- `scripts/persist_framework_state.py`
+  - `--action save --session-id <id> --framework-json <json-string>`
+  - `--action load --session-id <id>`
+- `scripts/clear_framework_state.py`
+  - `--action clear --session-id <id>`
+
+When running in tool-call environments, call `run_skill_script`:
+- Save framework: `script_name=persist_framework_state`, `action=save`
+- Load framework: `script_name=persist_framework_state`, `action=load`
+- Clear framework: `script_name=clear_framework_state`, `action=clear`
+
+### Mandatory Persistence Order
+- Every interview turn must start with `load` (`persist_framework_state`, `action=load`).
+- If framework content changed in this turn, it must end with `save` (`persist_framework_state`, `action=save`).
+- When interview reaches complete and summary is produced, call `clear` (`clear_framework_state`, `action=clear`).
+- Do not use host environment file write helpers for framework persistence.
+
 ### Key Behaviors
-- **Persistence**: Framework and conversation history are saved to files after each state-changing operation
+- **Persistence**: Framework is saved to one session state file after each state-changing operation
 - **Recovery**: Previous session state is automatically restored when available
-- **Cleanup**: All state files are deleted after successful interview completion and summarization
+- **Cleanup**: Session state file is deleted after successful interview completion and summarization
 
 When needed, load only the files relevant to the current step instead of reading every file at once.
 
@@ -34,7 +54,7 @@ At every turn, execute the following sequence:
 5. Detect and register contradictions that need clarification (see `references/conflict_resolution.md`).
 6. Select the current topic.
 7. Generate the next interview utterance.
-8. Persist State: Save updated framework and history (see `references/state_management.md`)
+8. Persist State: Save updated framework if changed (see `references/state_management.md`)
 
 Stop the loop only when the completion conditions in `references/checkpoints.md` are satisfied.
 
@@ -154,7 +174,7 @@ Instead:
 3. Output:
    - the final interview framework
    - a structured requirements summary following the required report format
-4. **Clean State**: Delete all session state files (see `references/state_cleanup.md`)
+4. **Clean State**: Delete the session state file (see `references/state_cleanup.md`)
 
 Completion hard rule:
 - do not mark the interview as `complete` when unresolved high impact contradictions still exist

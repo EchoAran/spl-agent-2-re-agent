@@ -1,0 +1,2638 @@
+{
+  "nodes": [
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-normalize-sku"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-release-items"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-reserve-items"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "commerce_ops_demo.commerce_ops.cli.main",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-main"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-get"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-build-demo-service"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-reserve"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-debit"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-paid"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-cartitem-validate"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-can-spend"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-mark-cancelled"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-customer-credit"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "label": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "kind": "function",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-format-currency"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "commerce_ops_demo.commerce_ops.models.Product.release",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-product-release"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-catalog-productcatalog-list-available"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-send-low-stock-alert"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-models-order-add-event"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-authorize"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-send-receipt"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-quote"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-tax"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-apply-coupon"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-notifications-notificationservice-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-save"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-payments-paymentgateway-refund"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-list-by-customer"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-get"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-checkout"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-init"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-build-order"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-repository-orderrepository-mark-paid"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-notify-customer"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-cancel-order"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-charge"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-services-orderservice-customer-history"
+    },
+    {
+      "id": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "kind": "method",
+      "url": "/wiki/method/commerce-ops-demo-commerce-ops-pricing-pricingpolicy-calculate-subtotal"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-catalog-productcatalog"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "commerce_ops_demo.commerce_ops.models.Product",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-product"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "commerce_ops_demo.commerce_ops.models.Customer",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-customer"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "commerce_ops_demo.commerce_ops.models.Order",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-models-order"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-notifications-notificationservice"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentgateway"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricequote"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-pricing-pricingpolicy"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-repository-orderrepository"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymentreceipt"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-services-orderservice"
+    },
+    {
+      "id": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "kind": "class",
+      "url": "/wiki/class/commerce-ops-demo-commerce-ops-payments-paymenterror"
+    },
+    {
+      "id": "file:commerce_ops/catalog.py",
+      "label": "commerce_ops_demo.commerce_ops.catalog",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-catalog-py"
+    },
+    {
+      "id": "file:commerce_ops/__init__.py",
+      "label": "commerce_ops_demo.commerce_ops",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-init-py"
+    },
+    {
+      "id": "file:commerce_ops/notifications.py",
+      "label": "commerce_ops_demo.commerce_ops.notifications",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-notifications-py"
+    },
+    {
+      "id": "file:commerce_ops/cli.py",
+      "label": "commerce_ops_demo.commerce_ops.cli",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-cli-py"
+    },
+    {
+      "id": "file:commerce_ops/models.py",
+      "label": "commerce_ops_demo.commerce_ops.models",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-models-py"
+    },
+    {
+      "id": "file:commerce_ops/services.py",
+      "label": "commerce_ops_demo.commerce_ops.services",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-services-py"
+    },
+    {
+      "id": "file:commerce_ops/payments.py",
+      "label": "commerce_ops_demo.commerce_ops.payments",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-payments-py"
+    },
+    {
+      "id": "file:commerce_ops/pricing.py",
+      "label": "commerce_ops_demo.commerce_ops.pricing",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-pricing-py"
+    },
+    {
+      "id": "file:commerce_ops/repository.py",
+      "label": "commerce_ops_demo.commerce_ops.repository",
+      "kind": "file",
+      "url": "/wiki/file/commerce-ops-repository-py"
+    },
+    {
+      "id": "package:commerce_ops_demo.commerce_ops",
+      "label": "commerce_ops_demo.commerce_ops",
+      "kind": "package",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "id": "package:commerce_ops_demo",
+      "label": "commerce_ops_demo",
+      "kind": "package",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "id": "home:root",
+      "label": "Repository Wiki",
+      "kind": "home",
+      "url": "/wiki/"
+    },
+    {
+      "id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "kind": "workflow",
+      "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-parse-cart"
+    },
+    {
+      "id": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "kind": "workflow",
+      "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-build-demo-service"
+    },
+    {
+      "id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "kind": "workflow",
+      "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo"
+    },
+    {
+      "id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main",
+      "kind": "workflow",
+      "url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main"
+    },
+    {
+      "id": "topic:authentication",
+      "label": "Authentication",
+      "kind": "topic",
+      "url": "/wiki/topic/authentication"
+    },
+    {
+      "id": "topic:configuration",
+      "label": "Configuration",
+      "kind": "topic",
+      "url": "/wiki/topic/configuration"
+    },
+    {
+      "id": "topic:external-integration",
+      "label": "External Integration",
+      "kind": "topic",
+      "url": "/wiki/topic/external-integration"
+    },
+    {
+      "id": "topic:persistence",
+      "label": "Persistence",
+      "kind": "topic",
+      "url": "/wiki/topic/persistence"
+    },
+    {
+      "id": "topic:validation",
+      "label": "Validation",
+      "kind": "topic",
+      "url": "/wiki/topic/validation"
+    }
+  ],
+  "edges": [
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "file:commerce_ops/cli.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "file:commerce_ops/cli.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "file:commerce_ops/cli.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "file:commerce_ops/cli.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "target": "file:commerce_ops/notifications.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "target": "file:commerce_ops/notifications.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target": "file:commerce_ops/payments.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "file:commerce_ops/models.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "file:commerce_ops/payments.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target": "file:commerce_ops/notifications.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "target": "file:commerce_ops/repository.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target": "file:commerce_ops/notifications.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "file:commerce_ops/repository.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "target": "file:commerce_ops/payments.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target": "file:commerce_ops/repository.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target": "file:commerce_ops/repository.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "file:commerce_ops/repository.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target": "file:commerce_ops/services.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "label": "calls"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "called_by"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "owned_by_class"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "owned_by_file"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "owned_by_package"
+    },
+    {
+      "source": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "called_by"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.__init__",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "label": "contains_method"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "uses"
+    },
+    {
+      "source": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "uses"
+    },
+    {
+      "source": "file:commerce_ops/catalog.py",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/catalog.py",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/notifications.py",
+      "target": "class:commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/notifications.py",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/cli.py",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/cli.py",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/cli.py",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/cli.py",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/models.py",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/models.py",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/models.py",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/models.py",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/services.py",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/payments.py",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/payments.py",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/payments.py",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/pricing.py",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/pricing.py",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "file:commerce_ops/repository.py",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "contains_symbol"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/__init__.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/cli.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/models.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/notifications.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/payments.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/pricing.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/repository.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo.commerce_ops",
+      "target": "file:commerce_ops/services.py",
+      "label": "contains_file"
+    },
+    {
+      "source": "package:commerce_ops_demo",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "contains_package"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Order",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "workflow_step"
+    },
+    {
+      "source": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "label": "workflow_step"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "class:commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "file:commerce_ops/services.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:authentication",
+      "target": "file:commerce_ops/payments.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.__init__",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:configuration",
+      "target": "class:commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:external-integration",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:external-integration",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:external-integration",
+      "target": "file:commerce_ops/payments.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:external-integration",
+      "target": "file:commerce_ops/repository.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:external-integration",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.__init__",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "class:commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "file:commerce_ops/cli.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "file:commerce_ops/models.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "file:commerce_ops/services.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "file:commerce_ops/repository.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:persistence",
+      "target": "package:commerce_ops_demo",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.main",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "class:commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Product",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "class:commerce_ops_demo.commerce_ops.models.Customer",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "class:commerce_ops_demo.commerce_ops.services.OrderService",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "file:commerce_ops/catalog.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "file:commerce_ops/cli.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "file:commerce_ops/models.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "file:commerce_ops/services.py",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "package:commerce_ops_demo.commerce_ops",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.models.Product.release",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "label": "topic_mentions"
+    },
+    {
+      "source": "topic:validation",
+      "target": "method:commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "label": "topic_mentions"
+    }
+  ]
+}

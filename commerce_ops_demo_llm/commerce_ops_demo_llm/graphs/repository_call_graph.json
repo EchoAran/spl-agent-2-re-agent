@@ -1,0 +1,2306 @@
+{
+  "edges": [
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "callee_id": "external.value.strip().upper",
+      "call_text": "value.strip().upper()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 11,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"sku is required\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 10,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "callee_id": "external.value.strip",
+      "call_text": "value.strip()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 9,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "callee_id": "external.value.strip",
+      "call_text": "value.strip()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 11,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "call_text": "normalize_sku(product.sku)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 18,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "call_text": "normalize_sku(sku)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 21,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "callee_id": "external.KeyError",
+      "call_text": "KeyError(f\"unknown sku {normalized}\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 23,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "callee_id": "external.sorted",
+      "call_text": "sorted(values, key=lambda product: product.sku)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 30,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available",
+      "callee_id": "external.self.products.values",
+      "call_text": "self.products.values()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 27,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "external.item.validate",
+      "call_text": "item.validate()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 36,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "call_text": "self.get(item.sku)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 37,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "call_text": "product.reserve(item.qty)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 38,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "external.reserved.append",
+      "call_text": "reserved.append(product)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 39,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "external.zip",
+      "call_text": "zip(reserved, items)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 42,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product.release",
+      "call_text": "product.release(item.qty)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 43,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "call_text": "self.get(item.sku)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 48,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product.release",
+      "call_text": "product.release(item.qty)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/catalog.py",
+      "line_number": 49,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "callee_id": "external.raw.split",
+      "call_text": "raw.split(\":\", 1)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 17,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "callee_id": "external.items.append",
+      "call_text": "items.append(CartItem(sku.strip(), int(qty_text)))",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 18,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.CartItem",
+      "call_text": "CartItem(sku.strip(), int(qty_text))",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 18,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "callee_id": "external.sku.strip",
+      "call_text": "sku.strip()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 18,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "callee_id": "external.int",
+      "call_text": "int(qty_text)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 18,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "call_text": "ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 23,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "call_text": "PricingPolicy(825, {\"SAVE10\": 1000, \"VIP5\": 500})",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 30,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "call_text": "PaymentGateway()",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 31,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "call_text": "OrderRepository()",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 32,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "call_text": "NotificationService()",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 33,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService",
+      "call_text": "OrderService(catalog, pricing, payments, repository, notifications)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 34,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product",
+      "call_text": "Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"])",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 25,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product",
+      "call_text": "Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"])",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 26,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Product",
+      "call_text": "Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"])",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 27,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "call_text": "build_demo_service()",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 38,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Customer",
+      "call_text": "Customer(\"cust-100\", \"reader@example.com\", 20000, \"vip\")",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 39,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "call_text": "parse_cart(raw_items)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 40,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "call_text": "service.checkout(customer, items, coupon)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 41,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "call_text": "service.customer_history(customer.customer_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 42,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "callee_id": "external.len",
+      "call_text": "len(history)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 43,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.main",
+      "callee_id": "external.print",
+      "call_text": "print(run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\"))",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 47,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.cli.main",
+      "callee_id": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "call_text": "run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\")",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/cli.py",
+      "line_number": 47,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"qty must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 18,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(f\"not enough stock for {self.sku}\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 20,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Product.release",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"qty must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 25,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "call_text": "self.can_spend(amount_cents)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 40,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"customer has insufficient balance\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 41,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"amount must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 46,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"sku is required\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 57,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"qty must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 59,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "call_text": "self.add_event(\"paid\", payment_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 76,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"only created orders can be marked paid\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 74,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "call_text": "self.add_event(\"cancelled\", reason)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 82,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"paid orders cannot be cancelled here\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 80,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "callee_id": "external.self.events.append",
+      "call_text": "self.events.append(\n            {\n                \"kind\": kind,\n                \"detail\": detail,\n                \"timestamp\": datetime.now(timezone.utc).isoformat(),\n            }\n        )",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 85,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "callee_id": "external.datetime.now(timezone.utc).isoformat",
+      "call_text": "datetime.now(timezone.utc).isoformat()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 89,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "callee_id": "external.datetime.now",
+      "call_text": "datetime.now(timezone.utc)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/models.py",
+      "line_number": 89,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"currency value cannot be negative\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/notifications.py",
+      "line_number": 10,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "callee_id": "external.self.sent_messages.append",
+      "call_text": "self.sent_messages.append(message)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/notifications.py",
+      "line_number": 20,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "callee_id": "commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "call_text": "format_currency(order.total_cents)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/notifications.py",
+      "line_number": 19,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "callee_id": "external.self.sent_messages.append",
+      "call_text": "self.sent_messages.append(alert)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/notifications.py",
+      "line_number": 28,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "callee_id": "external.alerts.append",
+      "call_text": "alerts.append(alert)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/notifications.py",
+      "line_number": 29,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "call_text": "PaymentReceipt(str(uuid4()), amount_cents, self.provider)",
+      "call_type": "constructor_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 34,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "call_text": "PaymentError(\"amount must be positive\")",
+      "call_type": "constructor_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 28,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "call_text": "customer.debit(amount_cents)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 30,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "external.str",
+      "call_text": "str(uuid4())",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 34,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "call_text": "PaymentError(str(exc))",
+      "call_type": "constructor_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 32,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "external.uuid4",
+      "call_text": "uuid4()",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 34,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "callee_id": "external.str",
+      "call_text": "str(exc)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 32,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "call_text": "customer.credit(receipt.amount_cents)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 39,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "call_text": "PaymentError(\"receipt amount must be positive\")",
+      "call_type": "constructor_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/payments.py",
+      "line_number": 38,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"tax rate cannot be negative\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 21,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "callee_id": "external.code.upper",
+      "call_text": "code.upper()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 23,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "callee_id": "external.coupons.items",
+      "call_text": "coupons.items()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 23,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "call_text": "self.calculate_subtotal(items, products)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 26,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "call_text": "self.apply_coupon(customer, subtotal, coupon)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 27,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "external.max",
+      "call_text": "max(subtotal - discount, 0)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 28,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "call_text": "self.calculate_tax(taxable)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 29,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "call_text": "PriceQuote(subtotal, discount, tax, total, coupon.upper())",
+      "call_type": "constructor_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 33,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"total must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 32,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "callee_id": "external.coupon.upper",
+      "call_text": "coupon.upper()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 33,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"qty must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 40,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "callee_id": "external.item.sku.upper",
+      "call_text": "item.sku.upper()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 41,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"price_cents must be positive\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 43,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "callee_id": "external.coupon.upper",
+      "call_text": "coupon.upper()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 50,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "callee_id": "external.min",
+      "call_text": "min(discount, subtotal_cents)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 56,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"coupon is not supported\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 52,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"taxable amount cannot be negative\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/pricing.py",
+      "line_number": 60,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "callee_id": "external.ValueError",
+      "call_text": "ValueError(\"order_id is required\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 14,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "callee_id": "external.KeyError",
+      "call_text": "KeyError(f\"order {order_id} not found\")",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 19,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "callee_id": "external.self.orders.values",
+      "call_text": "self.orders.values()",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 25,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "call_text": "self.get(order_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 30,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "call_text": "order.mark_paid(payment_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 31,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "call_text": "self.save(order)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/repository.py",
+      "line_number": 32,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "call_text": "self.catalog.reserve_items(items)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 31,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "call_text": "self.pricing.quote(customer, items, reserved_products, coupon)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 33,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "call_text": "self._build_order(customer, items, quote)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 34,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "call_text": "self._charge(customer, quote)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 35,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "call_text": "order.mark_paid(receipt.payment_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 36,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "call_text": "self.repository.save(order)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 37,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "call_text": "self._notify_customer(customer, order, reserved_products)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 38,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "call_text": "self.catalog.release_items(items)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 41,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "call_text": "self.repository.get(order_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 45,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "callee_id": "external.order.mark_cancelled",
+      "call_text": "order.mark_cancelled(reason)",
+      "call_type": "external_call",
+      "confidence": "low",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 46,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "callee_id": "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "call_text": "self.catalog.release_items(order.items)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 47,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "call_text": "self.repository.save(order)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 48,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "callee_id": "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "call_text": "self.repository.list_by_customer(customer_id)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 52,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "callee_id": "external.str",
+      "call_text": "str(order.total_cents)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 54,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order",
+      "call_text": "Order(str(uuid4()), customer.customer_id, list(items), quote.total_cents)",
+      "call_type": "direct_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 59,
+      "is_internal": true,
+      "is_cross_class": false,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "callee_id": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "call_text": "order.add_event(\"quoted\", f\"subtotal={quote.subtotal_cents}; discount={quote.discount_cents}; tax={quote.tax_cents}\")",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 60,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "callee_id": "external.str",
+      "call_text": "str(uuid4())",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 59,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "callee_id": "external.list",
+      "call_text": "list(items)",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 59,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "callee_id": "external.uuid4",
+      "call_text": "uuid4()",
+      "call_type": "external_call",
+      "confidence": "medium",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 59,
+      "is_internal": false,
+      "is_cross_class": false,
+      "is_cross_file": false,
+      "is_cross_package": true,
+      "is_external": true
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "callee_id": "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "call_text": "self.payments.authorize(customer, quote.total_cents)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 64,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "callee_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+      "call_text": "self.notifications.send_receipt(customer, order)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 69,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    },
+    {
+      "caller_id": "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer",
+      "callee_id": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "call_text": "self.notifications.send_low_stock_alert(products)",
+      "call_type": "method_call",
+      "confidence": "high",
+      "file_id": "commerce_ops/services.py",
+      "line_number": 70,
+      "is_internal": true,
+      "is_cross_class": true,
+      "is_cross_file": true,
+      "is_cross_package": false,
+      "is_external": false
+    }
+  ],
+  "direct_callers": {
+    "external.value.strip().upper": [
+      "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    ],
+    "external.ValueError": [
+      "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "commerce_ops_demo.commerce_ops.models.CartItem.validate",
+      "commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "commerce_ops_demo.commerce_ops.models.Product.release",
+      "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    ],
+    "external.value.strip": [
+      "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__",
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get"
+    ],
+    "external.KeyError": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.get"
+    ],
+    "external.sorted": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available"
+    ],
+    "external.self.products.values": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available"
+    ],
+    "external.item.validate": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Product.reserve": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "external.reserved.append": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "external.zip": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Product.release": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items"
+    ],
+    "external.raw.split": [
+      "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    ],
+    "external.items.append": [
+      "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    ],
+    "commerce_ops_demo.commerce_ops.models.CartItem": [
+      "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    ],
+    "external.sku.strip": [
+      "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    ],
+    "external.int": [
+      "commerce_ops_demo.commerce_ops.cli.parse_cart"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Product": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.parse_cart": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "external.len": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    ],
+    "external.print": [
+      "commerce_ops_demo.commerce_ops.cli.main"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo": [
+      "commerce_ops_demo.commerce_ops.cli.main"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer.can_spend": [
+      "commerce_ops_demo.commerce_ops.models.Customer.debit"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order.add_event": [
+      "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled",
+      "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    ],
+    "external.self.events.append": [
+      "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    ],
+    "external.datetime.now(timezone.utc).isoformat": [
+      "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    ],
+    "external.datetime.now": [
+      "commerce_ops_demo.commerce_ops.models.Order.add_event"
+    ],
+    "external.self.sent_messages.append": [
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.format_currency": [
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+    ],
+    "external.alerts.append": [
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentReceipt": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentError": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer.debit": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    ],
+    "external.str": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    ],
+    "external.uuid4": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize",
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer.credit": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund"
+    ],
+    "external.code.upper": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__"
+    ],
+    "external.coupons.items": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "external.max": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PriceQuote": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "external.coupon.upper": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote"
+    ],
+    "external.item.sku.upper": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal"
+    ],
+    "external.min": [
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon"
+    ],
+    "external.self.orders.values": [
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get": [
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid": [
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save": [
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid",
+      "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order",
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout"
+    ],
+    "external.order.mark_cancelled": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer": [
+      "commerce_ops_demo.commerce_ops.services.OrderService.customer_history"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order": [
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    ],
+    "external.list": [
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize": [
+      "commerce_ops_demo.commerce_ops.services.OrderService._charge"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt": [
+      "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert": [
+      "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    ]
+  },
+  "direct_callees": {
+    "commerce_ops_demo.commerce_ops.catalog.normalize_sku": [
+      "external.ValueError",
+      "external.value.strip",
+      "external.value.strip().upper"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.__init__": [
+      "commerce_ops_demo.commerce_ops.catalog.normalize_sku"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get": [
+      "commerce_ops_demo.commerce_ops.catalog.normalize_sku",
+      "external.KeyError"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.list_available": [
+      "external.self.products.values",
+      "external.sorted"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "commerce_ops_demo.commerce_ops.models.Product.release",
+      "commerce_ops_demo.commerce_ops.models.Product.reserve",
+      "external.item.validate",
+      "external.reserved.append",
+      "external.zip"
+    ],
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.get",
+      "commerce_ops_demo.commerce_ops.models.Product.release"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.parse_cart": [
+      "commerce_ops_demo.commerce_ops.models.CartItem",
+      "external.int",
+      "external.items.append",
+      "external.raw.split",
+      "external.sku.strip"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.build_demo_service": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+      "commerce_ops_demo.commerce_ops.models.Product",
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+      "commerce_ops_demo.commerce_ops.services.OrderService"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo": [
+      "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+      "commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "commerce_ops_demo.commerce_ops.models.Customer",
+      "commerce_ops_demo.commerce_ops.services.OrderService.checkout",
+      "commerce_ops_demo.commerce_ops.services.OrderService.customer_history",
+      "external.len"
+    ],
+    "commerce_ops_demo.commerce_ops.cli.main": [
+      "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "external.print"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Product.reserve": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Product.release": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer.debit": [
+      "commerce_ops_demo.commerce_ops.models.Customer.can_spend",
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Customer.credit": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.CartItem.validate": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order.mark_paid": [
+      "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order.mark_cancelled": [
+      "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.models.Order.add_event": [
+      "external.datetime.now",
+      "external.datetime.now(timezone.utc).isoformat",
+      "external.self.events.append"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.format_currency": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt": [
+      "commerce_ops_demo.commerce_ops.notifications.format_currency",
+      "external.self.sent_messages.append"
+    ],
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert": [
+      "external.alerts.append",
+      "external.self.sent_messages.append"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize": [
+      "commerce_ops_demo.commerce_ops.models.Customer.debit",
+      "commerce_ops_demo.commerce_ops.payments.PaymentError",
+      "commerce_ops_demo.commerce_ops.payments.PaymentReceipt",
+      "external.str",
+      "external.uuid4"
+    ],
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway.refund": [
+      "commerce_ops_demo.commerce_ops.models.Customer.credit",
+      "commerce_ops_demo.commerce_ops.payments.PaymentError"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.__init__": [
+      "external.ValueError",
+      "external.code.upper",
+      "external.coupons.items"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote": [
+      "commerce_ops_demo.commerce_ops.pricing.PriceQuote",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax",
+      "external.ValueError",
+      "external.coupon.upper",
+      "external.max"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_subtotal": [
+      "external.ValueError",
+      "external.item.sku.upper"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.apply_coupon": [
+      "external.ValueError",
+      "external.coupon.upper",
+      "external.min"
+    ],
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.calculate_tax": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.save": [
+      "external.ValueError"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.get": [
+      "external.KeyError"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer": [
+      "external.self.orders.values"
+    ],
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository.mark_paid": [
+      "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.save"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService.checkout": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.reserve_items",
+      "commerce_ops_demo.commerce_ops.models.Order.mark_paid",
+      "commerce_ops_demo.commerce_ops.pricing.PricingPolicy.quote",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "commerce_ops_demo.commerce_ops.services.OrderService._build_order",
+      "commerce_ops_demo.commerce_ops.services.OrderService._charge",
+      "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService.cancel_order": [
+      "commerce_ops_demo.commerce_ops.catalog.ProductCatalog.release_items",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.get",
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.save",
+      "external.order.mark_cancelled"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService.customer_history": [
+      "commerce_ops_demo.commerce_ops.repository.OrderRepository.list_by_customer",
+      "external.str"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._build_order": [
+      "commerce_ops_demo.commerce_ops.models.Order",
+      "commerce_ops_demo.commerce_ops.models.Order.add_event",
+      "external.list",
+      "external.str",
+      "external.uuid4"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._charge": [
+      "commerce_ops_demo.commerce_ops.payments.PaymentGateway.authorize"
+    ],
+    "commerce_ops_demo.commerce_ops.services.OrderService._notify_customer": [
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_low_stock_alert",
+      "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt"
+    ]
+  },
+  "external_nodes": {
+    "external.value.strip().upper": {
+      "id": "external.value.strip().upper",
+      "name": "upper",
+      "qualified_name": "external.value.strip().upper",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.ValueError": {
+      "id": "external.ValueError",
+      "name": "ValueError",
+      "qualified_name": "external.ValueError",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.value.strip": {
+      "id": "external.value.strip",
+      "name": "strip",
+      "qualified_name": "external.value.strip",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.KeyError": {
+      "id": "external.KeyError",
+      "name": "KeyError",
+      "qualified_name": "external.KeyError",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.sorted": {
+      "id": "external.sorted",
+      "name": "sorted",
+      "qualified_name": "external.sorted",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.self.products.values": {
+      "id": "external.self.products.values",
+      "name": "values",
+      "qualified_name": "external.self.products.values",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.item.validate": {
+      "id": "external.item.validate",
+      "name": "validate",
+      "qualified_name": "external.item.validate",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.reserved.append": {
+      "id": "external.reserved.append",
+      "name": "append",
+      "qualified_name": "external.reserved.append",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.zip": {
+      "id": "external.zip",
+      "name": "zip",
+      "qualified_name": "external.zip",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.raw.split": {
+      "id": "external.raw.split",
+      "name": "split",
+      "qualified_name": "external.raw.split",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.items.append": {
+      "id": "external.items.append",
+      "name": "append",
+      "qualified_name": "external.items.append",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.sku.strip": {
+      "id": "external.sku.strip",
+      "name": "strip",
+      "qualified_name": "external.sku.strip",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.int": {
+      "id": "external.int",
+      "name": "int",
+      "qualified_name": "external.int",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.len": {
+      "id": "external.len",
+      "name": "len",
+      "qualified_name": "external.len",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.print": {
+      "id": "external.print",
+      "name": "print",
+      "qualified_name": "external.print",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.self.events.append": {
+      "id": "external.self.events.append",
+      "name": "append",
+      "qualified_name": "external.self.events.append",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.datetime.now(timezone.utc).isoformat": {
+      "id": "external.datetime.now(timezone.utc).isoformat",
+      "name": "isoformat",
+      "qualified_name": "external.datetime.now(timezone.utc).isoformat",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.datetime.now": {
+      "id": "external.datetime.now",
+      "name": "now",
+      "qualified_name": "external.datetime.now",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.self.sent_messages.append": {
+      "id": "external.self.sent_messages.append",
+      "name": "append",
+      "qualified_name": "external.self.sent_messages.append",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.alerts.append": {
+      "id": "external.alerts.append",
+      "name": "append",
+      "qualified_name": "external.alerts.append",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.str": {
+      "id": "external.str",
+      "name": "str",
+      "qualified_name": "external.str",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.uuid4": {
+      "id": "external.uuid4",
+      "name": "uuid4",
+      "qualified_name": "external.uuid4",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.code.upper": {
+      "id": "external.code.upper",
+      "name": "upper",
+      "qualified_name": "external.code.upper",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.coupons.items": {
+      "id": "external.coupons.items",
+      "name": "items",
+      "qualified_name": "external.coupons.items",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.max": {
+      "id": "external.max",
+      "name": "max",
+      "qualified_name": "external.max",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.coupon.upper": {
+      "id": "external.coupon.upper",
+      "name": "upper",
+      "qualified_name": "external.coupon.upper",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.item.sku.upper": {
+      "id": "external.item.sku.upper",
+      "name": "upper",
+      "qualified_name": "external.item.sku.upper",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.min": {
+      "id": "external.min",
+      "name": "min",
+      "qualified_name": "external.min",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.self.orders.values": {
+      "id": "external.self.orders.values",
+      "name": "values",
+      "qualified_name": "external.self.orders.values",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.order.mark_cancelled": {
+      "id": "external.order.mark_cancelled",
+      "name": "mark_cancelled",
+      "qualified_name": "external.order.mark_cancelled",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    },
+    "external.list": {
+      "id": "external.list",
+      "name": "list",
+      "qualified_name": "external.list",
+      "kind": "external_symbol",
+      "language": "unknown",
+      "file_id": null,
+      "package_id": "external"
+    }
+  },
+  "unresolved_calls": []
+}

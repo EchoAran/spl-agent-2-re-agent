@@ -1,0 +1,111 @@
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "page_type": "entity",
+  "title": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "slug": "commerce-ops-demo-commerce-ops-cli-parse-cart",
+  "url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-parse-cart",
+  "entity_kind": "function",
+  "entity_id": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.parse_cart",
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/cli.py/parse_cart.spl"
+  ],
+  "summary": "Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.",
+  "body_markdown": "# commerce_ops_demo.commerce_ops.cli.parse_cart\n\nParse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.\n\n## SPL\n\n```spl\n[DEFINE_WORKER: \"Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.\" parse_cart]\n    [INPUTS]\n        <REF> raw_items </REF>: List[str] \"Iterable of strings in the format 'sku:qty' to parse into CartItem objects.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> items </REF>: List[CartItem] \"List of CartItem objects constructed from the parsed input strings.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Initialize an empty list to collect parsed items. RESULT items]\n            [COMMAND Iterate over raw_items; for each raw, split on ':' with maxsplit=1 and unpack into sku and qty_text. RESULT sku and qty_text for current element]\n            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> with sku.strip() and int(qty_text) and append it to items. RESULT items updated with a new CartItem]\n            [COMMAND Return the accumulated items list. RESULT List[CartItem]]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: raw.split(':', 1) does not produce exactly two parts for unpacking.]\n        [LOG \"Failed to unpack 'sku' and 'qty_text' from raw; expected 'sku:qty' format.\"]\n        [THROW ValueError \"Not enough values to unpack (expected 2).\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: qty_text cannot be converted to an integer via int(qty_text).]\n        [LOG \"Invalid quantity; int conversion failed for qty_text.\"]\n        [THROW ValueError \"Invalid literal for int() with base 10.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: raw is not a string-like object and does not support split(':', 1).]\n        [LOG \"raw element lacks a compatible split method.\"]\n        [THROW AttributeError or TypeError \"Object has no attribute 'split' or split invocation is not applicable.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.]\n        [LOG \"CartItem construction failed and is propagated.\"]\n        [THROW Exception \"Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]\n```\n\n## Wiki Navigation\n\n- Page ID: `method:commerce_ops_demo.commerce_ops.cli.parse_cart`\n- Entity kind: `function`\n- Package: `commerce_ops_demo.commerce_ops`\n- File: `commerce_ops/cli.py`\n\n## Wiki Summary\n\n# commerce_ops_demo.commerce_ops.cli.parse_cart\n\nParse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.\n\n## Inputs\n- raw_items (List[str]): Iterable of strings in the format 'sku:qty' to parse into CartItem objects.\n\n## Outputs\n- items (List[CartItem]): List of CartItem objects constructed from the parsed input strings.\n\n## Main Effect\nReturn the accumulated items list.\n\n## Calls and Callers\n- commerce_ops_demo.commerce_ops.models.CartItem\n- commerce_ops_demo.commerce_ops.cli.run_checkout_demo\n\n## Side Effects\n- items.append(CartItem(sku.strip(), int(qty_text)))\n\n## Errors\n- Exception: Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates.\n- The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.\n- ValueError: Invalid literal for int() with base 10.\n- ValueError: Not enough values to unpack (expected 2).\n- qty_text cannot be converted to an integer via int(qty_text).\n- raw is not a string-like object and does not support split(':', 1).\n- raw.split(':', 1) does not produce exactly two parts for unpacking.\n\n## Validation Rules\n- evidence: missing; confidence: not_available; source: static_analysis\n",
+  "outgoing_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "file:commerce_ops/cli.py",
+      "target_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "owned_by_file",
+      "label": "commerce_ops/cli.py"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "package:commerce_ops_demo.commerce_ops",
+      "target_url": "/wiki/package/commerce-ops-demo-commerce-ops",
+      "relation": "owned_by_package",
+      "label": "commerce_ops_demo.commerce_ops"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "class:commerce_ops_demo.commerce_ops.models.CartItem",
+      "target_url": "/wiki/class/commerce-ops-demo-commerce-ops-models-cartitem",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.models.CartItem"
+    },
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "target_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "target_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "called_by",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    }
+  ],
+  "incoming_links": [
+    {
+      "source_page_id": "method:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/method/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "calls",
+      "label": "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "file:commerce_ops/cli.py",
+      "source_url": "/wiki/file/commerce-ops-cli-py",
+      "relation": "contains_symbol",
+      "label": "commerce_ops_demo.commerce_ops.cli"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.parse_cart",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-parse-cart",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.parse_cart"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-run-checkout-demo",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+    },
+    {
+      "source_page_id": "workflow:commerce_ops_demo.commerce_ops.cli.main",
+      "source_url": "/wiki/workflow/commerce-ops-demo-commerce-ops-cli-main",
+      "relation": "workflow_step",
+      "label": "Workflow from commerce_ops_demo.commerce_ops.cli.main"
+    }
+  ],
+  "breadcrumbs": [
+    {
+      "title": "commerce_ops_demo",
+      "url": "/wiki/package/commerce-ops-demo"
+    },
+    {
+      "title": "commerce_ops_demo.commerce_ops",
+      "url": "/wiki/package/commerce-ops-demo-commerce-ops"
+    },
+    {
+      "title": "commerce_ops/cli.py",
+      "url": "/wiki/file/commerce-ops-cli-py"
+    }
+  ],
+  "tags": [
+    "method",
+    "public"
+  ],
+  "owners": [],
+  "package_path": "commerce_ops_demo.commerce_ops",
+  "file_path": "commerce_ops/cli.py",
+  "symbol_refs": [
+    "commerce_ops_demo.commerce_ops.cli.parse_cart"
+  ],
+  "graph_refs": [
+    "call_graph:commerce_ops_demo.commerce_ops.cli.parse_cart"
+  ],
+  "related_workflows": [],
+  "related_topics": [],
+  "updated_at": "2026-04-26T06:14:02.628185+00:00",
+  "build_version": "repo-spl-wiki-v1",
+  "content_hash": "f767b06cc9621fd94db8fb9d3ec4036a6c887ec2b305093ef5ee24a8eea8fb39",
+  "spl_source_path": "spl/commerce_ops_demo/commerce_ops/cli.py/parse_cart.spl",
+  "spl_content": "[DEFINE_WORKER: \"Parse a list of 'sku:qty' strings into CartItem objects by splitting on the first colon, stripping the SKU, converting quantity to int, and returning the list.\" parse_cart]\n    [INPUTS]\n        <REF> raw_items </REF>: List[str] \"Iterable of strings in the format 'sku:qty' to parse into CartItem objects.\"\n    [END_INPUTS]\n\n    [OUTPUTS]\n        <REF> items </REF>: List[CartItem] \"List of CartItem objects constructed from the parsed input strings.\"\n    [END_OUTPUTS]\n\n    [MAIN_FLOW]\n        [SEQUENTIAL_BLOCK]\n            [COMMAND Initialize an empty list to collect parsed items. RESULT items]\n            [COMMAND Iterate over raw_items; for each raw, split on ':' with maxsplit=1 and unpack into sku and qty_text. RESULT sku and qty_text for current element]\n            [COMMAND Construct <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> with sku.strip() and int(qty_text) and append it to items. RESULT items updated with a new CartItem]\n            [COMMAND Return the accumulated items list. RESULT List[CartItem]]\n        [END_SEQUENTIAL_BLOCK]\n    [END_MAIN_FLOW]\n\n    [EXCEPTION_FLOW: raw.split(':', 1) does not produce exactly two parts for unpacking.]\n        [LOG \"Failed to unpack 'sku' and 'qty_text' from raw; expected 'sku:qty' format.\"]\n        [THROW ValueError \"Not enough values to unpack (expected 2).\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: qty_text cannot be converted to an integer via int(qty_text).]\n        [LOG \"Invalid quantity; int conversion failed for qty_text.\"]\n        [THROW ValueError \"Invalid literal for int() with base 10.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: raw is not a string-like object and does not support split(':', 1).]\n        [LOG \"raw element lacks a compatible split method.\"]\n        [THROW AttributeError or TypeError \"Object has no attribute 'split' or split invocation is not applicable.\"]\n    [END_EXCEPTION_FLOW]\n\n    [EXCEPTION_FLOW: The constructor for <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> raises during instantiation.]\n        [LOG \"CartItem construction failed and is propagated.\"]\n        [THROW Exception \"Any exception raised by <SPL>commerce_ops_demo.commerce_ops.models.CartItem</SPL> propagates.\"]\n    [END_EXCEPTION_FLOW]\n\n[END_WORKER]"
+}

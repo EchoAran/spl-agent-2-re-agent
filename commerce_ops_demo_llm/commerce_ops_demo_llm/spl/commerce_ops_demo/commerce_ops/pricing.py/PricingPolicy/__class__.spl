@@ -1,0 +1,77 @@
+[DEFINE_AGENT: "A class that represents a cohesive abstraction with responsibility, state, behavior, and collaboration boundaries" PricingPolicy]
+
+[DEFINE_PERSONA:]
+    ROLE: "service"
+    DOMAIN: "Commerce operations: pricing and quoting"
+    ABSTRACTION_LEVEL: "Class-level; describes what the class does and how it works at a summarized level without expanding method command flows"
+[END_PERSONA]
+
+[DEFINE_AUDIENCE:]
+    KNOWLEDGE: "Developers who need to understand, reuse, test, extend, or modify this class"
+    INTEREST: "Class purpose, responsibility, public behavior, state, dependencies, control role, side effects, and errors"
+[END_AUDIENCE]
+
+[DEFINE_CONCEPTS:]
+    Purpose: "Encapsulate pricing rules for shopping carts by computing a price quote that combines item subtotal, coupon-based discounts, and tax using configured policy state."
+    Responsibility: "Primary: Provide a price quoting capability that orchestrates subtotal calculation, coupon discounting, and tax computation into a final result. Secondary: Maintain pricing policy configuration (tax_rate_bps and coupons mapping) and expose reusable helpers for subtotal, coupon, and tax calculations with validation."
+    PublicBehavior: "__init__(tax_rate_bps: int, coupons: mapping[str,int]): validate non-negative tax rate; normalize and store coupons with uppercase keys.; quote(customer, items, products, coupon): produce a PriceQuote by subtotaling items, applying coupon rules (code normalization, VIP bonus, cap), clamping taxable, computing tax, and validating positive total.; calculate_subtotal(items, products): compute subtotal in cents from product price lookup and item quantities with required validations.; apply_coupon(customer, subtotal_cents, coupon): resolve discount from coupons mapping with uppercased code, add VIP bonus when applicable, and cap discount to subtotal.; calculate_tax(taxable_cents): compute tax in cents using self.tax_rate_bps basis points with integer floor division."
+    InternalMechanism: "The class holds configuration state for tax and supported coupons. Callers construct an instance with these settings, then use quote to coordinate subtotal, coupon application, and tax. quote delegates to calculate_subtotal, apply_coupon, and calculate_tax, enforces non-negative taxable amounts and positive totals, and constructs a <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>."
+    StateModel: "tax_rate_bps (int): configuration for tax rate in basis points; written in __init__; read by calculate_tax.; coupons (mapping[str,int]): configuration of uppercase coupon codes to discount cents; written in __init__; read by apply_coupon."
+    Collaboration: "<SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>; external.ValueError; external.max; external.min; external.coupon.upper; external.item.sku.upper; external.code.upper"
+    ErrorBoundary: "ValueError: tax rate cannot be negative (initialization).; AttributeError: coupons does not provide an .items() method (initialization).; AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).; ValueError: total must be positive (quote).; ValueError: qty must be positive (calculate_subtotal).; ValueError: price_cents must be positive (calculate_subtotal).; AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).; KeyError: SKU not found in price lookup (calculate_subtotal).; TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).; ValueError: coupon is not supported (apply_coupon).; AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).; ValueError: taxable amount cannot be negative (calculate_tax).; TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."
+[END_CONCEPTS]
+
+[DEFINE_VARIABLES:]
+    <!-- Identity -->
+    <REF> class_name </REF>: text "PricingPolicy"
+    <REF> qualified_name </REF>: text "commerce_ops_demo.commerce_ops.pricing.PricingPolicy"
+    <REF> source_file </REF>: text "commerce_ops/pricing.py"
+
+    <!-- Purpose and responsibility -->
+    <REF> purpose </REF>: text "Encapsulate pricing rules for shopping carts by computing a price quote that combines item subtotal, coupon-based discounts, and tax using configured policy state."
+    <REF> responsibility </REF>: text "Primary: Provide a price quoting capability that orchestrates subtotal calculation, coupon discounting, and tax computation into a final result. Secondary: Maintain pricing policy configuration (tax_rate_bps and coupons mapping) and expose reusable helpers for subtotal, coupon, and tax calculations with validation."
+    <REF> role </REF>: text "service"
+
+    <!-- Public surface -->
+    <REF> public_surface </REF>: List [text] ["__init__(tax_rate_bps: int, coupons: mapping[str,int]): validate non-negative tax rate; normalize and store coupons with uppercase keys.", "quote(customer, items, products, coupon): produce a PriceQuote by subtotaling items, applying coupon rules (code normalization, VIP bonus, cap), clamping taxable, computing tax, and validating positive total.", "calculate_subtotal(items, products): compute subtotal in cents from product price lookup and item quantities with required validations.", "apply_coupon(customer, subtotal_cents, coupon): resolve discount from coupons mapping with uppercased code, add VIP bonus when applicable, and cap discount to subtotal.", "calculate_tax(taxable_cents): compute tax in cents using self.tax_rate_bps basis points with integer floor division."]
+    <REF> entrypoints </REF>: List [text] ["quote", "__init__"]
+
+    <!-- Internal mechanism -->
+    <REF> mechanism </REF>: text "The class holds configuration state for tax and supported coupons. Callers construct an instance with these settings, then use quote to coordinate subtotal, coupon application, and tax. quote delegates to calculate_subtotal, apply_coupon, and calculate_tax, enforces non-negative taxable amounts and positive totals, and constructs a <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>."
+    <REF> internal_structure </REF>: List [text] ["Quote orchestration entry: coordinates subtotal, coupon discounting, tax computation, and builds <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>.", "Subtotal computation helper: validates items and products and sums price_cents * qty.", "Coupon handling helper: normalizes coupon code to uppercase, looks up in self.coupons, adds VIP bonus when applicable, caps discount to subtotal.", "Tax calculation helper: reads self.tax_rate_bps and computes integer tax from a non-negative taxable amount.", "Configuration state: self.tax_rate_bps and self.coupons set during initialization."]
+    <REF> lifecycle </REF>: List [text] ["Creation: __init__ validates tax_rate_bps >= 0 and normalizes coupon keys to uppercase before storing state.", "Usage: quote is invoked with customer, items, products, and an optional coupon to obtain a PriceQuote.", "No explicit reset or disposal behavior is defined."]
+
+    <!-- State and data -->
+    <REF> state </REF>: List [text] ["tax_rate_bps (int): configuration for tax rate in basis points; written in __init__; read by calculate_tax.", "coupons (mapping[str,int]): configuration of uppercase coupon codes to discount cents; written in __init__; read by apply_coupon."]
+    <REF> inputs </REF>: List [text] ["tax_rate_bps (int)", "coupons (mapping[str,int])", "customer (Customer)", "items (List[CartItem])", "products (List[Product])", "coupon (str)", "taxable_cents (int)"]
+    <REF> outputs </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> from quote", "subtotal_cents (int)", "discount_cents (int)", "tax_cents (int)", "total_cents (int) encapsulated in PriceQuote"]
+
+    <!-- Collaboration -->
+    <REF> dependencies </REF>: List [text] ["<SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>", "external.ValueError", "external.max", "external.min", "external.coupon.upper", "external.item.sku.upper", "external.code.upper"]
+    <REF> used_by </REF>: List [text] ["commerce_ops_demo.commerce_ops.services.OrderService.checkout"]
+    <REF> key_interactions </REF>: List [text] ["quote -> calculate_subtotal", "quote -> apply_coupon", "quote -> calculate_tax", "quote -> <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL>", "commerce_ops_demo.commerce_ops.services.OrderService.checkout -> quote", "apply_coupon reads self.coupons", "calculate_tax reads self.tax_rate_bps"]
+
+    <!-- Effects and risks -->
+    <REF> side_effects </REF>: List [text] ["Sets self.tax_rate_bps during construction.", "Normalizes and stores coupons mapping with uppercase keys during construction.", "Constructs <SPL>commerce_ops_demo.commerce_ops.pricing.PriceQuote</SPL> when quoting."]
+    <REF> errors </REF>: List [text] ["ValueError: tax rate cannot be negative (initialization).", "AttributeError: coupons does not provide an .items() method (initialization).", "AttributeError: coupon code lacks .upper() during coupon key normalization (initialization).", "ValueError: total must be positive (quote).", "ValueError: qty must be positive (calculate_subtotal).", "ValueError: price_cents must be positive (calculate_subtotal).", "AttributeError: item missing required attributes or sku lacks upper() (calculate_subtotal).", "KeyError: SKU not found in price lookup (calculate_subtotal).", "TypeError: Non-numeric qty or price causes arithmetic failure (calculate_subtotal).", "ValueError: coupon is not supported (apply_coupon).", "AttributeError or TypeError: coupon.upper() unavailable or failed (apply_coupon).", "ValueError: taxable amount cannot be negative (calculate_tax).", "TypeError: Non-numeric taxable_cents or tax_rate_bps (calculate_tax)."]
+    <REF> invariants </REF>: List [text] ["self.tax_rate_bps >= 0.", "Coupon codes are normalized to uppercase in self.coupons.", "Subtotal uses only items with qty > 0 and products with price_cents > 0.", "Accepted coupon must exist in self.coupons.", "Applied discount is capped to subtotal.", "Taxable amount provided to tax calculation is >= 0.", "Final total in a quote is > 0."]
+
+    <!-- Traceability -->
+    <REF> method_refs </REF>: List [text] ["<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/__init__.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/quote.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_subtotal.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/apply_coupon.spl</SPL>", "<SPL>spl/commerce_ops_demo/commerce_ops/pricing.py/PricingPolicy/calculate_tax.spl</SPL>"]
+[END_VARIABLES]
+
+<!-- This section defines class-level reverse-engineering information.
+     It should let a developer understand what the class does, why it exists, how it works at a summarized level, and where to inspect method-level details.
+     Do NOT expand method COMMAND flows.
+     Do NOT restate every method implementation.
+     Use method_refs only for traceability. -->
+
+[DEFINE_CONSTRAINTS:]
+    ClassLevelOnly: "Describe the class-level abstraction; do not expand individual method command flows" LOG "class_over_expansion"
+    MechanismSummary: "Explain how the class works only at a summarized class level" LOG "class_mechanism_over_detail"
+    ResponsibilityBoundary: "Distinguish what this class owns from what it delegates to dependencies" LOG "class_boundary_error"
+    StateAccuracy: "Only include state actually owned, read, mutated, cached, or exposed by this class" LOG "class_state_error"
+    Traceability: "Refer to method-level SPL artifacts by reference instead of inlining method-level details" LOG "method_detail_leakage"
+[END_CONSTRAINTS]
+
+[END_AGENT]

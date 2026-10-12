@@ -1,0 +1,107 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.models.Order.add_event",
+  "summary": "Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/models.py/Order/add_event.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.models.Order.add_event
+
+Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list." add_event]
+    [INPUTS]
+        <REF> kind </REF>: str "Event type identifier to record in the new event."
+        <REF> detail </REF>: str "Event detail message or description."
+        <REF> self.events </REF>: list "Existing events list on the instance that will be mutated via append."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> return </REF>: None "No direct return value."
+        <REF> self.events </REF>: list "Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Generate a UTC timestamp string using datetime.now(timezone.utc).isoformat(). RESULT timestamp string in ISO 8601 format]
+            [COMMAND Construct an event dictionary with keys kind, detail, and timestamp. RESULT event dict with provided kind/detail and generated timestamp]
+            [COMMAND Append the constructed event dictionary to self.events. RESULT self.events updated with the new event entry]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: self.events is None or lacks an append method (not a list-like).]
+        [LOG "Cannot append event; self.events is not appendable."]
+        [THROW AttributeError "self.events does not support append."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: datetime or timezone is not imported/defined when generating the timestamp.]
+        [LOG "Time source unavailable: datetime or timezone is undefined."]
+        [THROW NameError "datetime or timezone is not defined."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.models.Order.add_event`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/models.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.models.Order.add_event
+
+Appends a new event dictionary with kind, detail, and a current UTC ISO timestamp to the instance's events list.
+
+## Inputs
+- kind (str): Event type identifier to record in the new event.
+- detail (str): Event detail message or description.
+- self.events (list): Existing events list on the instance that will be mutated via append.
+
+## Outputs
+- return (None): No direct return value.
+- self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.
+
+## Main Effect
+Append the constructed event dictionary to self.events.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.models.Order.mark_cancelled
+- commerce_ops_demo.commerce_ops.models.Order.mark_paid
+- commerce_ops_demo.commerce_ops.services.OrderService._build_order
+
+## Side Effects
+- mutates self.events
+- mutates self.events via append
+- self.events (list): Mutated by appending a new event dictionary containing kind, detail, and a UTC ISO timestamp.
+- self.events.append(
+            {
+                "kind": kind,
+                "detail": detail,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            }
+        )
+
+## Errors
+- AttributeError: self.events does not support append.
+- NameError: datetime or timezone is not defined.
+- datetime or timezone is not imported/defined when generating the timestamp.
+- self.events is None or lacks an append method (not a list-like).
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

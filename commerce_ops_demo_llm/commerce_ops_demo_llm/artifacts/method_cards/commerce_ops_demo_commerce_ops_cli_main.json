@@ -1,0 +1,50 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.cli.main",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.main",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/cli.py",
+  "signature": "def main() -> None:",
+  "visibility": "public",
+  "summary": "Calls <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> with fixed sample items and the 'SAVE10' code, then prints the returned value.",
+  "purpose_hint": "",
+  "inputs": [],
+  "outputs": [
+    "stdout (stdout): Printed representation of the value returned by <SPL>commerce_ops_demo.commerce_ops.cli.run_checkout_demo</SPL> when invoked with the sample inputs."
+  ],
+  "main_effect": "Print checkout_result to standard output.",
+  "side_effects": [],
+  "errors": [],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo",
+    "external.print"
+  ],
+  "direct_callers": [],
+  "external_calls": [
+    "external.print"
+  ],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 1,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [],
+    "function_calls": [
+      {
+        "type": "function_call",
+        "lineno": 2,
+        "code": "print(run_checkout_demo([\"BOOK-1:1\", \"MUG-1:2\"], \"SAVE10\"))"
+      }
+    ],
+    "returns": [],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": true,
+  "is_wrapper_candidate": true,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/cli.py/main.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}

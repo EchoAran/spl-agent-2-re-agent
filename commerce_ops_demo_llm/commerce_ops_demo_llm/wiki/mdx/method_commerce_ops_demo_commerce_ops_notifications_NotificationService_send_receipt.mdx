@@ -1,0 +1,106 @@
+---
+{
+  "page_id": "method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "page_type": "entity",
+  "entity_kind": "method",
+  "title": "commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt",
+  "summary": "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.",
+  "tags": [
+    "method",
+    "public"
+  ],
+  "source_refs": [
+    "spl/commerce_ops_demo/commerce_ops/notifications.py/NotificationService/send_receipt.spl"
+  ]
+}
+---
+
+# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt
+
+Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.
+
+## SPL
+
+```spl
+[DEFINE_WORKER: "Compose a receipt message for a customer's order, append it to sent_messages, and return the message string." send_receipt]
+    [INPUTS]
+        <REF> self </REF>: object "Object instance that must provide a sent_messages list-like attribute to append the message."
+        <REF> customer </REF>: Customer "Customer object providing email used in the receipt message."
+        <REF> order </REF>: Order "Order object providing order_id and total_cents used to compose and format the receipt."
+    [END_INPUTS]
+
+    [OUTPUTS]
+        <REF> message </REF>: str "The composed receipt message string that is returned."
+        <REF> self.sent_messages </REF>: List[str] "Updated list after appending the composed receipt message."
+    [END_OUTPUTS]
+
+    [MAIN_FLOW]
+        [SEQUENTIAL_BLOCK]
+            [COMMAND Construct receipt message string using customer.email, order.order_id, and <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL>(order.total_cents). RESULT message]
+            [COMMAND Append message to self.sent_messages. RESULT self.sent_messages]
+            [COMMAND Return the composed message. RESULT message]
+        [END_SEQUENTIAL_BLOCK]
+    [END_MAIN_FLOW]
+
+    [EXCEPTION_FLOW: customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.]
+        [LOG "Attribute access failed while composing the receipt message."]
+        [THROW AttributeError "Raised when expected attributes are missing on customer or order."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.]
+        [LOG "Formatting total_cents failed during receipt message construction."]
+        [THROW Exception "Propagated exception from format_currency when formatting the total."]
+    [END_EXCEPTION_FLOW]
+
+    [EXCEPTION_FLOW: self.sent_messages is missing or not list-like, causing append to fail.]
+        [LOG "Failed to append the message to self.sent_messages."]
+        [THROW AttributeError or TypeError "Raised when sent_messages attribute is absent or does not support append."]
+    [END_EXCEPTION_FLOW]
+
+[END_WORKER]
+```
+
+## Wiki Navigation
+
+- Page ID: `method:commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt`
+- Entity kind: `method`
+- Package: `commerce_ops_demo.commerce_ops`
+- File: `commerce_ops/notifications.py`
+
+## Wiki Summary
+
+# commerce_ops_demo.commerce_ops.notifications.NotificationService.send_receipt
+
+Compose a receipt message for a customer's order, append it to sent_messages, and return the message string.
+
+## Inputs
+- self (object): Object instance that must provide a sent_messages list-like attribute to append the message.
+- customer (Customer): Customer object providing email used in the receipt message.
+- order (Order): Order object providing order_id and total_cents used to compose and format the receipt.
+
+## Outputs
+- message (str): The composed receipt message string that is returned.
+- self.sent_messages (List[str]): Updated list after appending the composed receipt message.
+
+## Main Effect
+Return the composed message.
+
+## Calls and Callers
+- commerce_ops_demo.commerce_ops.notifications.format_currency
+- commerce_ops_demo.commerce_ops.services.OrderService._notify_customer
+
+## Side Effects
+- mutates self.sent_messages
+- mutates self.sent_messages via append
+- self.sent_messages (List[str]): Updated list after appending the composed receipt message.
+- self.sent_messages.append(message)
+
+## Errors
+- <SPL>commerce_ops_demo.commerce_ops.notifications.format_currency</SPL> raises due to invalid order.total_cents or internal formatting error.
+- AttributeError: Raised when expected attributes are missing on customer or order.
+- Exception: Propagated exception from format_currency when formatting the total.
+- customer or order lacks required attributes (email, order_id, total_cents) or is None, causing attribute access during message construction to fail.
+- self.sent_messages is missing or not list-like, causing append to fail.
+
+## Validation Rules
+- evidence: missing; confidence: not_available; source: static_analysis

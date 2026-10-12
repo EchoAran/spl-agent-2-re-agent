@@ -1,0 +1,87 @@
+{
+  "id": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "qualified_name": "commerce_ops_demo.commerce_ops.cli.build_demo_service",
+  "kind": "function",
+  "owner_class_id": null,
+  "owner_file_id": "commerce_ops/cli.py",
+  "signature": "def build_demo_service() -> OrderService:",
+  "visibility": "public",
+  "summary": "Constructs and returns a demo OrderService preconfigured with a sample catalog, pricing, and in-memory dependencies.",
+  "purpose_hint": "",
+  "inputs": [],
+  "outputs": [
+    "order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service."
+  ],
+  "main_effect": "Construct an order service from catalog, pricing, payments, repository, and notifications via <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>",
+  "side_effects": [
+    "ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )",
+    "order_service (OrderService): A configured demo OrderService instance built from a catalog of sample products, a pricing policy, a payment gateway, an order repository, and a notification service."
+  ],
+  "errors": [
+    "Exception: Underlying constructor exception is not handled and propagates to the caller.",
+    "If any constructor call (<SPL>commerce_ops_demo.commerce_ops.models.Product</SPL>, <SPL>commerce_ops_demo.commerce_ops.catalog.ProductCatalog</SPL>, <SPL>commerce_ops_demo.commerce_ops.pricing.PricingPolicy</SPL>, <SPL>commerce_ops_demo.commerce_ops.payments.PaymentGateway</SPL>, <SPL>commerce_ops_demo.commerce_ops.repository.OrderRepository</SPL>, <SPL>commerce_ops_demo.commerce_ops.notifications.NotificationService</SPL>, or <SPL>commerce_ops_demo.commerce_ops.services.OrderService</SPL>) raises an error"
+  ],
+  "validation_rules": [],
+  "direct_callees": [
+    "commerce_ops_demo.commerce_ops.catalog.ProductCatalog",
+    "commerce_ops_demo.commerce_ops.models.Product",
+    "commerce_ops_demo.commerce_ops.notifications.NotificationService",
+    "commerce_ops_demo.commerce_ops.payments.PaymentGateway",
+    "commerce_ops_demo.commerce_ops.pricing.PricingPolicy",
+    "commerce_ops_demo.commerce_ops.repository.OrderRepository",
+    "commerce_ops_demo.commerce_ops.services.OrderService"
+  ],
+  "direct_callers": [
+    "commerce_ops_demo.commerce_ops.cli.run_checkout_demo"
+  ],
+  "external_calls": [],
+  "state_reads": [],
+  "state_writes": [],
+  "control_markers": {
+    "statements_count": 6,
+    "control_structures": [],
+    "loops": [],
+    "assignments": [
+      {
+        "type": "assignment",
+        "lineno": 2,
+        "code": "catalog = ProductCatalog(\n        [\n            Product(\"BOOK-1\", \"Clean Architecture\", 3500, 4, [\"book\"]),\n            Product(\"MUG-1\", \"SPL Mug\", 1800, 3, [\"gift\"]),\n            Product(\"TEE-1\", \"Compiler Tee\", 2500, 1, [\"gift\"]),\n        ]\n    )"
+      },
+      {
+        "type": "assignment",
+        "lineno": 9,
+        "code": "pricing = PricingPolicy(825, {\"SAVE10\": 1000, \"VIP5\": 500})"
+      },
+      {
+        "type": "assignment",
+        "lineno": 10,
+        "code": "payments = PaymentGateway()"
+      },
+      {
+        "type": "assignment",
+        "lineno": 11,
+        "code": "repository = OrderRepository()"
+      },
+      {
+        "type": "assignment",
+        "lineno": 12,
+        "code": "notifications = NotificationService()"
+      }
+    ],
+    "function_calls": [],
+    "returns": [
+      {
+        "type": "return",
+        "lineno": 13,
+        "code": "return OrderService(catalog, pricing, payments, repository, notifications)"
+      }
+    ],
+    "switch_cases": []
+  },
+  "is_entrypoint_candidate": true,
+  "is_wrapper_candidate": false,
+  "is_helper_candidate": false,
+  "spl_path": "spl/commerce_ops_demo/commerce_ops/cli.py/build_demo_service.spl",
+  "confidence_notes": [],
+  "schema_version": "repo-spl-v1"
+}
